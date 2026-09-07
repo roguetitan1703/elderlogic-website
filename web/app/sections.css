@@ -101,7 +101,7 @@
   padding-block: var(--section-y);
 }
 .hero__copy .eyebrow { color: var(--navy-200); }
-.hero__heading { color: var(--text-inverse); max-width: 18ch; }
+.hero__heading { color: var(--text-inverse); }
 .hero__sub { color: var(--navy-200); max-width: 46ch; }
 /* On the hero the link text stays white in every state. The arrow is the only
    green on it, and hover moves the arrow rather than recolouring the words -
@@ -141,7 +141,7 @@
 @media (min-width: 900px) {
   .hero { min-height: clamp(34rem, 78svh, 44rem); display: flex; align-items: center; }
   .hero__inner { display: flex; align-items: center; }
-  .hero__copy { max-width: 60%; padding-inline-end: var(--sp-12); }
+  .hero__copy { padding-inline-end: var(--sp-8); }
 }
 
 /* ---------- questions page -------------------------------------------- */
@@ -856,3 +856,101 @@
   .flow { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; gap: var(--sp-16); }
   .flow__media .shot--phone { max-width: 16rem; margin-inline: 0; }
 }
+
+/* ---------------------------------------------------------------------------
+   Header over the hero
+   A white bar above a navy hero was two unrelated blocks stacked. The header
+   now sits on the hero and only takes a surface once you scroll past it.
+   --------------------------------------------------------------------------- */
+
+.site-header {
+  position: fixed;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+  transition: background var(--dur-base) var(--ease-standard),
+              border-color var(--dur-base) var(--ease-standard);
+}
+.site-header__nav a,
+.site-header__logo { color: var(--text-inverse); }
+.site-header__nav a:hover { color: #fff; }
+.site-header__toggle svg path { stroke: #fff; }
+
+.site-header.is-stuck {
+  background: rgba(var(--scrim-900), 0.92);
+  backdrop-filter: var(--blur-panel);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+/* The hero owns the top of the page, so it clears the fixed header itself. */
+.hero { padding-top: var(--header-h); }
+
+/* ---------------------------------------------------------------------------
+   The home card: the object every section is built from
+   --------------------------------------------------------------------------- */
+
+.hero__card {
+  position: relative;
+  z-index: 1;
+  margin: var(--sp-10) 0 0;
+}
+
+.hcard {
+  margin: 0;
+  max-width: 24rem;
+  padding: var(--sp-6);
+  background: rgba(255, 255, 255, 0.06);
+  border: var(--border-w) solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-lg);
+  backdrop-filter: var(--blur-panel);
+}
+.hcard__top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); }
+.hcard__kind {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+.hcard__flag {
+  font-size: var(--fs-micro);
+  padding: 0.2rem var(--sp-3);
+  border-radius: var(--radius-pill);
+  background: var(--green-700);
+  color: #fff;
+}
+.hcard__place {
+  margin: var(--sp-4) 0 var(--sp-5);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  color: #fff;
+}
+.hcard__rows { margin: 0; }
+.hcard__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+  border-top: var(--border-w) solid rgba(255, 255, 255, 0.1);
+}
+.hcard__row dt { color: rgba(255, 255, 255, 0.62); font-size: var(--fs-body-sm); }
+.hcard__row dd { margin: 0; color: #fff; font-size: var(--fs-body-sm); }
+.hcard__foot {
+  margin: var(--sp-5) 0 0;
+  font-size: var(--fs-micro);
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 1.5;
+}
+
+@media (min-width: 900px) {
+  /* copy left, the object right. .hero__inner stays the container, so the grid
+     goes on a wrapper inside it and the gutters are preserved. */
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 24rem;
+    gap: var(--sp-16);
+    align-items: center;
+  }
+  .hero__copy { min-width: 0; }
+  .hero__card { margin: 0; min-width: 0; }
+}
+

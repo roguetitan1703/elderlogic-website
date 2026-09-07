@@ -18,6 +18,7 @@ import Shot from "@/components/Shot";
 import CoverageField from "@/components/CoverageField";
 import Funnel from "@/components/Funnel";
 import HeroField from "@/components/HeroField";
+import HomeCard from "@/components/HomeCard";
 
 /**
  * One alignment discipline: everything sits on the left grid. Rhythm comes from
@@ -46,6 +47,11 @@ export default function Home() {
                   {hero.secondary.label} <span aria-hidden="true">&#8594;</span>
                 </a>
               </div>
+            </div>
+
+            {/* The atom, in the hero: the page opens on the thing it delivers. */}
+            <div className="hero__card">
+              <HomeCard />
             </div>
           </div>
           <div className="hero__media">

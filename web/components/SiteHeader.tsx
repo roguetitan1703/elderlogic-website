@@ -3,10 +3,18 @@
 import { useEffect, useState } from "react";
 import { nav } from "@/content/copy";
 
-/** The only fixed element on the page. Translucent white, hairline border,
- *  full-width sheet below 900px. No sticky CTA anywhere else. */
+/** The only fixed element on the page. Transparent over the hero, and it takes
+ *  a dark surface once you scroll past it. Full-width sheet below 900px. */
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [stuck, setStuck] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setStuck(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -16,11 +24,11 @@ export default function SiteHeader() {
   }, [open]);
 
   return (
-    <header className="site-header">
+    <header className={`site-header ${stuck ? "is-stuck" : ""}`}>
       <div className="container site-header__inner">
         <a href="/" className="site-header__logo" aria-label="ElderLogic, home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.svg" alt="ElderLogic" height={28} />
+          <img src="/logo-white.svg" alt="ElderLogic" height={28} />
         </a>
 
         <nav className="site-header__nav" aria-label="Primary">

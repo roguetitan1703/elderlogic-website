@@ -36,6 +36,24 @@ export const hero = {
   },
 };
 
+/**
+ * The recurring object on the page: one home, as the product hands it back.
+ * Values are illustrative, and the card says so. No real home is named.
+ */
+export const homeCard = {
+  kind: "Licensed home",
+  status: "Room today",
+  place: "Assisted living, Mesa",
+  rows: [
+    { label: "Licence", value: "Current" },
+    { label: "Inspections", value: "4 since 2019" },
+    { label: "Open enforcement", value: "None" },
+    { label: "Room", value: "Available now" },
+    { label: "Price agreed", value: "$4,200 / mo" },
+  ],
+  note: "Illustrative. Every field comes from the state record or the home itself.",
+};
+
 export const strip = {
   rule: { label: "What you get" },
   items: [
