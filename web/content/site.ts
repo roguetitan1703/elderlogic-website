@@ -29,10 +29,13 @@ function resolveSiteUrl(): string {
 export const siteUrl = resolveSiteUrl().replace(/\/+$/, "");
 
 /**
- * Only the real production deployment should be indexable. A preview on a
- * temporary host must never be crawled — it competes with the real site and
- * puts an unfinished page in front of search users.
+ * Indexable only once a real domain has been declared through
+ * NEXT_PUBLIC_SITE_URL. Vercel marks a project's first deployment as
+ * "production" even on a throwaway *.vercel.app host, so keying off VERCEL_ENV
+ * alone would put a temporary URL into Google — competing with the real site
+ * later and showing search users an unfinished page. Setting the variable is
+ * the deliberate act that turns indexing on.
  */
 export const isProduction =
-  process.env.VERCEL_ENV === "production" ||
-  (!process.env.VERCEL_ENV && !!process.env.NEXT_PUBLIC_SITE_URL);
+  !!process.env.NEXT_PUBLIC_SITE_URL &&
+  (process.env.VERCEL_ENV === "production" || !process.env.VERCEL_ENV);
