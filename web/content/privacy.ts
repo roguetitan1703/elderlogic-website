@@ -1,5 +1,5 @@
 /**
- * Privacy policy — verbatim from the client's supplied document.
+ * Privacy policy: verbatim from the client's supplied document.
  * Source: Content/Privacy Policy - Final.docx
  *
  * DO NOT EDIT the wording here. It is legal copy. If it needs to change,

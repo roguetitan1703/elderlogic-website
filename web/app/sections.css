@@ -1,8 +1,8 @@
-/* Section composition. Tokens only — nothing here invents a value.
+/* Section composition. Tokens only: nothing here invents a value.
  *
  * The scrims below are the one place a literal appears: CSS cannot take an
  * alpha of a token hex without color-mix, and these must composite over the
- * hero image. Each is navy-900 (#0b1a30) at a stated opacity — the same value
+ * hero image. Each is navy-900 (#0b1a30) at a stated opacity: the same value
  * the token holds, never a new colour.
  */
 :root {
@@ -53,7 +53,7 @@
 
 /* ---------- hero ------------------------------------------------------ */
 
-/* Navy ground. The map is the field the type sits on — it emerges out of the
+/* Navy ground. The map is the field the type sits on: it emerges out of the
    dark from the right rather than being a panel bolted to the side. */
 .hero {
   position: relative;
@@ -104,7 +104,7 @@
 .hero__heading { color: var(--text-inverse); max-width: 18ch; }
 .hero__sub { color: var(--navy-200); max-width: 46ch; }
 /* On the hero the link text stays white in every state. The arrow is the only
-   green on it, and hover moves the arrow rather than recolouring the words —
+   green on it, and hover moves the arrow rather than recolouring the words -
    the button is already carrying the green. */
 .hero .arrow-link,
 .hero .arrow-link:link,
@@ -319,7 +319,7 @@
   .wt-spine__item img { width: 22px; height: 22px; }
 }
 
-/* Below 600px the labels stop being readable — the icons and the progress bar
+/* Below 600px the labels stop being readable: the icons and the progress bar
    carry position instead. The label is still announced to a screen reader. */
 @media (max-width: 599px) {
   .wt-spine__label {
@@ -331,7 +331,7 @@
   .wt-controls .btn { flex: 1 1 0; }
 }
 
-/* Short viewports — a small laptop. */
+/* Short viewports: a small laptop. */
 @media (max-height: 760px) and (min-width: 900px) {
   .wt-frame { height: clamp(220px, 38svh, 340px); }
   .wt-frame__layer .shot img { max-height: clamp(220px, 38svh, 340px); }
@@ -580,8 +580,8 @@
 
 /* On a phone the panel is too narrow to slice: cropping would cut Buckeye and
    Apache Junction off the ends. Match the panel to the map's own aspect so the
-   whole territory stays in frame, drop the place names — the caption already
-   says where this is — and scale the marks up, since the viewBox is being drawn
+   whole territory stays in frame, drop the place names: the caption already
+   says where this is: and scale the marks up, since the viewBox is being drawn
    at roughly a third of its desktop size. */
 @media (max-width: 700px) {
   .cvg {

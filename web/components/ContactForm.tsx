@@ -6,13 +6,13 @@ import { close, footer } from "@/content/copy";
 /**
  * The fallback contact form.
  *
- * There is no submission endpoint yet — no email provider has been chosen — so
- * this must not pretend to send. A form with no action does a GET to its own
+ * There is no submission endpoint yet, because no email provider has been
+ * chosen, so this must not pretend to send. A form with no action does a GET to its own
  * URL on submit, which reloads the page with the sender's name and email in
  * the query string: visible, logged, and shareable. That is a real leak, so
  * submission is intercepted and the reader is handed the address instead.
  *
- * When an endpoint exists, replace handleSubmit with the POST and delete the
+ * When an endpoint exists, replace the onSubmit handler with the POST and drop the
  * fallback message. Nothing else here needs to change.
  */
 export default function ContactForm() {

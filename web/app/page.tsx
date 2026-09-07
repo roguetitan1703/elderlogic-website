@@ -21,7 +21,7 @@ import HeroField from "@/components/HeroField";
 
 /**
  * One alignment discipline: everything sits on the left grid. Rhythm comes from
- * column ratio, background and media — never from switching to centred.
+ * column ratio, background and media: never from switching to centred.
  *
  * Section intros use the same asymmetry throughout: heading left, body right.
  */
@@ -31,7 +31,7 @@ export default function Home() {
       <SiteHeader />
 
       <main id="top">
-        {/* Hero — the territory as ground. Same data as Coverage, zoomed out and
+        {/* Hero: the territory as ground. Same data as Coverage, zoomed out and
             unlabelled; Coverage zooms in and names things. */}
         <section className="hero">
           <div className="hero__inner">
@@ -54,7 +54,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* What it is — three columns, orientation for a cold reader. */}
+        {/* What it is: three columns, orientation for a cold reader. */}
         <section className="section--tight">
           <div className="container">
             <span className="eyebrow">{strip.rule.label}</span>
@@ -78,7 +78,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Coverage — the problem, then the field. Container width, like everything else. */}
+        {/* Coverage: the problem, then the field. Container width, like everything else. */}
         <section className="section" id="territory">
           <div className="container">
             <span className="eyebrow">{territory.eyebrow}</span>
@@ -121,7 +121,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* The concierge — the work the fee pays for, in active voice. The
+        {/* The concierge: the work the fee pays for, in active voice. The
             funnel lives here rather than inside the walkthrough: it is this
             section's argument, and behind a stepper nobody saw it. */}
         <section className="section surface-paper" id="concierge">
@@ -141,7 +141,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Marketing visits — copy left, the screen right. */}
+        {/* Marketing visits: copy left, the screen right. */}
         <section className="section surface-paper" id="marketing-visits">
           <div className="container">
             <span className="eyebrow">{marketingVisits.eyebrow}</span>
@@ -162,7 +162,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Why a home takes the meeting — the payoff, with the home's own words. */}
+        {/* Why a home takes the meeting: the payoff, with the home's own words. */}
         <section className="section">
           <div className="container">
             <span className="eyebrow">Why a home takes the meeting</span>
@@ -189,7 +189,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* The record — the page's one dark weight. */}
+        {/* The record: the page's one dark weight. */}
         <section className="section surface-dark" id="record">
           <div className="container">
             <span className="eyebrow">{record.eyebrow}</span>
@@ -214,7 +214,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Close — one path. Booking is the action; the form is a fallback for
+        {/* Close: one path. Booking is the action; the form is a fallback for
             someone who will not pick a time, folded away until they ask for it.
             <details> so it works with no script. */}
         <section className="section surface-paper" id="book">

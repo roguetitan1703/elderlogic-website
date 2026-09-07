@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 /** One-time reveal on entry: fade + 8px rise, --dur-reveal.
- *  Nothing here advances anything — it only fades a block in once. */
+ *  Nothing here advances anything: it only fades a block in once. */
 export default function Reveal({
   children,
   as: Tag = "div",

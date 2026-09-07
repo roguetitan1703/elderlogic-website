@@ -11,7 +11,7 @@ const LAST = steps.length - 1;
  * One placement, as a route.
  *
  * This is a drive: six stops, in order, and the line between them fills as you
- * go. That is not decoration — routing homes into a day is what the product
+ * go. That is not decoration: routing homes into a day is what the product
  * actually does, so the section's shape is the product's shape.
  *
  * It replaced two earlier attempts. A pinned stepper hid seven of eight steps
@@ -19,7 +19,7 @@ const LAST = steps.length - 1;
  * placeholder. A snapping track keeps every stop reachable in one screen and
  * gives the motion back.
  *
- * Scroll, swipe, click a stop, or use the arrow keys — all four move the same
+ * Scroll, swipe, click a stop, or use the arrow keys: all four move the same
  * state. Without JavaScript the track is still a horizontally scrollable list,
  * so nothing here is required to read the section.
  */

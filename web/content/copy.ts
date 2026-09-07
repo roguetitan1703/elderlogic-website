@@ -7,7 +7,7 @@
 
 export const meta = {
   name: "ElderLogic",
-  title: "ElderLogic — placement and marketing-visit software for hospice teams in Arizona",
+  title: "ElderLogic: placement and marketing-visit software for hospice teams in Arizona",
   /** Shown on the share card. Shorter than the meta title, which gets truncated. */
   shareTitle: "Every licensed home in Arizona, on one map",
   description:
@@ -25,7 +25,7 @@ export const nav = {
 };
 
 export const hero = {
-  eyebrow: "Hospice placement and marketing visits — Arizona",
+  eyebrow: "Hospice placement and marketing visits in Arizona",
   heading: "There are 2,600 licensed homes in Arizona. Most hospice teams work with about a dozen.",
   sub: "ElderLogic is placement and marketing-visit software for hospice teams in Arizona. You get every licensed home in the state, and shortlists we have already phoned ahead on, with the room found and the price agreed.",
   primary: { label: "Book a demo", href: "/#book" },

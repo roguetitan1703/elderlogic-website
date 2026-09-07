@@ -1,5 +1,5 @@
-ELDERLOGIC — COPY AS RENDERED
-Generated from the running site on 2026-09-06. Do not edit here.
+ELDERLOGIC: COPY AS RENDERED
+Generated from the running site on 2026-09-07. Do not edit here.
 Source of truth is web/content/copy.ts. Regenerate after any copy change.
 
 ========================================================================
@@ -17,7 +17,7 @@ A          Marketing visits
 A          The record
 A          FAQ
 A          Book a demo
-SPAN       HOSPICE PLACEMENT AND MARKETING VISITS — ARIZONA
+SPAN       HOSPICE PLACEMENT AND MARKETING VISITS IN ARIZONA
 H1         There are 2,600 licensed homes in Arizona. Most hospice teams work with about a dozen.
 
 P          ElderLogic is placement and marketing-visit software for hospice teams in Arizona. You get every licensed home in the state, and shortlists we have already phoned ahead on, with the room found and the price agreed.

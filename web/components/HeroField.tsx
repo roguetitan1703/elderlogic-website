@@ -2,7 +2,7 @@ import fieldData from "../public/product/map-field.json";
 
 /**
  * The hero ground: the same territory as the coverage section, at the same
- * coordinates, drawn from the same data — but dark, unlabelled and quiet,
+ * coordinates, drawn from the same data: but dark, unlabelled and quiet,
  * because type sits on top of it. Coverage then zooms in and annotates it.
  *
  * Decorative here: the coverage section carries the accessible description.

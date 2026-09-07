@@ -4,7 +4,7 @@ import { territory } from "@/content/copy";
 /**
  * The coverage field.
  *
- * The ground is the real Phoenix metro — roads, water and open land traced out
+ * The ground is the real Phoenix metro: roads, water and open land traced out
  * of the map the product actually draws, toned all the way back so it reads as
  * context rather than content. Every dot on top of it is a licensed home,
  * placed from the real distribution. Twelve are lit, because that is the
@@ -14,7 +14,7 @@ import { territory } from "@/content/copy";
  *
  * Drawn rather than screenshotted, so the page keeps its own palette and no
  * product chrome leaks onto a marketing page. Nothing here identifies a home
- * or says anything about one — it is density, not a directory.
+ * or says anything about one: it is density, not a directory.
  */
 const { points, labels, highlight, ring, aspect } = fieldData as unknown as {
   points: [number, number][];

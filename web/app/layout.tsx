@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: meta.title,
     // Sub-pages set only their own name; the brand is appended here so it is
     // never hardcoded twice and never drifts.
-    template: `%s — ${meta.name}`,
+    template: `%s | ${meta.name}`,
   },
   description: meta.description,
   applicationName: meta.name,

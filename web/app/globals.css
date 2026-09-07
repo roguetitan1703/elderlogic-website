@@ -38,7 +38,7 @@ body { overflow-x: hidden; }
 .stack-tight { display: flex; flex-direction: column; gap: var(--stack-tight); }
 .stack-loose { display: flex; flex-direction: column; gap: var(--stack-loose); }
 
-/* Content first, device shot second — always, on mobile. */
+/* Content first, device shot second: always, on mobile. */
 .split { display: grid; gap: var(--sp-10); align-items: center; }
 @media (min-width: 900px) {
   .split { grid-template-columns: 1fr 1fr; gap: var(--sp-16); }
@@ -91,7 +91,7 @@ body { overflow-x: hidden; }
 
 /* The design system styles every <a>, including hover colour and an underline.
    A button that happens to be a link must beat those rules in all states, or
-   its label takes the link colour on hover — green text on a green button. */
+   its label takes the link colour on hover: green text on a green button. */
 a.btn,
 a.btn:link,
 a.btn:visited,
@@ -234,7 +234,7 @@ a.btn--quiet:active { color: var(--text-strong); }
 
 /* ---------- the record grammar ----------------------------------------
    The page's connective tissue. ElderLogic's native artifact is a record
-   row — label, value, source, date, under a hairline. Sections open like
+   row: label, value, source, date, under a hairline. Sections open like
    file dividers rather than with decorative eyebrows, and every figure
    carries its provenance in mono, the way the product itself shows state
    data. This is the one signature; everything around it stays quiet.      */
