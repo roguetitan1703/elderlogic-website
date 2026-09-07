@@ -36,7 +36,6 @@ export default function Home() {
         <section className="hero">
           <div className="hero__inner">
             <div className="hero__copy">
-              <span className="eyebrow">{hero.eyebrow}</span>
               <h1 className="display-1 hero__heading">{hero.heading}</h1>
               <p className="lead hero__sub">{hero.sub}</p>
               <div className="actions">
@@ -57,7 +56,6 @@ export default function Home() {
         {/* What it is: three columns, orientation for a cold reader. */}
         <section className="section--tight">
           <div className="container">
-            <span className="eyebrow">{strip.rule.label}</span>
             <div className="strip">
               {strip.items.map((item) => (
                 <div key={item.label} className="strip__item">
@@ -81,7 +79,6 @@ export default function Home() {
         {/* Coverage: the problem, then the field. Container width, like everything else. */}
         <section className="section" id="territory">
           <div className="container">
-            <span className="eyebrow">{territory.eyebrow}</span>
             <Reveal className="intro">
               <h2 className="display-2 intro__heading">{territory.heading}</h2>
               <p className="lead intro__body">{territory.body}</p>
@@ -95,29 +92,6 @@ export default function Home() {
               {territory.caption} {territory.source}
             </p>
 
-            {/* With no sourced figures the two-column split would leave a dead
-                right column, so the closing line stands on its own. */}
-            {territory.stats.length > 0 ? (
-              <Reveal className="intro territory__figures">
-                <p className="lead intro__heading">{territory.closing}</p>
-                <div className="figures">
-                  {territory.stats.map((s, i) => (
-                    <div
-                      key={s.value}
-                      className={`figure-stat ${i === 0 ? "figure-stat--lead" : "figure-stat--quiet"}`}
-                    >
-                      <div className="figure-stat__value">{s.value}</div>
-                      <p className="figure-stat__label">{s.label}</p>
-                      {s.note && <p className="figure-stat__note">{s.note}</p>}
-                    </div>
-                  ))}
-                </div>
-              </Reveal>
-            ) : (
-              <Reveal className="territory__figures">
-                <p className="lead measure">{territory.closing}</p>
-              </Reveal>
-            )}
           </div>
         </section>
 
@@ -126,12 +100,11 @@ export default function Home() {
             section's argument, and behind a stepper nobody saw it. */}
         <section className="section surface-paper" id="concierge">
           <div className="container">
-            <span className="eyebrow">{concierge.eyebrow}</span>
             <div className="split">
               <Reveal className="stack">
                 <h2 className="display-2 intro__heading">{concierge.heading}</h2>
                 <p className="lead measure">{concierge.body}</p>
-                <p className="testimony__text">{concierge.aside}</p>
+                <p className="lead measure">{concierge.body2}</p>
               </Reveal>
               <Reveal>
                 <Funnel active />
@@ -144,7 +117,6 @@ export default function Home() {
         {/* Marketing visits: copy left, the screen right. */}
         <section className="section surface-paper" id="marketing-visits">
           <div className="container">
-            <span className="eyebrow">{marketingVisits.eyebrow}</span>
             <div className="split split--wide-media">
               <Reveal className="stack">
                 <h2 className="display-2 intro__heading">{marketingVisits.heading}</h2>
@@ -165,7 +137,6 @@ export default function Home() {
         {/* Why a home takes the meeting: the payoff, with the home's own words. */}
         <section className="section">
           <div className="container">
-            <span className="eyebrow">Why a home takes the meeting</span>
             <div className="split">
               <Reveal className="stack">
                 <h2 className="display-2 intro__heading">{meeting.heading}</h2>
@@ -192,7 +163,6 @@ export default function Home() {
         {/* The record: the page's one dark weight. */}
         <section className="section surface-dark" id="record">
           <div className="container">
-            <span className="eyebrow">{record.eyebrow}</span>
             <div className="split">
               <Reveal className="stack">
                 <h2 className="display-2 intro__heading">{record.heading}</h2>
@@ -200,14 +170,6 @@ export default function Home() {
                 <p className="record__rule">{record.ruleLine}</p>
               </Reveal>
               <Reveal>
-                <dl className="record-list">
-                  {record.rows.map((row) => (
-                    <div key={row.label} className="record-list__row">
-                      <dt>{row.label}</dt>
-                      <dd className="mono">{row.value}</dd>
-                    </div>
-                  ))}
-                </dl>
                 <p className="record__source mono">{record.rule.meta}</p>
               </Reveal>
             </div>
@@ -219,7 +181,6 @@ export default function Home() {
             <details> so it works with no script. */}
         <section className="section surface-paper" id="book">
           <div className="container">
-            <span className="eyebrow">{close.rule.label}</span>
             <div className="split">
               <Reveal className="stack close__intro">
                 <h2 className="display-2 intro__heading">{close.heading}</h2>
