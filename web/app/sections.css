@@ -1,0 +1,802 @@
+/* Section composition. Tokens only — nothing here invents a value.
+ *
+ * The scrims below are the one place a literal appears: CSS cannot take an
+ * alpha of a token hex without color-mix, and these must composite over the
+ * hero image. Each is navy-900 (#0b1a30) at a stated opacity — the same value
+ * the token holds, never a new colour.
+ */
+:root {
+  --scrim-900: 11, 26, 48;   /* --navy-900, for rgba() compositing */
+  --scrim-0: 255, 255, 255;  /* --n-0 */
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- header ---------------------------------------------------- */
+
+.site-header {
+  position: sticky; top: 0; z-index: var(--z-header);
+  background: rgba(var(--scrim-0), 0.94);
+  backdrop-filter: var(--blur-panel);
+  border-bottom: var(--border-w) solid var(--border-hairline);
+}
+.site-header__inner { display: flex; align-items: center; gap: var(--sp-8); min-height: var(--header-h); }
+.site-header__logo { border-bottom: 0; margin-right: auto; display: flex; align-items: center; color: var(--text-strong); }
+.site-header__logo img { height: 32px; width: auto; }
+.site-header__nav { display: none; gap: 1.75rem; align-items: center; }
+.site-header__nav a {
+  font-size: var(--fs-body-sm); font-weight: var(--fw-medium);
+  color: var(--text-body); border-bottom: 0; white-space: nowrap;
+  transition: var(--transition-control);
+}
+.site-header__nav a:hover { color: var(--text-strong); }
+.site-header__cta { display: none; }
+.site-header__toggle { display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; color: var(--text-strong); }
+.site-header__toggle svg path { stroke: var(--navy-700); }
+.site-header__sheet {
+  border-top: var(--border-w) solid var(--border-hairline);
+  padding-block: var(--sp-6);
+  background: var(--surface-page);
+}
+.site-header__sheet a { border-bottom: 0; font-size: var(--fs-lead); color: var(--text-strong); }
+@media (min-width: 900px) {
+  .site-header__inner { min-height: var(--header-h-lg); }
+  .site-header__logo img { height: 38px; }
+  .site-header__nav, .site-header__cta { display: inline-flex; }
+  .site-header__toggle, .site-header__sheet { display: none; }
+}
+
+/* ---------- header, taller and quieter -------------------------------- */
+
+/* ---------- hero ------------------------------------------------------ */
+
+/* Navy ground. The map is the field the type sits on — it emerges out of the
+   dark from the right rather than being a panel bolted to the side. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  background: var(--navy-900);
+  color: var(--text-inverse);
+  overflow: hidden;
+}
+.hero__media { position: absolute; inset: 0; z-index: -2; }
+.hero__field {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.hero__dots circle {
+  fill: var(--green-300);
+  opacity: 0.5;
+}
+@media (max-width: 899px) {
+  .hero__dots circle { r: 3.4; }
+}
+/* Scrim: solid navy under the type, thinning out to the right. */
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(100deg,
+      var(--navy-900) 0%,
+      rgba(var(--scrim-900), 0.96) 30%,
+      rgba(var(--scrim-900), 0.62) 52%,
+      rgba(var(--scrim-900), 0.22) 78%,
+      rgba(var(--scrim-900), 0.12) 100%),
+    linear-gradient(to bottom, rgba(var(--scrim-900), 0.34) 0%, rgba(var(--scrim-900), 0) 26%, rgba(var(--scrim-900), 0.34) 100%);
+}
+
+.hero__inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+@media (min-width: 768px) { .hero__inner { padding-inline: var(--gutter-lg); } }
+
+.hero__copy {
+  display: flex; flex-direction: column; gap: var(--sp-5);
+  padding-block: var(--section-y);
+}
+.hero__copy .eyebrow { color: var(--navy-200); }
+.hero__heading { color: var(--text-inverse); max-width: 18ch; }
+.hero__sub { color: var(--navy-200); max-width: 46ch; }
+/* On the hero the link text stays white in every state. The arrow is the only
+   green on it, and hover moves the arrow rather than recolouring the words —
+   the button is already carrying the green. */
+.hero .arrow-link,
+.hero .arrow-link:link,
+.hero .arrow-link:visited,
+.hero .arrow-link:hover,
+.hero .arrow-link:focus,
+.hero .arrow-link:active { color: var(--n-0); }
+.hero .arrow-link span { color: var(--green-400); }
+/* No underline on hover: a white-alpha rule reads grey over navy and arrives
+   too abruptly. The arrow moving is the whole affordance. */
+.hero .arrow-link:hover { border-bottom: 0; }
+.hero .arrow-link:hover span { color: var(--green-300); }
+
+.hero__note {
+  position: absolute; right: max(var(--gutter), calc((100vw - var(--container-wide)) / 2)); bottom: var(--sp-5);
+  font-size: var(--fs-micro); color: var(--navy-200);
+  background: rgba(var(--scrim-900), 0.62);
+  border: var(--border-w) solid rgba(var(--scrim-0), 0.14);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-pill);
+  backdrop-filter: var(--blur-panel);
+}
+
+@media (max-width: 899px) {
+  .hero__copy { padding-block: var(--sp-16) var(--sp-20); }
+  .hero__media img { object-position: 46% center; opacity: 0.5; }
+  .hero::before {
+    background:
+      linear-gradient(180deg, rgba(var(--scrim-900), 0.92) 0%, rgba(var(--scrim-900), 0.8) 52%, rgba(var(--scrim-900), 0.5) 100%);
+  }
+  .hero__note { left: var(--gutter); right: auto; }
+}
+
+@media (min-width: 900px) {
+  .hero { min-height: clamp(34rem, 78svh, 44rem); display: flex; align-items: center; }
+  .hero__inner { display: flex; align-items: center; }
+  .hero__copy { max-width: 60%; padding-inline-end: var(--sp-12); }
+}
+
+/* ---------- questions page -------------------------------------------- */
+
+.page-head { padding-bottom: var(--section-y-tight); }
+
+.qa-list { margin: 0; display: grid; gap: 0; border-top: var(--border-w) solid var(--border-hairline); }
+.qa-list__item { padding-block: var(--sp-8); border-bottom: var(--border-w) solid var(--border-hairline); display: grid; gap: var(--sp-3); }
+@media (min-width: 900px) {
+  .qa-list__item { grid-template-columns: 5fr 7fr; gap: var(--sp-12); align-items: start; }
+}
+.qa-list__q { font-family: var(--font-display); font-size: var(--fs-h2); color: var(--text-strong); line-height: var(--lh-heading); }
+.qa-list__a { margin: 0; color: var(--text-body); max-width: var(--measure); }
+
+/* ---------- support strip --------------------------------------------- */
+
+.strip { display: grid; gap: var(--sp-8) var(--sp-10); }
+@media (min-width: 700px) { .strip { grid-template-columns: repeat(3, 1fr); } }
+.strip__item { display: grid; gap: var(--sp-3); align-content: start; }
+.strip__icon { width: 26px; height: 26px; }
+.strip__label {
+  font-family: var(--font-sans); font-size: var(--fs-body);
+  font-weight: var(--fw-semibold); color: var(--text-strong);
+}
+.strip__footnote {
+  margin-top: var(--sp-8); padding-top: var(--sp-4);
+  border-top: var(--border-w) solid var(--border-hairline);
+}
+
+/* ---------- quote ----------------------------------------------------- */
+
+.testimony { border-left: var(--rule-w) solid var(--accent-rule); padding-left: var(--sp-6); }
+.testimony__text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  color: var(--text-strong);
+}
+.testimony__attr {
+  margin-top: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-faint);
+}
+
+/* ---------- stats ----------------------------------------------------- */
+
+.territory__map { margin-block: var(--sp-12) var(--sp-4); }
+.territory__map img { width: 100%; height: clamp(260px, 46svh, 520px); object-fit: cover; object-position: center; }
+.source-note { margin-bottom: var(--sp-10); }
+.record-stats { margin: 0; }
+.territory__closing { margin-top: var(--sp-8); max-width: var(--measure); }
+
+/* ---------- walkthrough ----------------------------------------------- */
+
+/* A pass, not a gate: ~40svh of travel per step, and a visible way out at every
+   moment. A reader who wants the bottom of the page is never trapped here. */
+.wt { position: relative; min-height: calc(var(--steps) * 40svh); }
+.wt__pin {
+  position: sticky; top: var(--header-h);
+  min-height: calc(100svh - var(--header-h));
+  display: flex; align-items: center;
+  padding-block: var(--sp-8);
+}
+.wt__inner { display: flex; flex-direction: column; gap: var(--sp-6); width: 100%; }
+
+.wt-spine { display: flex; gap: var(--sp-1); overflow-x: auto; scrollbar-width: none; }
+.wt-spine::-webkit-scrollbar { display: none; }
+.wt-spine__item {
+  display: flex; flex-direction: column; align-items: center; gap: var(--sp-2);
+  flex: 1 1 0; min-width: 72px; min-height: 44px;
+  padding: var(--sp-3) var(--sp-2);
+  background: none; border: 0; color: var(--text-body);
+  border-top: var(--border-w-thick) solid var(--border-hairline);
+  cursor: pointer; transition: var(--transition-control);
+}
+.wt-spine__item img { opacity: .3; transition: opacity var(--dur-slow) var(--ease-standard); }
+.wt-spine__label { font-size: var(--fs-micro); font-weight: var(--fw-medium); color: var(--text-faint); text-align: center; line-height: 1.3; }
+.wt-spine__item.is-done { border-top-color: var(--accent-quiet); }
+.wt-spine__item.is-done img { opacity: .75; }
+.wt-spine__item.is-done .wt-spine__label { color: var(--text-muted); }
+.wt-spine__item.is-active { border-top-color: var(--green-500); }
+.wt-spine__item.is-active img { opacity: 1; }
+.wt-spine__item.is-active .wt-spine__label { color: var(--text-strong); font-weight: var(--fw-semibold); }
+.wt-spine__item:hover img { opacity: 1; }
+
+/* Two fixed wells side by side. Neither changes size between steps. */
+.wt__panel { display: grid; gap: var(--sp-8); align-items: start; }
+@media (min-width: 900px) {
+  .wt__panel { grid-template-columns: 5fr 7fr; gap: var(--sp-12); align-items: center; }
+}
+
+.wt-copy { display: flex; flex-direction: column; gap: var(--sp-5); }
+.wt-copy__inner {
+  display: flex; flex-direction: column; gap: var(--sp-3);
+  min-height: 11.5rem;
+  max-width: var(--measure-narrow);
+  animation: wt-enter var(--dur-slow) var(--ease-out) both;
+}
+@keyframes wt-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.wt-step__num { font-size: var(--fs-caption); color: var(--text-faint); }
+.wt-note {
+  font-size: var(--fs-body-sm); color: var(--text-muted);
+  border-left: var(--rule-w) solid var(--accent-rule);
+  padding-left: var(--sp-4);
+}
+.wt-controls { display: flex; gap: var(--sp-3); }
+.wt-controls .btn:disabled { opacity: .4; cursor: default; }
+.btn--sm { min-height: 40px; padding: 0 var(--sp-4); font-size: var(--fs-caption); }
+
+/* The frame. One box, one size, every step cross-fading inside it. */
+.wt-frame { position: relative; height: clamp(300px, 46vh, 480px); }
+.wt-frame__layer {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  opacity: 0; transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+.wt-frame__layer.is-active { opacity: 1; transform: none; pointer-events: auto; }
+.wt-frame__layer .shot,
+.wt-frame__layer .placeholder,
+.wt-frame__layer .funnel { max-height: 100%; }
+.wt-frame__layer .shot { display: flex; justify-content: center; }
+.wt-frame__layer .shot img { max-height: clamp(300px, 46vh, 480px); width: auto; }
+/* Width-driven, so a short frame can never force the box wider than the page. */
+.wt-frame__layer .placeholder { min-height: 0; max-width: 100%; max-height: 100%; }
+.wt-frame__layer .placeholder--phone { aspect-ratio: 9 / 17; height: 100%; width: auto; }
+.wt-frame__layer .placeholder--desktop { aspect-ratio: 16 / 10; width: 100%; height: auto; }
+
+.wt-foot { display: flex; align-items: center; gap: var(--sp-5); }
+.wt-foot .wt-progress { flex: 1 1 auto; }
+.wt-skip { font-size: var(--fs-caption); color: var(--text-muted); border-bottom: 0; white-space: nowrap; }
+.wt-skip:hover { color: var(--text-strong); }
+@media (max-width: 599px) { .wt-skip { font-size: var(--fs-micro); } }
+
+.wt-progress { height: 2px; background: var(--border-hairline); border-radius: var(--radius-pill); overflow: hidden; }
+.wt-progress span { display: block; height: 100%; width: var(--p); background: var(--green-500); transition: width var(--dur-slow) var(--ease-standard); }
+
+.wt-static { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--section-y-tight); }
+.wt-static__item { display: grid; gap: var(--sp-8); }
+@media (min-width: 900px) { .wt-static__item { grid-template-columns: 5fr 7fr; align-items: center; gap: var(--sp-16); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .wt-copy__inner { animation: none; }
+  .wt-frame__layer { transition: none; }
+}
+
+
+/* ---------- walkthrough, phone first ---------------------------------- */
+
+/* A forwarded link opens here. Everything has to fit one short screen with no
+   inner scrolling, so the frame shrinks, the copy well stops reserving height,
+   and the spine drops to icons alone. */
+@media (min-width: 900px) {
+  .wt__pin { top: var(--header-h-lg); min-height: calc(100svh - var(--header-h-lg)); }
+}
+
+@media (max-width: 899px) {
+  .wt__pin { padding-block: var(--sp-5); align-items: flex-start; padding-top: var(--sp-6); }
+  .wt__inner { gap: var(--sp-4); }
+  .wt__panel { gap: var(--sp-5); }
+  .wt-copy { gap: var(--sp-4); }
+  .wt-copy__inner { min-height: 0; }
+  .wt-frame { height: clamp(200px, 34svh, 300px); }
+  .wt-frame__layer .shot img { max-height: clamp(200px, 34svh, 300px); }
+  .wt-spine__item { min-width: 0; padding: var(--sp-2) var(--sp-1); gap: var(--sp-1); }
+  .wt-spine__item img { width: 22px; height: 22px; }
+}
+
+/* Below 600px the labels stop being readable — the icons and the progress bar
+   carry position instead. The label is still announced to a screen reader. */
+@media (max-width: 599px) {
+  .wt-spine__label {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap;
+  }
+  .wt-spine__item { position: relative; }
+  .wt-copy__inner { min-height: 0; }
+  .wt-controls .btn { flex: 1 1 0; }
+}
+
+/* Short viewports — a small laptop. */
+@media (max-height: 760px) and (min-width: 900px) {
+  .wt-frame { height: clamp(220px, 38svh, 340px); }
+  .wt-frame__layer .shot img { max-height: clamp(220px, 38svh, 340px); }
+  .wt-copy__inner { min-height: 9rem; }
+  .wt__pin { padding-block: var(--sp-5); }
+  .wt__inner { gap: var(--sp-4); }
+}
+
+/* Landscape phone. Very little height, so the panel goes side by side early,
+   the frame gets small, and the section heading steps out of the way. */
+@media (max-height: 560px) and (orientation: landscape) {
+  .wt__pin { align-items: center; padding-block: var(--sp-3); }
+  .wt__inner { gap: var(--sp-3); }
+  .wt__inner > .stack-tight {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap;
+  }
+  .wt__panel { grid-template-columns: 1fr 1fr; gap: var(--sp-6); align-items: center; }
+  .wt-frame { height: clamp(150px, 52svh, 240px); }
+  .wt-frame__layer .shot img { max-height: clamp(150px, 52svh, 240px); }
+  .wt-spine__item { padding: var(--sp-1); }
+  .wt-spine__item img { width: 20px; height: 20px; }
+}
+
+/* ---------- funnel ---------------------------------------------------- */
+
+.funnel { margin: 0; }
+.funnel__rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.funnel__row {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  align-items: center;
+  gap: var(--sp-4);
+  opacity: 0;
+  transform: translateY(6px);
+}
+.funnel__row.is-in {
+  opacity: 1; transform: none;
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
+}
+.funnel__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: 1;
+  color: var(--text-strong);
+  text-align: right;
+}
+.funnel__bar {
+  width: var(--w);
+  min-width: max-content;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-sm);
+  background: var(--navy-600);
+  color: var(--text-inverse);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-snug);
+  white-space: nowrap;
+}
+.funnel__row.is-emphasis .funnel__bar { background: var(--navy-200); color: var(--navy-800); }
+.funnel__row.is-result .funnel__bar { background: var(--green-700); }
+.funnel__caption {
+  display: block;
+  margin-top: var(--sp-5);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  color: var(--text-strong);
+}
+.funnel__source {
+  display: block;
+  margin-top: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-faint);
+}
+@media (prefers-reduced-motion: reduce) { .funnel__row { opacity: 1; transform: none; } }
+
+/* ---------- record ---------------------------------------------------- */
+
+.record__body { color: var(--text-inverse-muted); }
+.record__rule { font-size: var(--fs-body-sm); color: var(--text-inverse-muted); border-left: var(--rule-w) solid var(--green-400); padding-left: var(--sp-4); max-width: var(--measure-narrow); }
+.record-list { margin: 0; border-top: var(--border-w) solid var(--border-dark); }
+.record-list__row { display: flex; justify-content: space-between; gap: var(--sp-6); padding: var(--sp-4) 0; border-bottom: var(--border-w) solid var(--border-dark); }
+.record-list__row dt { color: var(--text-inverse-muted); font-size: var(--fs-body-sm); }
+.record-list__row dd { margin: 0; color: var(--green-300); font-size: var(--fs-body-sm); }
+
+/* ---------- questions ------------------------------------------------- */
+
+.qa { display: grid; gap: var(--sp-8); }
+@media (min-width: 768px) { .qa { grid-template-columns: 1fr 1fr; gap: var(--sp-10) var(--sp-16); } }
+.qa__q { font-family: var(--font-sans); font-size: var(--fs-body); font-weight: var(--fw-semibold); color: var(--text-strong); margin-bottom: var(--sp-2); }
+
+/* ---------- form ------------------------------------------------------ */
+
+.field { display: flex; flex-direction: column; gap: var(--sp-2); }
+.field__label { font-size: var(--fs-caption); font-weight: var(--fw-medium); color: var(--text-muted); }
+.field__input {
+  min-height: 44px; padding: var(--sp-3) var(--sp-4); font: inherit;
+  color: var(--text-body); background: var(--surface-card);
+  border: var(--border-w) solid var(--border-default);
+  border-radius: var(--radius-control);
+  transition: var(--transition-control);
+}
+.field__input:focus { border-color: var(--border-focus); box-shadow: var(--shadow-focus); outline: none; }
+
+/* ---------- footer ---------------------------------------------------- */
+
+.site-footer { padding-top: var(--section-y-tight); padding-bottom: var(--sp-8); }
+.site-footer__inner { display: grid; gap: var(--sp-10); padding-bottom: var(--sp-10); }
+@media (min-width: 600px) { .site-footer__inner { grid-template-columns: 1fr 1fr; gap: var(--sp-8) var(--sp-10); } }
+@media (min-width: 1024px) { .site-footer__inner { grid-template-columns: 2fr 1fr 1fr 1.4fr; } }
+.site-footer a { color: var(--text-inverse); border-bottom-color: var(--border-dark); font-size: var(--fs-body-sm); }
+.site-footer a:hover { color: var(--green-300); border-bottom-color: var(--green-400); }
+.site-footer__tagline { color: var(--text-inverse-muted); max-width: 34ch; }
+.site-footer__location { color: var(--text-inverse-muted); font-size: var(--fs-body-sm); }
+.site-footer__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--sp-4); padding-top: var(--sp-6); border-top: var(--border-w) solid var(--border-dark); }
+.site-footer__base .caption { color: var(--text-inverse-muted); }
+
+/* ---------- legal pages ------------------------------------------------ */
+
+.legal { max-width: var(--measure); }
+.legal section + section { margin-top: var(--sp-10); }
+.legal__h {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  color: var(--text-strong);
+  margin-bottom: var(--sp-4);
+}
+.legal__p { margin-bottom: var(--sp-4); color: var(--text-body); }
+.legal__p:last-child { margin-bottom: 0; }
+
+/* ---------- close ------------------------------------------------------ */
+
+.close__intro { margin-bottom: var(--sp-12); }
+.close__panels { align-items: start; }
+
+/* ---------- section spacing on the left grid --------------------------- */
+
+.eyebrow { display: block; margin-bottom: var(--sp-6); }
+
+.strip { margin-top: 0; }
+.territory__map { margin-block: var(--sp-12) var(--sp-4); }
+.territory__figures { margin-top: var(--sp-12); }
+.figures { display: grid; gap: var(--sp-8); }
+@media (min-width: 600px) { .figures { grid-template-columns: 1fr 1fr; gap: var(--sp-10); } }
+
+.record__source {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-micro);
+  color: var(--text-inverse-muted);
+  letter-spacing: var(--ls-mono);
+}
+.close__intro { margin-bottom: 0; }
+
+/* ---------------------------------------------------------------------------
+   Coverage field
+   A drawn map, not a screenshot. Dots are placed from the real distribution;
+   twelve are lit because that is the sentence the section is making.
+   --------------------------------------------------------------------------- */
+
+.cvg {
+  margin: var(--sp-8) 0 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-50);
+  border: var(--rule-w, 1px) solid var(--paper-200);
+  border-radius: var(--radius-lg);
+}
+
+.cvg__svg {
+  display: block;
+  width: 100%;
+  height: clamp(19rem, 31vw, 27rem);
+}
+
+.cvg__ground {
+  opacity: 0.9;
+}
+
+.cvg__dots circle {
+  fill: var(--navy-600);
+  opacity: 0.42;
+}
+
+/* One animated property for nine hundred nodes: the field wipes in from the
+   west, the way the territory actually opens up. */
+.js .reveal .cvg__dots {
+  clip-path: inset(0 100% 0 0);
+}
+.js .reveal.is-in .cvg__dots {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1400ms var(--ease-standard, cubic-bezier(0.2, 0, 0, 1)) 120ms;
+}
+
+.cvg__labels text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--navy-600);
+  text-anchor: middle;
+}
+
+.cvg__ring {
+  fill: none;
+  stroke: var(--green-600);
+  stroke-width: 1.25;
+  opacity: 0.55;
+}
+.cvg__lit {
+  fill: var(--green-600);
+}
+.cvg__leader {
+  stroke: var(--green-600);
+  stroke-width: 1.25;
+  opacity: 0.55;
+}
+.cvg__annot {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  fill: var(--green-800);
+}
+
+.js .reveal .cvg__mark {
+  opacity: 0;
+}
+.js .reveal.is-in .cvg__mark {
+  opacity: 1;
+  transition: opacity 520ms var(--ease-standard, cubic-bezier(0.2, 0, 0, 1)) 1380ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal .cvg__dots,
+  .js .reveal.is-in .cvg__dots {
+    clip-path: none;
+    transition: none;
+  }
+  .js .reveal .cvg__mark,
+  .js .reveal.is-in .cvg__mark {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* On a phone the panel is too narrow to slice: cropping would cut Buckeye and
+   Apache Junction off the ends. Match the panel to the map's own aspect so the
+   whole territory stays in frame, drop the place names — the caption already
+   says where this is — and scale the marks up, since the viewBox is being drawn
+   at roughly a third of its desktop size. */
+@media (max-width: 700px) {
+  .cvg {
+    margin-top: var(--sp-6);
+  }
+  .cvg__svg {
+    height: auto;
+    aspect-ratio: 1.635;
+  }
+  .cvg__labels {
+    display: none;
+  }
+  .cvg__dots circle {
+    r: 3.8;
+  }
+  .cvg__lit {
+    r: 7;
+  }
+  .cvg__ring,
+  .cvg__leader {
+    stroke-width: 3;
+  }
+  .cvg__annot {
+    font-size: 27px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   One placement, laid out
+   Replaced a pinned stepper. Numbered rail on the left carries the order, copy
+   next to it, screen on the right. Same shape every row so the sequence reads
+   as a sequence; the variation is in the screens.
+   --------------------------------------------------------------------------- */
+
+.steps {
+  list-style: none;
+  margin: var(--sp-10) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: var(--sp-5);
+  padding: var(--sp-8) 0;
+  border-top: var(--rule-w, 1px) solid var(--border-hairline);
+}
+.step:first-child { border-top: 0; padding-top: 0; }
+
+.step__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+.step__num {
+  font-size: var(--fs-caption);
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+}
+.step__icon { display: block; width: 28px; height: 28px; }
+
+.step__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
+  color: var(--text-strong);
+  margin: 0 0 var(--sp-2);
+}
+.step__note {
+  margin-top: var(--sp-3);
+  padding-left: var(--sp-4);
+  border-left: var(--rule-w, 1px) solid var(--accent-rule);
+  color: var(--text-muted);
+  font-size: var(--fs-body-sm);
+}
+/* Two columns on a phone but three children: without this the media lands
+   back in the 3.5rem rail column and renders 56px wide. */
+.step__media {
+  grid-column: 2;
+  margin-top: var(--sp-6);
+  /* grid items default to min-width:auto, so a wide child refuses to shrink
+     and pushes the row past the viewport */
+  min-width: 0;
+}
+.step__media .placeholder { min-height: 200px; }
+
+@media (min-width: 900px) {
+  .step {
+    grid-template-columns: 3.5rem minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+  .step__media { grid-column: auto; margin-top: 0; }
+  .step__media .shot--phone { max-width: 15rem; margin-inline: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   One placement, as a route
+   Stops joined by a line that fills as you go. Scroll-snap track so every stop
+   is one swipe away and the section stays inside a screen.
+   --------------------------------------------------------------------------- */
+
+.route { margin-top: var(--sp-10); }
+
+.route__rail {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-8);
+}
+.route__line {
+  position: absolute;
+  top: 0.72rem;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--border-hairline);
+}
+.route__line--fill {
+  background: var(--green-600);
+  transition: width var(--dur-reveal, 420ms) var(--ease-standard, cubic-bezier(0.2, 0, 0, 1));
+}
+
+.route__stop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  min-height: 44px;
+}
+.route__pin {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-page);
+  border: 2px solid var(--border-hairline);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+  transition: var(--transition-control);
+}
+.route__stop.is-done .route__pin { border-color: var(--green-600); color: var(--green-800); }
+.route__stop.is-active .route__pin {
+  border-color: var(--green-600);
+  background: var(--green-600);
+  color: var(--text-inverse);
+}
+.route__stop-label {
+  font-size: var(--fs-micro);
+  line-height: 1.3;
+  color: var(--text-faint);
+}
+.route__stop.is-active .route__stop-label { color: var(--text-strong); font-weight: var(--fw-medium); }
+.route__stop:focus-visible { outline: var(--border-w) solid var(--border-focus); outline-offset: 4px; }
+
+.route__track {
+  display: flex;
+  gap: var(--sp-8);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  scroll-padding-left: 0;
+}
+.route__track::-webkit-scrollbar { display: none; }
+.route__track:focus-visible { outline: var(--border-w) solid var(--border-focus); outline-offset: 6px; }
+
+.route__card {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: grid;
+  gap: var(--sp-6);
+  align-content: start;
+}
+.route__count { font-size: var(--fs-micro); color: var(--text-faint); letter-spacing: 0.08em; }
+.route__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  color: var(--text-strong);
+  margin: var(--sp-2) 0 var(--sp-3);
+}
+.route__media { min-width: 0; }
+.route__media .placeholder { min-height: 220px; }
+
+.route__controls {
+  display: flex;
+  gap: var(--sp-3);
+  margin-top: var(--sp-8);
+}
+.route__controls .btn[disabled] { opacity: 0.4; cursor: default; }
+
+@media (min-width: 900px) {
+  .route__card {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center;
+    gap: var(--sp-12);
+  }
+  .route__media .shot--phone { max-width: 15rem; margin-inline: 0; }
+}
+@media (max-width: 700px) {
+  /* Six labels do not fit across a phone; the pins carry the route and the
+     active step is named on the card itself. */
+  .route__stop-label { display: none; }
+  .route__rail { gap: var(--sp-1); }
+}

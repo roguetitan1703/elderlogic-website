@@ -1,0 +1,21 @@
+:root{
+--container-max:1160px; /* @kind spacing */
+--container-narrow:720px; /* @kind spacing */
+--container-wide:1320px; /* @kind spacing */
+--measure:64ch; /* @kind other */
+--measure-narrow:46ch; /* @kind other */
+--header-h:64px; /* @kind spacing */
+--header-h-lg:76px; /* @kind spacing */
+--bp-sm:480px; /* @kind spacing */
+--bp-md:768px; /* @kind spacing */
+--bp-lg:1024px; /* @kind spacing */
+--bp-xl:1280px; /* @kind spacing */
+--z-base:0; /* @kind other */
+--z-raised:10; /* @kind other */
+--z-header:100; /* @kind other */
+--z-overlay:200; /* @kind other */
+--z-modal:300; /* @kind other */
+--phone-w:320px; /* @kind spacing */
+--phone-w-lg:380px; /* @kind spacing */
+--desktop-w:960px; /* @kind spacing */
+}

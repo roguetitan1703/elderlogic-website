@@ -1,0 +1,23 @@
+:root{
+--sp-0:0; /* @kind spacing */
+--sp-1:.25rem; /* @kind spacing */
+--sp-2:.5rem; /* @kind spacing */
+--sp-3:.75rem; /* @kind spacing */
+--sp-4:1rem; /* @kind spacing */
+--sp-5:1.25rem; /* @kind spacing */
+--sp-6:1.5rem; /* @kind spacing */
+--sp-8:2rem; /* @kind spacing */
+--sp-10:2.5rem; /* @kind spacing */
+--sp-12:3rem; /* @kind spacing */
+--sp-16:4rem; /* @kind spacing */
+--sp-20:5rem; /* @kind spacing */
+--sp-24:6rem; /* @kind spacing */
+--sp-32:8rem; /* @kind spacing */
+--gutter:1.25rem; /* @kind spacing */
+--gutter-lg:2rem; /* @kind spacing */
+--section-y:clamp(3.5rem,8vw,7rem); /* @kind spacing */
+--section-y-tight:clamp(2.5rem,5vw,4rem); /* @kind spacing */
+--stack-tight:var(--sp-3); /* @kind spacing */
+--stack:var(--sp-5); /* @kind spacing */
+--stack-loose:var(--sp-8); /* @kind spacing */
+}

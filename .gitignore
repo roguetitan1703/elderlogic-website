@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next
+.next/
+out/
+build/
+next-env.d.ts
+
+# env — never commit; NEXT_PUBLIC_SITE_URL is set in the Vercel dashboard
+.env
+.env.local
+.env.*.local
+
+# vercel
+.vercel/
+
+# os / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# build artefacts and scratch
+*.tsbuildinfo
+scratchpad/

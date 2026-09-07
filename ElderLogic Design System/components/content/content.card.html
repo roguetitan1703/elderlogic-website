@@ -1,0 +1,25 @@
+<!-- @dsCard group="Components" viewport="700x380" name="Content" subtitle="Eyebrow, section heading, feature items, stat, card, pull quote" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px;background:var(--surface-page)}.row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}.col{display:grid;gap:16px}.lbl{font-family:var(--font-mono);font-size:11px;color:var(--text-faint);letter-spacing:.04em}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const { Eyebrow, SectionHeading, FeatureItem, StatBlock, Card, PullQuote } = window.ElderLogicDesignSystem_cac832;
+
+function Demo(){return <div className="col" style={{gap:28}}>
+<SectionHeading eyebrow="Every client, one place" title="Everything your team needs. Nothing they don't." lead="Client information stays organised without the complexity of a CRM."/>
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24}}>
+<FeatureItem label="Built-in validation">Reduces errors and keeps data consistent as reps type.</FeatureItem>
+<FeatureItem label="Ready for action">Powers placement matching, outreach and custom routing.</FeatureItem>
+</div>
+<div style={{display:'grid',gridTemplateColumns:'240px 1fr',gap:24,alignItems:'start'}}>
+<StatBlock size="md" value="2,621" label="Arizona senior living & care facilities" note="AZDHS · refreshed monthly"/>
+<Card padding="md"><Eyebrow rule>Updated monthly</Eyebrow><p style={{marginTop:12,fontSize:'var(--fs-body-sm)'}}>Licensing, inspection, violation and enforcement history, exactly as the state published it.</p></Card>
+</div>
+<PullQuote attribution="Terrah Shaw" role="Founder">We do our own placements, so you never pay a placement-agent fee.</PullQuote>
+</div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

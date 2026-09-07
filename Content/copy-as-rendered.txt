@@ -1,0 +1,197 @@
+ELDERLOGIC — COPY AS RENDERED
+Generated from the running site on 2026-09-06. Do not edit here.
+Source of truth is web/content/copy.ts. Regenerate after any copy change.
+
+========================================================================
+HOME
+========================================================================
+
+A          How it works
+A          Marketing visits
+A          The record
+A          FAQ
+A          Book a demo
+BUTTON     Open menu
+A          How it works
+A          Marketing visits
+A          The record
+A          FAQ
+A          Book a demo
+SPAN       HOSPICE PLACEMENT AND MARKETING VISITS — ARIZONA
+H1         There are 2,600 licensed homes in Arizona. Most hospice teams work with about a dozen.
+
+P          ElderLogic is placement and marketing-visit software for hospice teams in Arizona. You get every licensed home in the state, and shortlists we have already phoned ahead on, with the room found and the price agreed.
+A          Book a demo
+A          See how it works →
+SPAN       WHAT YOU GET
+H2         Every licensed home
+
+P          Every licensed senior living home in the state, with its record attached.
+H2         Shortlists
+
+P          A shortlist for one patient, with the rooms and the prices already on it.
+H2         Routed days
+
+P          A day of stops on a phone, ordered so nobody doubles back.
+SPAN       COVERAGE
+H2         Most of this territory has never been worked.
+
+P          Homes decide which hospice to call when a resident starts to decline, and a liaison can only build that with homes they know exist. The rest of the territory has open rooms, homes that would refer, and homes nobody has walked into.
+P          Licensed homes, Phoenix metro. Around 2,600 statewide, August 2026.
+P          Census is the number an owner answers for. Every unworked home on this map is a referral that goes somewhere else.
+SPAN       THE OUTREACH
+H2         We do the calling.
+
+P          When a patient needs a bed, a search goes out to every licensed home that fits, and we ring them: who has a room, what it costs, what they say, including the no's. We do the same before a marketing day, getting to the homes in that area first with what your hospice can offer, and building the route around the ones that want the meeting. Either way your team opens the app and picks from what came back.
+P          Neither of those costs your team a phone call.
+LI         200 in the radius
+LI         40 ruled out by your team
+LI         60 contacted
+LI         20 replied
+LI         5 room and price agreed
+LI         2 toured
+FIGCAPTION Five homes with a room and a price already agreed. From one Phoenix-area search.
+P          One placement search
+SPAN       MARKETING VISITS
+H2         A day of visits, in driving order.
+
+P          A rep picks a morning and an area to work. Back comes every home inside it, each with its contact details and its state record, already placed in the day's order.
+P          A family's pre-tour runs on the same routing, which means it is a marketing visit as well. The home meets your liaison and a family on the same afternoon.
+SPAN       WHY A HOME TAKES THE MEETING
+H2         You are the visit a home doesn't pay for.
+
+P          Homes pay placement agents to fill rooms. A hospice brings residents and charges nothing for it, so the meeting is easy to get, and the home still remembers you six months later.
+BLOCKQUOTE We do our own placements, saving you from paying any placement agent fees. Can't wait to meet!
+P          A home, replying to a hospice that got in touch.
+H2         One placement, start to finish.
+
+BUTTON     01 Someone needs a place
+BUTTON     02 The search runs
+BUTTON     03 We call the homes
+BUTTON     04 Homes that said yes
+BUTTON     05 Routed into a day
+BUTTON     06 Move-in
+SPAN       01 / 06
+H3         Someone needs a place
+
+P          Your liaison fills one assessment on a phone. The client and power-of-attorney records write themselves from it.
+SPAN       02 / 06
+H3         The search runs
+
+P          Every home in range, measured against what this patient actually needs. The ones your team has ruled out never appear.
+P          One rep rules a home out and it stays out of every future search, for everyone.
+SPAN       03 / 06
+H3         We call the homes
+
+P          Every home in the search gets a call, and every answer lands in one log against that patient, including the homes that never replied.
+SPAN       04 / 06
+H3         Homes that said yes
+
+P          Five names on a typical search. Each has a room for this patient and a price your team never had to negotiate.
+SPAN       05 / 06
+H3         Routed into a day
+
+P          The stops re-order themselves when the day changes. The same route goes to the family, and opens in their own maps app.
+SPAN       06 / 06
+H3         Move-in
+
+P          Client, home, price, date, on the record.
+BUTTON     Previous
+BUTTON     Next
+SPAN       THE RECORD
+H2         The record is the state's. We keep it current.
+
+P          Every home carries its full AZDHS history, not only what is true today, and one click opens the official state file from anywhere in the workflow. Placing a patient into a home with open enforcement is real exposure. This is where a team sees it.
+P          We do not score or rank homes. Your team reads the record and decides.
+DT         Licensing
+DD         Full history
+DT         Inspections
+DD         Full history
+DT         Violations
+DD         Full history
+DT         Enforcement
+DD         Full history
+DT         Refreshed
+DD         Monthly
+DT         Source document
+DD         One click to AZDHS
+P          Arizona Dept. of Health Services
+SPAN       BOOK A DEMO
+H2         Start with an area you already cover.
+
+P          We open the map on that area and you see what is in it: how many licensed homes, what the state has published about each one, and which ones nobody has contacted.
+A          Book a demo
+A          Read the FAQ →
+SPAN       Scheduling embed
+SUMMARY    Rather not book a time? Leave your details instead
+P          We will come back to you. We read these ourselves.
+LABEL      Name
+LABEL      Organisation
+LABEL      Email
+LABEL      Message
+BUTTON     Send
+P          Placement and marketing visits for hospice teams in Arizona.
+SPAN       PRODUCT
+A          How it works
+A          Marketing visits
+A          The record
+A          FAQ
+SPAN       COMPANY
+A          Privacy
+A          Book a demo
+A          hello@elderlogic.app
+A          (480) 685-5657
+SPAN       Arizona
+P          Home licensing, inspection, violation and enforcement data published by the Arizona Department of Health Services.
+P          © 2026 ElderLogic
+
+-- HOME: ~650 words of body copy --
+
+========================================================================
+FAQ
+========================================================================
+
+A          How it works
+A          Marketing visits
+A          The record
+A          FAQ
+A          Book a demo
+BUTTON     Open menu
+A          How it works
+A          Marketing visits
+A          The record
+A          FAQ
+A          Book a demo
+H1         FAQ
+
+P          The things a hospice team asks before the first call. If yours is not here, email us and we will answer it.
+DT         Which states do you cover?
+DD         Arizona. Every licensed senior living home in the state.
+DT         Do we have to contact the homes ourselves?
+DD         No. Your team receives homes that have already confirmed a room and a price, and can approach any home directly at any point.
+DT         Do you rate the homes?
+DD         No. The state publishes a record, we show it to you, and your team decides.
+DT         Does it replace our EMR or CRM?
+DD         No. It handles placement and marketing visits, and sits alongside what you already run.
+DT         Does it work on a phone?
+DD         Yes. Assessments, routes, home records and post-visit forms. That is where the work happens.
+H2         See it on your own territory.
+
+P          We open the map on the area your liaisons cover and you see what is in it.
+A          Book a demo
+P          Placement and marketing visits for hospice teams in Arizona.
+SPAN       PRODUCT
+A          How it works
+A          Marketing visits
+A          The record
+A          FAQ
+SPAN       COMPANY
+A          Privacy
+A          Book a demo
+A          hello@elderlogic.app
+A          (480) 685-5657
+SPAN       Arizona
+P          Home licensing, inspection, violation and enforcement data published by the Arizona Department of Health Services.
+P          © 2026 ElderLogic
+
+-- FAQ: ~141 words of body copy --

@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ElderLogic — Smarter Placement, Better Outcomes</title>
+<link rel="icon" href="../assets/favicon-512.svg">
+<link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;background:var(--surface-page)}
+.el-hero{display:grid;gap:var(--sp-10);align-items:center;grid-template-columns:1fr}
+.el-two-col{display:grid;gap:var(--sp-10);grid-template-columns:1fr}
+.el-pricing{display:grid;gap:var(--sp-6);grid-template-columns:1fr}
+.el-field-pair{display:grid;gap:var(--sp-5);grid-template-columns:1fr}
+.el-hero-cta{display:flex;flex-direction:column;gap:var(--sp-3);width:100%}
+.el-hero-cta>*{width:100%}
+@media(min-width:760px){.el-hero-cta{flex-direction:row;width:auto}.el-hero-cta>*{width:auto}.el-field-pair{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){
+.el-hero{grid-template-columns:1.15fr .85fr;gap:var(--sp-16)}
+.el-two-col{grid-template-columns:1fr 1fr;gap:var(--sp-16)}
+.el-pricing{grid-template-columns:1.05fr .95fr;gap:var(--sp-8)}
+.el-flip>div:first-child{order:2}
+}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="./_dev_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel" src="../ui_kits/marketing-site/HomeScreen.jsx"></script>
+<script type="text/babel" src="../ui_kits/marketing-site/PlatformScreen.jsx"></script>
+<script type="text/babel" src="../ui_kits/marketing-site/ConciergeScreen.jsx"></script>
+<script type="text/babel" src="../ui_kits/marketing-site/PricingScreen.jsx"></script>
+<script type="text/babel" src="../ui_kits/marketing-site/ContactScreen.jsx"></script>
+<script type="text/babel">
+const { SiteHeader, SiteFooter } = window.ElderLogicDesignSystem_cac832;
+const LINKS=[{label:'Platform',href:'/platform'},{label:'Concierge',href:'/concierge'},{label:'Pricing',href:'/pricing'}];
+function App(){
+  const [page,setPage]=React.useState('/');
+  const go=(href)=>{setPage(href);window.scrollTo(0,0);};
+  const Screen={'/':window.HomeScreen,'/platform':window.PlatformScreen,'/concierge':window.ConciergeScreen,'/pricing':window.PricingScreen,'/contact':window.ContactScreen}[page]||window.HomeScreen;
+  return <React.Fragment>
+    <SiteHeader links={LINKS} active={page} onNavigate={go} onCta={()=>go('/contact')} assetBase=".."/>
+    <Screen go={go} base=".."/>
+    <SiteFooter assetBase=".." columns={[
+      {title:'Platform',links:[{label:'The database',href:'#'},{label:'Assessment',href:'#'},{label:'Routing',href:'#'}]},
+      {title:'Concierge',links:[{label:'Outreach',href:'#'},{label:'Visit verification',href:'#'}]},
+      {title:'Company',links:[{label:'Pricing',href:'#'},{label:'Contact',href:'#'}]}]}/>
+  </React.Fragment>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body></html>

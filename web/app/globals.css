@@ -1,0 +1,374 @@
+/* Page-level composition only.
+   All colour, type, spacing, radius, elevation and motion come from the design
+   system tokens loaded in layout.tsx. Nothing here invents a value. */
+
+/* Any in-page jump must clear the sticky header, and the whole page honours
+   reduced motion rather than smooth-scrolling regardless. */
+html { scroll-behavior: smooth; }
+body { overflow-x: hidden; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+:target, [id] { scroll-margin-top: calc(var(--header-h-lg) + var(--sp-6)); }
+
+/* ---------- layout primitives ---------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+@media (min-width: 768px) {
+  .container { padding-inline: var(--gutter-lg); }
+}
+
+.section { padding-block: var(--section-y); }
+.section--tight { padding-block: var(--section-y-tight); }
+
+.surface-paper { background: var(--surface-paper); }
+.surface-dark { background: var(--surface-dark); color: var(--text-inverse); }
+.surface-dark h2,
+.surface-dark h3 { color: var(--text-inverse); }
+
+.container--wide { max-width: var(--container-wide); }
+
+.measure { max-width: var(--measure); }
+.measure-narrow { max-width: var(--measure-narrow); }
+
+.stack { display: flex; flex-direction: column; gap: var(--stack); }
+.stack-tight { display: flex; flex-direction: column; gap: var(--stack-tight); }
+.stack-loose { display: flex; flex-direction: column; gap: var(--stack-loose); }
+
+/* Content first, device shot second — always, on mobile. */
+.split { display: grid; gap: var(--sp-10); align-items: center; }
+@media (min-width: 900px) {
+  .split { grid-template-columns: 1fr 1fr; gap: var(--sp-16); }
+  .split--wide-media { grid-template-columns: 5fr 7fr; }
+}
+
+/* ---------- type ------------------------------------------------------ */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: var(--tt-eyebrow);
+  color: var(--text-muted);
+}
+.surface-dark .eyebrow { color: var(--text-inverse-muted); }
+
+.display-1 { font-family: var(--font-display); font-size: var(--fs-display-1); line-height: var(--lh-tight); letter-spacing: var(--ls-display); }
+@media (max-width: 380px) { .display-1 { font-size: 2.0625rem; } }
+.display-2 { font-family: var(--font-display); font-size: var(--fs-display-2); line-height: var(--lh-snug); letter-spacing: var(--ls-display); }
+.display-3 { font-family: var(--font-display); font-size: var(--fs-display-3); line-height: var(--lh-snug); letter-spacing: var(--ls-display); }
+
+.lead { font-size: var(--fs-lead); line-height: var(--lh-body); color: var(--text-body); }
+.body-sm { font-size: var(--fs-body-sm); }
+.caption { font-size: var(--fs-caption); color: var(--text-muted); }
+
+/* Mono means: this is the record, not our words. */
+.mono { font-family: var(--font-mono); letter-spacing: var(--ls-mono); }
+
+/* ---------- controls -------------------------------------------------- */
+
+/* A row of calls to action. Used by every section that has one. */
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--sp-6);
+  border: var(--border-w) solid transparent;
+  border-radius: var(--radius-control);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition: var(--transition-control);
+}
+
+/* The design system styles every <a>, including hover colour and an underline.
+   A button that happens to be a link must beat those rules in all states, or
+   its label takes the link colour on hover — green text on a green button. */
+a.btn,
+a.btn:link,
+a.btn:visited,
+a.btn:hover,
+a.btn:focus,
+a.btn:active { text-decoration: none; border-bottom-color: transparent; }
+
+.btn:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+.btn:active { transform: translateY(1px); }
+
+.btn--primary { background: var(--green-700); border-color: var(--green-700); }
+.btn--primary,
+a.btn--primary:link,
+a.btn--primary:visited,
+a.btn--primary:hover,
+a.btn--primary:focus,
+a.btn--primary:active { color: var(--text-inverse); }
+.btn--primary:hover { background: var(--green-800); border-color: var(--green-800); }
+
+.btn--quiet { background: transparent; border-color: var(--border-default); }
+.btn--quiet,
+a.btn--quiet:link,
+a.btn--quiet:visited,
+a.btn--quiet:hover,
+a.btn--quiet:focus,
+a.btn--quiet:active { color: var(--text-strong); }
+.btn--quiet:hover { background: var(--n-50); }
+.surface-dark .btn--quiet,
+.surface-dark a.btn--quiet:link,
+.surface-dark a.btn--quiet:visited,
+.surface-dark a.btn--quiet:hover { color: var(--text-inverse); border-color: var(--border-dark); }
+
+/* Paper is warm; cool neutral borders on it read dirty. Sections on paper
+   take the paper ramp's own border. */
+.surface-paper { --border-hairline: var(--paper-200); --border-default: var(--paper-200); }
+
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  font-weight: var(--fw-medium);
+  border-bottom: 0;
+}
+.arrow-link:link, .arrow-link:visited { color: var(--text-link); }
+.arrow-link:hover, .arrow-link:focus, .arrow-link:active { color: var(--text-link-hover); }
+.arrow-link span { transition: transform var(--dur-base) var(--ease-standard); }
+.arrow-link:hover span { transform: translateX(3px); }
+
+/* ---------- form feedback --------------------------------------------- */
+
+/* The only place the feedback ramp is allowed. Never on a home. */
+.field__input:user-invalid {
+  border-color: var(--feedback-error);
+  background: var(--feedback-error-bg);
+}
+.field__error { font-size: var(--fs-caption); color: var(--feedback-error); }
+
+/* ---------- one-time reveal ------------------------------------------- */
+
+.js .reveal { opacity: 0; transform: translateY(8px); }
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; }
+}
+
+/* ---------- media ----------------------------------------------------- */
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: var(--border-w) solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 40px rgba(11, 26, 48, 0.14);
+}
+
+/* A phone screen needs a device to be read as a phone screen. The frame is
+   drawn here rather than baked into the asset, so there is no stock iOS chrome
+   and no 9:41 status bar. Capped near the captures' own resolution (298-405px)
+   so type never goes soft from upscaling. */
+.shot--phone {
+  max-width: 19rem;
+  margin-inline: auto;
+  padding: 0.6rem;
+  background: var(--navy-900);
+  border-radius: 1.9rem;
+  box-shadow: 0 20px 44px rgba(11, 26, 48, 0.22);
+}
+.shot--phone img {
+  border: 0;
+  border-radius: 1.35rem;
+  box-shadow: none;
+}
+
+/* On a phone, a phone inside a phone is redundant: drop the device and let the
+   screen run to the column. */
+@media (max-width: 899px) {
+  .shot--phone {
+    max-width: 22rem;
+    margin-inline: 0;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .shot--phone img {
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 18px 40px rgba(11, 26, 48, 0.14);
+  }
+}
+
+/* Grey block standing in for a screen the client has yet to capture.
+   Alt text is real, so the page is complete for review and for a screen reader. */
+.placeholder {
+  display: grid;
+  place-items: center;
+  padding: var(--sp-8);
+  border: var(--border-w) dashed var(--border-strong);
+  border-radius: var(--radius-card);
+  background: var(--surface-inset);
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  text-align: center;
+  min-height: 260px;
+  /* the alt text inside is long; without this its min-content width sets the
+     box and the placeholder outgrows its column on a narrow screen */
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.placeholder--phone { max-width: var(--phone-w-lg); margin-inline: auto; aspect-ratio: 9 / 17; }
+.placeholder--desktop { aspect-ratio: 16 / 10; }
+
+/* ---------- the record grammar ----------------------------------------
+   The page's connective tissue. ElderLogic's native artifact is a record
+   row — label, value, source, date, under a hairline. Sections open like
+   file dividers rather than with decorative eyebrows, and every figure
+   carries its provenance in mono, the way the product itself shows state
+   data. This is the one signature; everything around it stays quiet.      */
+
+.rule-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: var(--border-w) solid var(--border-strong);
+  margin-bottom: var(--sp-10);
+}
+.rule-head__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+.rule-head__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-faint);
+  margin-left: auto;
+  text-align: right;
+}
+.surface-dark .rule-head { border-top-color: var(--border-dark); }
+.surface-dark .rule-head__label { color: var(--text-inverse); }
+.surface-dark .rule-head__meta { color: var(--text-inverse-muted); }
+
+
+/* ---------- layout variation ------------------------------------------ */
+
+.bleed { width: 100vw; margin-inline: calc(50% - 50vw); }
+
+/* Section intro: heading left, body right. The reference's core asymmetry,
+   and the reason its sections read as designed rather than stacked. */
+.intro { display: grid; gap: var(--sp-6); align-items: start; }
+@media (min-width: 900px) {
+  .intro { grid-template-columns: 5fr 6fr; gap: var(--sp-16); }
+}
+.intro__heading { max-width: 20ch; }
+.intro__body { max-width: var(--measure); }
+
+/* A figure, with a rule carrying its weight. Green leads, neutral follows. */
+.figure-stat { border-left: var(--rule-w) solid var(--accent-quiet); padding-left: var(--sp-5); }
+.figure-stat--lead { border-left-color: var(--accent-rule); }
+.figure-stat__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-stat);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  color: var(--text-strong);
+}
+.figure-stat--lead .figure-stat__value { color: var(--navy-800); }
+.figure-stat--quiet .figure-stat__value { color: var(--text-muted); font-size: var(--fs-display-3); }
+.figure-stat__label { font-size: var(--fs-body-sm); color: var(--text-muted); max-width: 34ch; }
+.figure-stat__note {
+  margin-top: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--text-faint);
+}
+
+@media (min-width: 900px) {
+  .split--mirror > :first-child { order: 2; }
+  .split--mirror > :last-child { order: 1; }
+}
+
+
+/* ---------- touch targets ---------------------------------------------
+   44px minimum wherever a finger is the pointer. Applied by input type, not
+   by width, so a touch laptop gets it too. */
+@media (pointer: coarse), (max-width: 899px) {
+  .site-header__logo { min-height: 44px; }
+  .wt-controls .btn,
+  .btn--sm { min-height: 44px; }
+  .wt-skip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .site-footer__inner nav a,
+  .site-footer__contact a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .site-header__nav a { min-height: 44px; display: inline-flex; align-items: center; }
+  /* Mono labels are small by design; on a phone they sit at the legible end. */
+  .eyebrow { font-size: var(--fs-caption); }
+}
+
+
+/* ---------- the secondary path ----------------------------------------
+   Booking is the action on this page. The form is for someone who will not
+   pick a time, so it is folded away until they ask for it. <details> keeps
+   that working with no script. */
+.btn--lg { min-height: 52px; padding: 0 var(--sp-8); font-size: var(--fs-body); }
+
+.fallback { margin-top: var(--sp-4); }
+/* A button in a stack must not stretch to the column width. */
+.close__intro .btn { align-self: start; }
+/* The right column grows when the fallback opens; the copy must not drift
+   to the vertical centre when it does. */
+#book.section .split { align-items: start; }
+.fallback__summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  color: var(--text-muted);
+  font-size: var(--fs-body-sm);
+  cursor: pointer;
+  list-style: none;
+}
+.fallback__summary::-webkit-details-marker { display: none; }
+.fallback__summary::after {
+  content: "›";
+  transform: rotate(90deg);
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+.fallback[open] .fallback__summary::after { transform: rotate(-90deg); }
+.fallback__summary:hover { color: var(--text-strong); }
+.fallback__summary:focus-visible { outline: var(--border-w) solid var(--border-focus); outline-offset: 3px; }
+.fallback__body { display: flex; flex-direction: column; gap: var(--sp-5); padding-top: var(--sp-4); }
+
+.field__notice {
+  margin-top: var(--sp-2);
+  padding: var(--sp-4);
+  border-left: var(--rule-w, 1px) solid var(--accent-rule);
+  background: var(--surface-inset);
+  color: var(--text-body);
+  font-size: var(--fs-body-sm);
+}

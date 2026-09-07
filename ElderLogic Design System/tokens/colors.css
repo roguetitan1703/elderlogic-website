@@ -1,0 +1,29 @@
+:root{
+/* --- brand base --------------------------------------------------------- */
+--green-50:#eaf7f2;--green-100:#cdece1;--green-200:#9ad9c3;--green-300:#63c9a7;
+--green-400:#2fb98d;--green-500:#00a676;--green-600:#00875f;--green-700:#006b4c;--green-800:#04503a;
+--navy-50:#eef2f8;--navy-100:#dbe3ef;--navy-200:#b3c1da;--navy-300:#7f96c0;
+--navy-400:#4a6a9e;--navy-500:#2a5289;--navy-600:#1c4073;--navy-700:#16335c;--navy-800:#102544;--navy-900:#0b1a30;
+/* --- neutrals (cool, faintly navy-tinted) ------------------------------- */
+--n-0:#ffffff;--n-25:#fafbfc;--n-50:#f4f6f9;--n-100:#e8ecf2;--n-200:#d5dbe4;--n-300:#b7c0cd;
+--n-400:#8b96a6;--n-500:#667283;--n-600:#4b5666;--n-700:#35404e;--n-800:#212a36;--n-900:#131a23;
+/* --- paper (the one warm surface; alternate section background) --------- */
+--paper-50:#faf8f4;--paper-100:#f5f1e9;--paper-200:#e9e2d4;
+/* --- form/system feedback ---------------------------------------------- */
+/* Never applied to a senior living home. See readme.md → "The no-rating rule". */
+--feedback-error:#a8331f;--feedback-error-bg:#fbf0ed;
+--feedback-notice:#8a6d1f;--feedback-notice-bg:#faf5e8;
+--feedback-info:var(--navy-600);--feedback-info-bg:var(--navy-50);
+
+/* --- semantic aliases -------------------------------------------------- */
+--brand:var(--green-500);--brand-ink:var(--green-700);--brand-deep:var(--navy-600);
+--text-strong:var(--navy-800);--text-body:var(--n-700);--text-muted:var(--n-500);
+--text-faint:var(--n-400);--text-inverse:var(--n-0);--text-inverse-muted:var(--navy-200);
+--text-link:var(--green-700);--text-link-hover:var(--green-800);
+--surface-page:var(--n-0);--surface-subtle:var(--n-50);--surface-paper:var(--paper-100);
+--surface-card:var(--n-0);--surface-inset:var(--n-50);
+--surface-dark:var(--navy-800);--surface-dark-deep:var(--navy-900);--surface-brand:var(--green-500);
+--border-hairline:var(--n-100);--border-default:var(--n-200);--border-strong:var(--n-300);
+--border-dark:rgba(255,255,255,.14);--border-focus:var(--green-600);
+--accent-rule:var(--green-500);--accent-quiet:var(--navy-200);
+}
