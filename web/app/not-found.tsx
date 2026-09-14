@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { close, nav } from "@/content/copy";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -17,13 +15,11 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <>
-      <SiteHeader />
 
       <main id="top">
         <section className="section">
           <div className="container">
-            <span className="eyebrow">404</span>
-            <div className="intro">
+                        <div className="intro">
               <h1 className="display-2 intro__heading">This page is not here.</h1>
               <div className="stack">
                 <p className="lead">
@@ -31,15 +27,15 @@ export default function NotFound() {
                   the site is one of these:
                 </p>
                 <nav className="stack-tight">
-                  {nav.items.map((item) => (
+                  {nav.links.map((item) => (
                     <Link key={item.href} href={item.href}>
                       {item.label}
                     </Link>
                   ))}
                 </nav>
                 <div className="actions">
-                  <Link className="btn btn--primary" href={close.cta.href}>
-                    {close.cta.label}
+                  <Link className="btn btn--primary" href={"/" + nav.ctaHref}>
+                    {close.cta}
                   </Link>
                   <Link className="arrow-link" href="/">
                     Back to the start <span aria-hidden="true">&#8594;</span>
@@ -51,7 +47,6 @@ export default function NotFound() {
         </section>
       </main>
 
-      <SiteFooter />
     </>
   );
 }

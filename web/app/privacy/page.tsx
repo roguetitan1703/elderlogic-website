@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { privacy } from "@/content/privacy";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -14,7 +12,6 @@ export const metadata: Metadata = {
 export default function Privacy() {
   return (
     <>
-      <SiteHeader />
 
       <main id="top">
         <section className="section page-head">
@@ -41,7 +38,6 @@ export default function Privacy() {
         </section>
       </main>
 
-      <SiteFooter />
     </>
   );
 }

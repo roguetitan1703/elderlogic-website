@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { questions, close } from "@/content/copy";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -15,7 +12,6 @@ export const metadata: Metadata = {
 export default function Questions() {
   return (
     <>
-      <SiteHeader />
 
       <main id="top">
         <section className="section page-head">
@@ -29,10 +25,10 @@ export default function Questions() {
           <div className="container">
             <dl className="qa-list">
               {questions.items.map((item) => (
-                <Reveal key={item.q} as="div" className="qa-list__item">
+                <div key={item.q} className="qa-list__item">
                   <dt className="qa-list__q">{item.q}</dt>
                   <dd className="qa-list__a">{item.a}</dd>
-                </Reveal>
+                </div>
               ))}
             </dl>
           </div>
@@ -46,14 +42,13 @@ export default function Questions() {
             </p>
             <div>
               <a className="btn btn--primary" href="/#book">
-                {close.cta.label}
+                {close.cta}
               </a>
             </div>
           </div>
         </section>
       </main>
 
-      <SiteFooter />
     </>
   );
 }

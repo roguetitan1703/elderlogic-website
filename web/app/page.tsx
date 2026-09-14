@@ -1,229 +1,169 @@
-import {
-  hero,
-  concierge,
-  strip,
-  meeting,
-  territory,
-  marketingVisits,
-  record,
-  close,
-  walkthrough,
-} from "@/content/copy";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import Route from "@/components/Route";
+import CallLog from "@/components/CallLog";
+import ChartIndex from "@/components/ChartIndex";
 import ContactForm from "@/components/ContactForm";
-import Reveal from "@/components/Reveal";
-import Shot from "@/components/Shot";
-import CoverageField from "@/components/CoverageField";
-import Funnel from "@/components/Funnel";
-import HeroField from "@/components/HeroField";
-import HomeCard from "@/components/HomeCard";
+import RunSheet from "@/components/RunSheet";
+import {
+  calls,
+  close,
+  field,
+  homes,
+  identity,
+  inField,
+  inventory,
+  chartIndex,
+  nav,
+  placement,
+  problem,
+  record,
+  routedDay,
+} from "@/content/copy";
 
 /**
- * One alignment discipline: everything sits on the left grid. Rhythm comes from
- * column ratio, background and media: never from switching to centred.
+ * The home page, as a chart.
  *
- * Section intros use the same asymmetry throughout: heading left, body right.
+ * Eleven sections, eleven different shapes. No two share a template. The
+ * previous build was eight sections of heading left, paragraph under, media
+ * right, which is what the client rejected and what must never come back.
+ *
+ * Three sections break the grammar and go full bleed: the map field, one phone
+ * at life size, and the routed day. They fall at 3, 6 and 9, one every third
+ * section, so the page has a pulse instead of a single volume.
+ *
+ * Section and topic coverage is decided in Content/section-coverage.md.
  */
 export default function Home() {
   return (
-    <>
-      <SiteHeader />
+    <main className="chart">
+      <ChartIndex />
+      {/* 1. Identity line. The chart header, not a hero. */}
+      <section className="sheet id">
+        <h1 className="id__head">{identity.heading}</h1>
+        <p className="id__body">{identity.body}</p>
+        <a className="btn btn--primary" href={nav.ctaHref}>
+          {identity.cta}
+        </a>
+      </section>
 
-      <main id="top">
-        {/* Hero: the territory as ground. Same data as Coverage, zoomed out and
-            unlabelled; Coverage zooms in and names things. */}
-        <section className="hero">
-          <div className="hero__inner">
-            <div className="hero__copy">
-              <h1 className="display-1 hero__heading">{hero.heading}</h1>
-              <p className="lead hero__sub">{hero.sub}</p>
-              <div className="actions">
-                <a className="btn btn--primary" href={hero.primary.href}>
-                  {hero.primary.label}
-                </a>
-                <a className="arrow-link" href={hero.secondary.href}>
-                  {hero.secondary.label} <span aria-hidden="true">&#8594;</span>
-                </a>
-              </div>
-            </div>
+      {/* 2. Presenting problem. A chart opens with the reason for admission. */}
+      <section className="sheet say">
+        <div className="sheet__inner">
+          <h2 className="say__head">{problem.heading}</h2>
+          <p className="say__body">{problem.body}</p>
+        </div>
+      </section>
 
-            {/* The atom, in the hero: the page opens on the thing it delivers. */}
-            <div className="hero__card">
-              <HomeCard />
-            </div>
-          </div>
-          <div className="hero__media">
-            <HeroField />
-          </div>
-        </section>
+      {/* 3. Full bleed. No copy sits on the image. */}
+      <figure className="bleed bleed--wide">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/product/map.jpg" alt={field.alt} width={1672} height={941} />
+        <figcaption className="bleed__cap">
+          <span className="bleed__figure">{field.figure}</span>
+          <span className="bleed__note">{field.figureNote}</span>
+          <span className="bleed__text">{field.caption}</span>
+        </figcaption>
+      </figure>
 
-        {/* What it is: three columns, orientation for a cold reader. */}
-        <section className="section--tight">
-          <div className="container">
-            <div className="strip">
-              {strip.items.map((item) => (
-                <div key={item.label} className="strip__item">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    className="strip__icon"
-                    src={`/icons/deep-blue/${item.icon}.svg`}
-                    alt=""
-                    aria-hidden="true"
-                    width={26}
-                    height={26}
-                  />
-                  <h2 className="strip__label">{item.label}</h2>
-                  <p className="body-sm">{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+      {/* 4. The attached exhibit: what the state holds on every home. */}
+      <section className="sheet rec" id="record">
+        <h2 className="rec__head">{record.heading}</h2>
+        <p className="rec__body">{record.body}</p>
+        <ul className="rec__list">
+          {record.carries.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <p className="rec__source">{record.source}</p>
+        <p className="rec__rule">{record.rule}</p>
+      </section>
 
-        {/* Coverage: the problem, then the field. Container width, like everything else. */}
-        <section className="section" id="territory">
-          <div className="container">
-            <Reveal className="intro">
-              <h2 className="display-2 intro__heading">{territory.heading}</h2>
-              <p className="lead intro__body">{territory.body}</p>
-            </Reveal>
+      {/* 5. The run sheet. The one place numbers are earned. */}
+      <section className="sheet sheet--tint plan" id="placement">
+        <div className="sheet__inner">
+          <h2 className="plan__head">{placement.heading}</h2>
+          <RunSheet />
+      
+        </div>
+      </section>
 
-            <Reveal>
-              <CoverageField />
-            </Reveal>
+      {/* 6. Full bleed. One phone at the size it is actually used. */}
+      <figure className="bleed bleed--life">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/product/phone-assessment-screen.png"
+          alt={inField.alt}
+          width={329}
+          height={667}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption className="bleed__cap bleed__cap--life">{inField.caption}</figcaption>
+      </figure>
 
-            <p className="caption source-note mono">
-              {territory.caption} {territory.source}
-            </p>
+      {/* 7. The calls. The differentiator, with the funnel on it. */}
+      <section className="sheet log" id="outreach">
+        <h2 className="log__head">{calls.heading}</h2>
+        <p className="log__body">{calls.body}</p>
+        <CallLog />
+      </section>
 
-          </div>
-        </section>
+      {/* 8. The only voiced proof this project holds. */}
+      <section className="sheet sheet--ink why">
+        <div className="sheet__inner">
+          <h2 className="why__head">{homes.heading}</h2>
+          <p className="why__body">{homes.body}</p>
+          <blockquote className="why__quote">
+            <p>{homes.quote}</p>
+            <cite>{homes.attribution}</cite>
+          </blockquote>
+      
+        </div>
+      </section>
 
-        {/* The concierge: the work the fee pays for, in active voice. The
-            funnel lives here rather than inside the walkthrough: it is this
-            section's argument, and behind a stepper nobody saw it. */}
-        <section className="section surface-paper" id="concierge">
-          <div className="container">
-            <div className="split">
-              <Reveal className="stack">
-                <h2 className="display-2 intro__heading">{concierge.heading}</h2>
-                <p className="lead measure">{concierge.body}</p>
-                <p className="lead measure">{concierge.body2}</p>
-              </Reveal>
-              <Reveal>
-                <Funnel active />
-                <p className="caption mono">{concierge.rule.meta}</p>
-              </Reveal>
-            </div>
-          </div>
-        </section>
+      {/* 9. Full bleed. The routed day. */}
+      <section className="sheet day" id="visits">
+        <h2 className="day__head">{routedDay.heading}</h2>
+        <p className="day__body">{routedDay.body}</p>
+      </section>
+      <figure className="bleed bleed--dark">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/product/route.png"
+          alt={routedDay.alt}
+          width={1272}
+          height={1940}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption className="bleed__cap bleed__cap--dark">{routedDay.caption}</figcaption>
+      </figure>
 
-        {/* Marketing visits: copy left, the screen right. */}
-        <section className="section surface-paper" id="marketing-visits">
-          <div className="container">
-            <div className="split split--wide-media">
-              <Reveal className="stack">
-                <h2 className="display-2 intro__heading">{marketingVisits.heading}</h2>
-                <p className="lead measure">{marketingVisits.body}</p>
-                <p className="step__note">{marketingVisits.note}</p>
-              </Reveal>
-              <Reveal>
-                <Shot
-                  src={marketingVisits.image.src}
-                  alt={marketingVisits.image.alt}
-                  kind="phone"
-                />
-              </Reveal>
-            </div>
-          </div>
-        </section>
+      {/* 10. The inventory. Never an icon and caption grid. */}
+      <section className="sheet sheet--tint inv" id="contents">
+        <div className="sheet__inner">
+          <h2 className="inv__head">{inventory.heading}</h2>
+          <ul className="inv__list">
+            {inventory.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p className="inv__note">{inventory.note}</p>
+      
+        </div>
+      </section>
 
-        {/* Why a home takes the meeting: the payoff, with the home's own words. */}
-        <section className="section">
-          <div className="container">
-            <div className="split">
-              <Reveal className="stack">
-                <h2 className="display-2 intro__heading">{meeting.heading}</h2>
-                <p className="lead measure">{meeting.body}</p>
-              </Reveal>
-              <Reveal className="testimony">
-                <blockquote className="testimony__text">{meeting.quote}</blockquote>
-                <p className="testimony__attr">{meeting.attribution}</p>
-              </Reveal>
-            </div>
-          </div>
-        </section>
+      {/* 11. The signature block. Contact is subordinate, never beside. */}
+      <section className="sheet sign" id="book">
+        <h2 className="sign__head">{close.heading}</h2>
+        <p className="sign__body">{close.body}</p>
+        <a className="btn btn--primary sign__cta" href="mailto:hello@elderlogic.app?subject=Demo">
+          {close.cta}
+        </a>
 
-        {/* One placement, as a route: stops on a snapping track. */}
-        <section className="section" id="walkthrough">
-          <div className="container">
-            <Reveal className="intro">
-              <h2 className="display-2 intro__heading">{walkthrough.heading}</h2>
-            </Reveal>
-            <Route />
-          </div>
-        </section>
-
-        {/* The record: the page's one dark weight. */}
-        <section className="section surface-dark" id="record">
-          <div className="container">
-            <div className="split">
-              <Reveal className="stack">
-                <h2 className="display-2 intro__heading">{record.heading}</h2>
-                <p className="lead measure record__body">{record.body}</p>
-                <p className="record__rule">{record.ruleLine}</p>
-              </Reveal>
-              <Reveal>
-                <p className="record__source mono">{record.rule.meta}</p>
-              </Reveal>
-            </div>
-          </div>
-        </section>
-
-        {/* Close: one path. Booking is the action; the form is a fallback for
-            someone who will not pick a time, folded away until they ask for it.
-            <details> so it works with no script. */}
-        <section className="section surface-paper" id="book">
-          <div className="container">
-            <div className="split">
-              <Reveal className="stack close__intro">
-                <h2 className="display-2 intro__heading">{close.heading}</h2>
-                <p className="lead measure">{close.body}</p>
-                <a className="btn btn--primary btn--lg" href="#scheduler">
-                  {close.cta.label}
-                </a>
-                <a className="arrow-link" href="/faq">
-                  Read the FAQ <span aria-hidden="true">&#8594;</span>
-                </a>
-              </Reveal>
-
-              <Reveal className="stack">
-                <div
-                  className="placeholder"
-                  id="scheduler"
-                  role="img"
-                  aria-label="Scheduling calendar, embedded"
-                >
-                  <span>Scheduling embed</span>
-                </div>
-
-                <details className="fallback">
-                  <summary className="fallback__summary">{close.fallbackToggle}</summary>
-                  <div className="fallback__body">
-                    <p className="caption">{close.fallbackIntro}</p>
-                    <ContactForm />
-                  </div>
-                </details>
-              </Reveal>
-            </div>
-          </div>
-        </section>
-
-      </main>
-
-      <SiteFooter />
-    </>
+        <details className="sign__alt">
+          <summary>{close.fallbackLead}</summary>
+          <ContactForm />
+        </details>
+      </section>
+    </main>
   );
 }

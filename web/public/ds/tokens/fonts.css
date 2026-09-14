@@ -1,6 +1,7 @@
 /* ElderLogic webfonts.
    NOTE: no font binaries were supplied with the brand assets. The logo lockup is set in a
-   geometric sans matched by eye to Poppins; Poppins is loaded for wordmark fallbacks only.
+   geometric sans matched by eye to Poppins. Poppins itself is NOT requested:
+   the wordmark is an SVG, so nothing on the site ever rendered in it.
    Interface + body text is IBM Plex Sans; headlines are Source Serif 4; record data is IBM Plex Mono.
    Replace these @import lines with @font-face rules if licensed binaries arrive. */
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&family=Poppins:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");

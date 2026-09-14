@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
 import { meta } from "@/content/copy";
 import { siteUrl, isProduction } from "@/content/site";
 import "./globals.css";
@@ -54,23 +56,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    /* The .js class is set by the inline script below, before React hydrates,
-       so the server HTML and the client DOM differ on <html> by design. That is
-       the point of the technique, and it is the one place where suppressing the
-       warning is correct. */
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
         {/* Design system tokens. Never hard-code a value that has a token. */}
         <link rel="stylesheet" href="/ds/styles.css" />
-        {/* Reveals are progressive enhancement: without this class every
-            section renders visible. Nothing on this page depends on script. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
-          }}
-        />
       </head>
-      <body>{children}</body>
+      {/* Header and footer live here rather than in each page, so a route
+          added later cannot ship without them. */}
+      <body>
+        <SiteHeader />
+        {children}
+        <SiteFooter />
+      </body>
     </html>
   );
 }

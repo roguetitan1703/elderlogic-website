@@ -199,7 +199,8 @@ Secondary path: short contact form — name, organisation, email, message.
 Tagline: *Placement and territory work for hospice teams in Arizona.*
 Columns: How it works · Territory · The record · Questions | About · Privacy · Book a demo
 Contact: `hello@elderlogic.app` · (480) 685-5657 · **Arizona** — a street address goes in later, when we have one.
-Source line: Home licensing, inspection, violation and enforcement data published by the Arizona Department of Health Services.
+Source line: Licensing and inspection records belong to the State of Arizona. ElderLogic keeps them current.
+**Corrected.** The previous line said records were "published by the Arizona Department of Health Services", which is the exact source description the client banned. It shipped to the footer from here.
 © 2026 ElderLogic · Phoenix, Arizona
 
 ---

@@ -32,3 +32,13 @@ yarn-error.log*
 # build artefacts and scratch
 *.tsbuildinfo
 scratchpad/
+
+# source screenshots and reference material, 35MB and carrying a real home's
+# name, address, phone and email, real client names, the founder's home
+# address, and the platform names the client does not want published.
+# Edited, cleared versions live in web/public/product.
+Assets/
+
+# agent tooling, not part of the site
+.claude/
+.impeccable/

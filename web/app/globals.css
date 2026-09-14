@@ -46,17 +46,10 @@ body { overflow-x: hidden; }
 }
 
 /* ---------- type ------------------------------------------------------ */
+/* No .eyebrow class. Eyebrows are banned on this site: a tab divider
+   identifies a section and the heading carries its own weight. */
 
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--fs-eyebrow);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-eyebrow);
-  text-transform: var(--tt-eyebrow);
-  color: var(--text-muted);
-}
-.surface-dark .eyebrow { color: var(--text-inverse-muted); }
-
+.surface-dark 
 .display-1 { font-family: var(--font-display); font-size: var(--fs-display-1); line-height: var(--lh-tight); letter-spacing: var(--ls-display); }
 @media (max-width: 380px) { .display-1 { font-size: 2.0625rem; } }
 .display-2 { font-family: var(--font-display); font-size: var(--fs-display-2); line-height: var(--lh-snug); letter-spacing: var(--ls-display); }
@@ -327,8 +320,7 @@ a.btn--quiet:active { color: var(--text-strong); }
   }
   .site-header__nav a { min-height: 44px; display: inline-flex; align-items: center; }
   /* Mono labels are small by design; on a phone they sit at the legible end. */
-  .eyebrow { font-size: var(--fs-caption); }
-}
+  }
 
 
 /* ---------- the secondary path ----------------------------------------
