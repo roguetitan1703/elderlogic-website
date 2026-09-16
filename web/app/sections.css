@@ -1140,61 +1140,21 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 
 
 /* ---------------------------------------------------------------------------
-   Booking panel
-   Replaced a dashed grey box reading "Scheduling embed", which was the last
-   thing a visitor saw before the footer. The slot for the calendar is still
-   marked, with the height it needs, so connecting one is a swap rather than a
-   redesign.
+   The calendar slot
+   Replaces the dashed grey box that read "Scheduling embed". Marked, sized so
+   the section does not resize when a calendar lands in it, and no taller than
+   the column beside it needs.
    --------------------------------------------------------------------------- */
 
 .booking {
+  display: grid;
+  place-items: center;
+  min-height: 17rem;
+  padding: var(--sp-6);
   background: var(--surface-card, #fff);
   border: var(--border-w) solid var(--border-default);
   border-radius: var(--radius-lg);
-  padding: var(--sp-6);
-}
-
-.booking__head {
-  margin: 0 0 var(--sp-5);
-  font-family: var(--font-sans);
-  font-size: var(--fs-body-sm);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-eyebrow);
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.booking__steps { list-style: none; margin: 0; padding: 0; }
-.booking__steps li {
-  display: grid;
-  grid-template-columns: 1.9rem 1fr;
-  gap: var(--sp-3);
-  padding: var(--sp-4) 0;
-  border-top: var(--border-w) solid var(--border-hairline);
-  color: var(--text-body);
-}
-.booking__num { font-size: var(--fs-caption); color: var(--green-800); }
-
-.booking__meta {
-  margin: var(--sp-5) 0 0;
-  padding-top: var(--sp-5);
-  border-top: var(--border-w) solid var(--border-hairline);
   font-size: var(--fs-caption);
   letter-spacing: var(--ls-mono);
   color: var(--text-muted);
-}
-
-/* The slot. Sized to a month view, so the section does not resize when a
-   calendar lands in it. */
-.booking__slot {
-  margin-top: var(--sp-6);
-  min-height: 21rem;
-  display: grid;
-  place-items: center;
-  border: var(--border-w) dashed var(--border-default);
-  border-radius: var(--radius-md, 6px);
-  background: var(--paper-50, #faf8f4);
-  color: var(--text-faint, var(--text-muted));
-  font-size: var(--fs-caption);
-  letter-spacing: var(--ls-mono);
 }
