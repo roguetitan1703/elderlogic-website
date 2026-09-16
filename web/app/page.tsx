@@ -248,13 +248,22 @@ export default function Home() {
             </Reveal>
 
             <Reveal className="stack">
-              <div
-                className="placeholder"
-                id="scheduler"
-                role="img"
-                aria-label={close.schedulerLabel}
-              >
-                <span>{close.schedulerPlaceholder}</span>
+              {/* The booking panel. When a calendar is connected it replaces
+                  the .booking__slot below and everything else here stays. */}
+              <div className="booking" id="scheduler">
+                <h3 className="booking__head">{close.booking.heading}</h3>
+                <ol className="booking__steps">
+                  {close.booking.steps.map((step, i) => (
+                    <li key={step}>
+                      <span className="booking__num mono">{String(i + 1).padStart(2, "0")}</span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ol>
+                <p className="booking__meta mono">{close.booking.duration}</p>
+                <div className="booking__slot" aria-hidden="true">
+                  <span className="mono">{close.booking.slotNote}</span>
+                </div>
               </div>
             </Reveal>
           </div>

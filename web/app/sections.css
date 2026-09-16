@@ -34,19 +34,43 @@
 }
 .site-header__nav a:hover { color: var(--text-strong); }
 .site-header__cta { display: none; }
-.site-header__toggle { display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; color: var(--text-strong); }
-.site-header__toggle svg path { stroke: var(--navy-700); }
-.site-header__sheet {
-  border-top: var(--border-w) solid var(--border-hairline);
-  padding-block: var(--sp-6);
-  background: var(--surface-page);
+.site-header__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 44px;
+  padding: 0 var(--sp-2) 0 var(--sp-3);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--text-inverse);
+  font-family: var(--font-sans);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
-.site-header__sheet a { border-bottom: 0; font-size: var(--fs-lead); color: var(--text-strong); }
+.site-header__toggle:focus-visible { outline: var(--border-w) solid var(--green-400); outline-offset: 3px; }
+
+/* Two bars that cross into an X. A word beside them, because an icon on its
+   own is a guess and this is the only navigation on a phone. */
+.burger { position: relative; display: block; width: 20px; height: 14px; }
+.burger span {
+  position: absolute; left: 0; right: 0; height: 2px;
+  background: currentColor; border-radius: 1px;
+  transition: transform var(--dur-base) var(--ease-standard),
+              opacity var(--dur-fast, 140ms) var(--ease-standard);
+}
+.burger span:first-child { top: 3px; }
+.burger span:last-child { bottom: 3px; }
+.site-header.is-open .burger span:first-child { transform: translateY(4px) rotate(45deg); }
+.site-header.is-open .burger span:last-child { transform: translateY(-4px) rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) { .burger span { transition: none; } }
 @media (min-width: 900px) {
   .site-header__inner { min-height: var(--header-h-lg); }
   .site-header__logo img { height: 38px; }
   .site-header__nav, .site-header__cta { display: inline-flex; }
-  .site-header__toggle, .site-header__sheet { display: none; }
+  .site-header__toggle { display: none; }
 }
 
 /* ---------- header, taller and quieter -------------------------------- */
@@ -1014,4 +1038,163 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 @media (prefers-reduced-motion: reduce) {
   .to-top { transition: opacity var(--dur-base) var(--ease-standard), visibility 0s; transform: none; }
   .to-top.is-shown { transform: none; }
+}
+
+
+/* ---------------------------------------------------------------------------
+   The phone menu
+   A panel, not a dropdown. The dropdown was a white strip hanging under a navy
+   bar, fighting the header it belonged to, and it gave four links less room
+   than the footer gives them. A panel has room for the call to action and the
+   contact details, which is most of what someone opens a menu on a phone for.
+   --------------------------------------------------------------------------- */
+
+.site-menu {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-header) - 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sp-10);
+  padding: calc(var(--header-h) + var(--sp-10)) var(--gutter) var(--sp-10);
+  background: var(--navy-900);
+  color: var(--text-inverse);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The links. Serif, at the size the page sets a heading, because this is the
+   page speaking rather than a control strip. */
+.site-menu__nav { display: flex; flex-direction: column; }
+.site-menu__nav a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  padding: var(--sp-5) 0;
+  border-bottom: var(--border-w) solid var(--border-dark);
+  font-family: var(--font-display);
+  font-size: var(--fs-display-3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-display);
+  color: var(--text-inverse);
+  text-decoration: none;
+}
+.site-menu__nav a:first-child { border-top: var(--border-w) solid var(--border-dark); }
+.site-menu__nav a svg { flex: none; color: var(--green-400); transition: transform var(--dur-fast, 140ms) var(--ease-standard); }
+.site-menu__nav a:hover svg,
+.site-menu__nav a:focus-visible svg { transform: translate(2px, -2px); }
+.site-menu__nav a:focus-visible { outline: var(--border-w) solid var(--green-400); outline-offset: 4px; }
+
+.site-menu__foot { display: flex; flex-direction: column; align-items: start; gap: var(--sp-3); }
+.site-menu__cta { align-self: stretch; justify-content: center; }
+.site-menu__lead {
+  margin: var(--sp-5) 0 0;
+  font-size: var(--fs-caption);
+  color: var(--text-inverse-muted);
+}
+.site-menu__contact {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-body-sm);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-inverse);
+  border-bottom: var(--border-w) solid transparent;
+}
+.site-menu__contact:hover { color: var(--green-300); border-bottom-color: var(--green-400); }
+
+/* Entry. The panel fades, the links arrive a beat apart so the eye lands on
+   the first one. Opacity and transform only. */
+.site-menu { opacity: 0; }
+.site-menu.is-open { opacity: 1; animation: menu-in var(--dur-base) var(--ease-standard) both; }
+.site-menu.is-open .site-menu__nav a {
+  animation: menu-item var(--dur-reveal) var(--ease-out) both;
+  animation-delay: calc(60ms + var(--i) * 45ms);
+}
+.site-menu.is-open .site-menu__foot {
+  animation: menu-item var(--dur-reveal) var(--ease-out) both;
+  animation-delay: 260ms;
+}
+@keyframes menu-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes menu-item { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-menu.is-open,
+  .site-menu.is-open .site-menu__nav a,
+  .site-menu.is-open .site-menu__foot { animation: none; opacity: 1; transform: none; }
+}
+
+/* The panel is phone navigation only. Above 900px the links are in the bar. */
+@media (min-width: 900px) { .site-menu { display: none; } }
+
+/* While the panel is open the header sits on it, so it takes the same ground
+   and drops its rule: two navy blocks with a line between them read as a seam. */
+.site-header.is-open,
+.site-header.is-open.is-stuck {
+  background: var(--navy-900);
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+
+
+/* ---------------------------------------------------------------------------
+   Booking panel
+   Replaced a dashed grey box reading "Scheduling embed", which was the last
+   thing a visitor saw before the footer. The slot for the calendar is still
+   marked, with the height it needs, so connecting one is a swap rather than a
+   redesign.
+   --------------------------------------------------------------------------- */
+
+.booking {
+  background: var(--surface-card, #fff);
+  border: var(--border-w) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+}
+
+.booking__head {
+  margin: 0 0 var(--sp-5);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.booking__steps { list-style: none; margin: 0; padding: 0; }
+.booking__steps li {
+  display: grid;
+  grid-template-columns: 1.9rem 1fr;
+  gap: var(--sp-3);
+  padding: var(--sp-4) 0;
+  border-top: var(--border-w) solid var(--border-hairline);
+  color: var(--text-body);
+}
+.booking__num { font-size: var(--fs-caption); color: var(--green-800); }
+
+.booking__meta {
+  margin: var(--sp-5) 0 0;
+  padding-top: var(--sp-5);
+  border-top: var(--border-w) solid var(--border-hairline);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-muted);
+}
+
+/* The slot. Sized to a month view, so the section does not resize when a
+   calendar lands in it. */
+.booking__slot {
+  margin-top: var(--sp-6);
+  min-height: 21rem;
+  display: grid;
+  place-items: center;
+  border: var(--border-w) dashed var(--border-default);
+  border-radius: var(--radius-md, 6px);
+  background: var(--paper-50, #faf8f4);
+  color: var(--text-faint, var(--text-muted));
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
 }

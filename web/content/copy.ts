@@ -65,6 +65,14 @@ export const nav = {
     { label: "FAQ", href: "/faq" },
   ],
   cta: { label: "Book a demo", href: "/#book" },
+  /** The phone menu. It is a panel, not a dropdown, so it has room for the
+   *  things a dropdown never has room for. */
+  menu: {
+    open: "Menu",
+    close: "Close",
+    /** Sits above the contact details at the foot of the panel. */
+    contactLead: "Or reach us directly",
+  },
 };
 
 /* ------------------------------------------------------------- Hero. */
@@ -311,8 +319,28 @@ export const close = {
   secondary: { label: "Read the FAQ", href: "/faq" },
   fallbackToggle: "Rather not book a time? Leave your details instead",
   fallbackIntro: "We will come back to you. We read these ourselves.",
-  schedulerLabel: "Scheduling calendar, embedded",
-  schedulerPlaceholder: "Scheduling embed",
+  /**
+   * The booking panel.
+   *
+   * This was a grey dashed box reading "Scheduling embed", which is the last
+   * thing a visitor sees before the footer and said "unfinished" more loudly
+   * than anything else on the page. Until a real calendar is connected it now
+   * says what the demo actually is, which is what a scheduler would be asked
+   * to sell anyway.
+   */
+  booking: {
+    heading: "What happens on the call",
+    steps: [
+      "You name an area your team works.",
+      "We open the map on it, live, while you watch.",
+      "You see every licensed home in it, and the record on each.",
+    ],
+    /** Real, checkable, and it lowers the cost of saying yes. */
+    duration: "Thirty minutes, screen shared. No preparation needed.",
+    /** The slot the calendar drops into. Marked, with its size, so nothing has
+     *  to be improvised when the account exists. */
+    slotNote: "Calendar to be connected",
+  },
   fields: [
     { name: "name", label: "Name", type: "text" },
     { name: "organisation", label: "Organisation", type: "text" },
