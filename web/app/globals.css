@@ -9,6 +9,11 @@ body { overflow-x: hidden; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 :target, [id] { scroll-margin-top: calc(var(--header-h-lg) + var(--sp-6)); }
 
+/* The hidden attribute always wins, whatever a class says about display.
+   Without this, any element toggled with `hidden` that also carries a display
+   rule stays laid out and keeps intercepting pointer events. */
+[hidden] { display: none !important; }
+
 /* ---------- layout primitives ---------------------------------------- */
 
 .container {

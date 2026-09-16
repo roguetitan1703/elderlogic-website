@@ -1049,6 +1049,12 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
    contact details, which is most of what someone opens a menu on a phone for.
    --------------------------------------------------------------------------- */
 
+/* The hidden attribute must win. A class selector beats the browser's own
+   [hidden] { display: none }, so setting display on .site-menu left the panel
+   laid out over the whole viewport at opacity 0, catching every touch and
+   wheel event on the page. The site did not scroll on a phone at all. */
+.site-menu[hidden] { display: none; }
+
 .site-menu {
   position: fixed;
   inset: 0;
