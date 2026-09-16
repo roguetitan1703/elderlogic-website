@@ -15,7 +15,7 @@
 --sp-32:8rem; /* @kind spacing */
 --gutter:1.25rem; /* @kind spacing */
 --gutter-lg:2rem; /* @kind spacing */
---section-y:clamp(3.5rem,8vw,7rem); /* @kind spacing */
+--section-y:clamp(3rem,6.6vw,6rem); /* @kind spacing */
 --section-y-tight:clamp(2.5rem,5vw,4rem); /* @kind spacing */
 --stack-tight:var(--sp-3); /* @kind spacing */
 --stack:var(--sp-5); /* @kind spacing */

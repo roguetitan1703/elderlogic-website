@@ -4,22 +4,22 @@
 --font-brand:"Poppins","Century Gothic",var(--font-sans); /* @kind font */
 --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace; /* @kind font */
 
---fs-display-1:clamp(2.5rem,6vw,4.25rem); /* @kind font */
---fs-display-2:clamp(2.125rem,4.6vw,3.25rem); /* @kind font */
---fs-display-3:clamp(1.75rem,3.4vw,2.5rem); /* @kind font */
+--fs-display-1:clamp(2.25rem,4.4vw,3.5rem); /* @kind font */
+--fs-display-2:clamp(1.75rem,2.9vw,2.375rem); /* @kind font */
+--fs-display-3:clamp(1.5rem,2.2vw,1.875rem); /* @kind font */
 --fs-h1:clamp(1.625rem,2.6vw,2rem); /* @kind font */
 --fs-h2:1.375rem; /* @kind font */
 --fs-h3:1.125rem; /* @kind font */
---fs-lead:clamp(1.0625rem,1.4vw,1.25rem); /* @kind font */
+--fs-lead:clamp(1rem,1.25vw,1.0625rem); /* @kind font */
 --fs-body:1rem; /* @kind font */
---fs-body-sm:.9375rem; /* @kind font */
+--fs-body-sm:.875rem; /* @kind font */
 --fs-caption:.8125rem; /* @kind font */
 --fs-micro:.6875rem; /* @kind font */
 --fs-eyebrow:.75rem; /* @kind font */
---fs-stat:clamp(3rem,7vw,5.25rem); /* @kind font */
+--fs-stat:clamp(2.5rem,5vw,3.75rem); /* @kind font */
 
 --lh-tight:1.06; /* @kind font */
---lh-snug:1.18; /* @kind font */
+--lh-snug:1.14; /* @kind font */
 --lh-heading:1.28; /* @kind font */
 --lh-body:1.62; /* @kind font */
 --lh-loose:1.75; /* @kind font */

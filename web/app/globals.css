@@ -22,6 +22,28 @@ body { overflow-x: hidden; }
 }
 
 .section { padding-block: var(--section-y); }
+
+/* A hairline at container width, for a section that follows one carrying the
+   same ground. Depth on this page is rules and space, never shadow, so the
+   break is drawn the way the rest of the page draws one: it is the same device
+   as the rules inside the inventory and the record blocks, not a separator
+   invented to patch a background problem. Sections with their own ground do
+   not need it, and never take it. */
+.section--ruled { position: relative; }
+.section--ruled::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  width: min(100% - (var(--gutter) * 2), var(--container-max));
+  border-top: var(--border-w) solid var(--border-hairline);
+}
+@media (min-width: 768px) {
+  .section--ruled::before {
+    width: min(100% - (var(--gutter-lg) * 2), var(--container-max));
+  }
+}
 .section--tight { padding-block: var(--section-y-tight); }
 
 .surface-paper { background: var(--surface-paper); }
@@ -46,10 +68,24 @@ body { overflow-x: hidden; }
 }
 
 /* ---------- type ------------------------------------------------------ */
-/* No .eyebrow class. Eyebrows are banned on this site: a tab divider
-   identifies a section and the heading carries its own weight. */
 
-.surface-dark 
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: var(--tt-eyebrow);
+  color: var(--text-muted);
+}
+.surface-dark .eyebrow { color: var(--text-inverse-muted); }
+/* Muted body on a dark ground. --text-muted is #667283, a mid grey chosen for
+   white paper: on navy-800 it measures about 2.2:1 and the intro paragraph was
+   effectively unreadable. The inverse token is the same role, the other way up. */
+.surface-dark .intro__body,
+.surface-dark .lead,
+.surface-dark .caption,
+.surface-dark .body-sm { color: var(--text-inverse-muted); }
+
 .display-1 { font-family: var(--font-display); font-size: var(--fs-display-1); line-height: var(--lh-tight); letter-spacing: var(--ls-display); }
 @media (max-width: 380px) { .display-1 { font-size: 2.0625rem; } }
 .display-2 { font-family: var(--font-display); font-size: var(--fs-display-2); line-height: var(--lh-snug); letter-spacing: var(--ls-display); }
@@ -166,22 +202,21 @@ a.btn--quiet:active { color: var(--text-strong); }
   box-shadow: 0 18px 40px rgba(11, 26, 48, 0.14);
 }
 
-/* A phone screen needs a device to be read as a phone screen. The frame is
-   drawn here rather than baked into the asset, so there is no stock iOS chrome
-   and no 9:41 status bar. Capped near the captures' own resolution (298-405px)
-   so type never goes soft from upscaling. */
+/* A phone screen needs a device to be read as a phone screen, and the HPC
+   captures already have one: the frame is part of the image. So nothing is
+   drawn here. A CSS bezel around them would put a second device around the
+   first. The shadow sits on the image instead of on a wrapper, and it is soft
+   rather than hard because it has to follow a shape with transparent corners.
+   Capped near the capture's own width (347-381px) so type never goes soft. */
 .shot--phone {
-  max-width: 19rem;
+  max-width: 23rem;
   margin-inline: auto;
-  padding: 0.6rem;
-  background: var(--navy-900);
-  border-radius: 1.9rem;
-  box-shadow: 0 20px 44px rgba(11, 26, 48, 0.22);
 }
 .shot--phone img {
   border: 0;
-  border-radius: 1.35rem;
+  border-radius: 0;
   box-shadow: none;
+  filter: drop-shadow(0 20px 40px rgba(11, 26, 48, 0.22));
 }
 
 /* On a phone, a phone inside a phone is redundant: drop the device and let the
@@ -320,7 +355,8 @@ a.btn--quiet:active { color: var(--text-strong); }
   }
   .site-header__nav a { min-height: 44px; display: inline-flex; align-items: center; }
   /* Mono labels are small by design; on a phone they sit at the legible end. */
-  }
+  .eyebrow { font-size: var(--fs-caption); }
+}
 
 
 /* ---------- the secondary path ----------------------------------------

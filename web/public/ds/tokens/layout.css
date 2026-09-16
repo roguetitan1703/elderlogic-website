@@ -1,7 +1,7 @@
 :root{
---container-max:1160px; /* @kind spacing */
+--container-max:1280px; /* @kind spacing */
 --container-narrow:720px; /* @kind spacing */
---container-wide:1320px; /* @kind spacing */
+--container-wide:1400px; /* @kind spacing */
 --measure:64ch; /* @kind other */
 --measure-narrow:46ch; /* @kind other */
 --header-h:64px; /* @kind spacing */

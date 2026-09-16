@@ -1,536 +1,1017 @@
-/* ======================================================================
-   The Chart.
-
-   A placement produces a record, so the page is one. The chart is a
-   STRUCTURAL LOGIC, never a texture: there are no ruled-line backgrounds,
-   no paper grain, no torn edges, no clipboards and no shadows anywhere in
-   this file. What makes it read as a chart is how information is organised.
-
-   Phone first. A chart page is portrait, so 380px is the native size and
-   the desktop is the adaptation. Every base rule here is the phone rule;
-   min-width queries adapt upward.
-
-   Three sections break the grammar and go full bleed, at 3, 6 and 9.
-   Everything else is quiet so that those land.
-
-   Colour: navy is ink, green is annotation, paper appears exactly twice.
-   Mono is the record and figures only, never labels or prose.
-   ====================================================================== */
-
+/* Section composition. Tokens only: nothing here invents a value.
+ *
+ * The scrims below are the one place a literal appears: CSS cannot take an
+ * alpha of a token hex without color-mix, and these must composite over the
+ * hero image. Each is navy-900 (#0b1a30) at a stated opacity: the same value
+ * the token holds, never a new colour.
+ */
 :root {
-  --doc: 34rem;        /* prose measure, about 68 characters */
-  --wide: 52rem;       /* dense structures on desktop */
-  --gut: 1.25rem;      /* phone gutter */
-  --rule: var(--n-200);
-  --hair: var(--n-100);
+  --scrim-900: 11, 26, 48;   /* --navy-900, for rgba() compositing */
+  --scrim-0: 255, 255, 255;  /* --n-0 */
 }
 
-/* ---------- browser surfaces we did not draw -------------------------- */
-/* These ship with defaults belonging to no design system. Theming them is
-   the cheapest signal that a page was built rather than assembled. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
 
-::selection { background: var(--green-100); color: var(--navy-900); }
-html { accent-color: var(--green-600); caret-color: var(--green-700); scrollbar-color: var(--n-300) transparent; }
-:focus-visible { outline: 2px solid var(--green-600); outline-offset: 3px; }
+/* ---------- header ---------------------------------------------------- */
 
-/* ---------- section grounds ------------------------------------------- */
-/* Consecutive sections on one white ground read as a single long document,
-   which is what the inline dividers used to break up. The index replaced their
-   navigation but not their separation, so the ground does it instead: a
-   section boundary you can see without a rule. Paper stays capped at two
-   appearances; the tint is a cool neutral, not a third paper. */
+.site-header {
+  position: sticky; top: 0; z-index: var(--z-header);
+  background: rgba(var(--scrim-0), 0.94);
+  backdrop-filter: var(--blur-panel);
+  border-bottom: var(--border-w) solid var(--border-hairline);
+}
+.site-header__inner { display: flex; align-items: center; gap: var(--sp-8); min-height: var(--header-h); }
+.site-header__logo { border-bottom: 0; margin-right: auto; display: flex; align-items: center; color: var(--text-strong); }
+.site-header__logo img { height: 32px; width: auto; }
+.site-header__nav { display: none; gap: 1.75rem; align-items: center; }
+.site-header__nav a {
+  font-size: var(--fs-body-sm); font-weight: var(--fw-medium);
+  color: var(--text-body); border-bottom: 0; white-space: nowrap;
+  transition: var(--transition-control);
+}
+.site-header__nav a:hover { color: var(--text-strong); }
+.site-header__cta { display: none; }
+.site-header__toggle { display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; color: var(--text-strong); }
+.site-header__toggle svg path { stroke: var(--navy-700); }
+.site-header__sheet {
+  border-top: var(--border-w) solid var(--border-hairline);
+  padding-block: var(--sp-6);
+  background: var(--surface-page);
+}
+.site-header__sheet a { border-bottom: 0; font-size: var(--fs-lead); color: var(--text-strong); }
+@media (min-width: 900px) {
+  .site-header__inner { min-height: var(--header-h-lg); }
+  .site-header__logo img { height: 38px; }
+  .site-header__nav, .site-header__cta { display: inline-flex; }
+  .site-header__toggle, .site-header__sheet { display: none; }
+}
 
-/* Any section carrying a ground runs edge to edge and holds its content in an
-   inner container. Painting `.sheet` itself only tints the 832px container,
-   which renders as a floating card on white: the one shape this design bans. */
-/* Doubled class so these beat `.sheet`, which is defined later in this file
-   at equal specificity and would otherwise win on order. */
-.sheet.sheet--tint,
-.sheet.sheet--ink { max-width: none; padding-inline: 0; }
+/* ---------- header, taller and quieter -------------------------------- */
 
-.sheet__inner {
-  max-width: var(--wide);
+/* ---------- hero ------------------------------------------------------ */
+
+/* Navy ground. The map is the field the type sits on: it emerges out of the
+   dark from the right rather than being a panel bolted to the side. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  background: var(--navy-900);
+  color: var(--text-inverse);
+  overflow: hidden;
+}
+.hero__media { position: absolute; inset: 0; z-index: -2; }
+.hero__field {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 52% 42%;
+  /* The real map is a bright light ground with saturated pins on it. The hero
+     type and the card were drawn for a dark, quiet field, so the map is pulled
+     down to a texture: desaturated, darkened, and blended for luminosity only
+     so the navy underneath supplies the colour. */
+  filter: grayscale(1) contrast(0.78) brightness(0.52);
+  opacity: 0.62;
+  mix-blend-mode: luminosity;
+}
+.hero__dots circle {
+  fill: var(--green-300);
+  opacity: 0.5;
+}
+@media (max-width: 899px) {
+  .hero__dots circle { r: 3.4; }
+}
+/* Scrim: solid navy under the type, thinning out to the right. */
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(100deg,
+      var(--navy-900) 0%,
+      rgba(var(--scrim-900), 0.96) 30%,
+      rgba(var(--scrim-900), 0.62) 52%,
+      rgba(var(--scrim-900), 0.22) 78%,
+      rgba(var(--scrim-900), 0.12) 100%),
+    linear-gradient(to bottom, rgba(var(--scrim-900), 0.34) 0%, rgba(var(--scrim-900), 0) 26%, rgba(var(--scrim-900), 0.34) 100%);
+}
+
+.hero__inner {
+  width: 100%;
+  max-width: var(--container-max);
   margin-inline: auto;
-  padding-inline: var(--gut);
+  padding-inline: var(--gutter);
 }
-@media (min-width: 700px) { .sheet__inner { padding-inline: 2rem; } }
+@media (min-width: 768px) { .hero__inner { padding-inline: var(--gutter-lg); } }
 
-.sheet--tint { background: var(--n-50); }
-
-/* One dark section, at the emotional peak. A real change of pace mid page,
-   and the reason the quote lands rather than passing as another block. */
-.sheet--ink { background: var(--navy-900); }
-.sheet--ink .why__head { color: var(--n-0); }
-.sheet--ink .why__body { color: var(--navy-200); }
-.sheet--ink .why__quote { border-left-color: var(--green-400); }
-.sheet--ink .why__quote p { color: var(--n-0); }
-.sheet--ink .why__quote cite { color: var(--navy-300); }
-
-/* Sections that share a ground still need an edge between them. */
-.sheet + .sheet { border-top: 1px solid var(--hair); }
-.sheet--tint + .sheet--tint { border-top-color: var(--n-200); }
-.sheet--ink + .sheet,
-.sheet + .sheet--ink,
-.sheet + .sheet--tint,
-.sheet--tint + .sheet { border-top: 0; }
-
-/* ---------- the page -------------------------------------------------- */
-
-body { background: var(--n-0); color: var(--text-body); }
-
-.chart { display: block; }
-
-/* The document column. Everything that is not a full bleed sits in one, and
-   there is only ever one of them: one container, one left edge. Prose is held
-   to a reading measure inside it with max-width, never by a second container. */
-.sheet {
-  max-width: var(--wide);
-  margin-inline: auto;
-  padding-inline: var(--gut);
-  padding-block: 3rem;
+.hero__copy {
+  display: flex; flex-direction: column; gap: var(--sp-5);
+  padding-block: var(--section-y);
 }
-@media (min-width: 700px) {
-  .sheet { padding-inline: 2rem; padding-block: 4.5rem; }
+.hero__copy .eyebrow { color: var(--navy-200); }
+.hero__heading { color: var(--text-inverse); }
+.hero__sub { color: var(--navy-200); max-width: 46ch; }
+/* On the hero the link text stays white in every state. The arrow is the only
+   green on it, and hover moves the arrow rather than recolouring the words -
+   the button is already carrying the green. */
+.hero .arrow-link,
+.hero .arrow-link:link,
+.hero .arrow-link:visited,
+.hero .arrow-link:hover,
+.hero .arrow-link:focus,
+.hero .arrow-link:active { color: var(--n-0); }
+.hero .arrow-link span { color: var(--green-400); }
+/* No underline on hover: a white-alpha rule reads grey over navy and arrives
+   too abruptly. The arrow moving is the whole affordance. */
+.hero .arrow-link:hover { border-bottom: 0; }
+.hero .arrow-link:hover span { color: var(--green-300); }
+
+.hero__note {
+  position: absolute; right: max(var(--gutter), calc((100vw - var(--container-wide)) / 2)); bottom: var(--sp-5);
+  font-size: var(--fs-micro); color: var(--navy-200);
+  background: rgba(var(--scrim-900), 0.62);
+  border: var(--border-w) solid rgba(var(--scrim-0), 0.14);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-pill);
+  backdrop-filter: var(--blur-panel);
 }
 
-/* Headings are the company speaking over the record. Serif, and only here. */
-.id__head, .say__head, .rec__head, .plan__head,
-.log__head, .why__head, .day__head, .inv__head, .sign__head {
+@media (max-width: 899px) {
+  .hero__copy { padding-block: var(--sp-16) var(--sp-20); }
+  .hero__media img { object-position: 46% center; opacity: 0.5; }
+  .hero::before {
+    background:
+      linear-gradient(180deg, rgba(var(--scrim-900), 0.92) 0%, rgba(var(--scrim-900), 0.8) 52%, rgba(var(--scrim-900), 0.5) 100%);
+  }
+  .hero__note { left: var(--gutter); right: auto; }
+}
+
+@media (min-width: 900px) {
+  .hero { min-height: clamp(34rem, 78svh, 44rem); display: flex; align-items: center; }
+  .hero__inner { display: flex; align-items: center; }
+  .hero__copy { padding-inline-end: var(--sp-8); }
+}
+
+/* ---------- questions page -------------------------------------------- */
+
+.page-head { padding-bottom: var(--section-y-tight); }
+
+.qa-list { margin: 0; display: grid; gap: 0; border-top: var(--border-w) solid var(--border-hairline); }
+.qa-list__item { padding-block: var(--sp-8); border-bottom: var(--border-w) solid var(--border-hairline); display: grid; gap: var(--sp-3); }
+@media (min-width: 900px) {
+  .qa-list__item { grid-template-columns: 5fr 7fr; gap: var(--sp-12); align-items: start; }
+}
+.qa-list__q { font-family: var(--font-display); font-size: var(--fs-h2); color: var(--text-strong); line-height: var(--lh-heading); }
+.qa-list__a { margin: 0; color: var(--text-body); max-width: var(--measure); }
+
+/* ---------- support strip --------------------------------------------- */
+
+.strip { display: grid; gap: var(--sp-8) var(--sp-10); }
+@media (min-width: 700px) { .strip { grid-template-columns: repeat(3, 1fr); } }
+.strip__item { display: grid; gap: var(--sp-3); align-content: start; }
+.strip__icon { width: 26px; height: 26px; }
+.strip__label {
+  font-family: var(--font-sans); font-size: var(--fs-body);
+  font-weight: var(--fw-semibold); color: var(--text-strong);
+}
+.strip__footnote {
+  margin-top: var(--sp-8); padding-top: var(--sp-4);
+  border-top: var(--border-w) solid var(--border-hairline);
+}
+
+/* ---------- quote ----------------------------------------------------- */
+
+.testimony { border-left: var(--rule-w) solid var(--accent-rule); padding-left: var(--sp-6); }
+.testimony__text {
+  margin: 0;
   font-family: var(--font-display);
-  font-weight: var(--fw-regular);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
   color: var(--text-strong);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-  margin: 0 0 0.75rem;
-  font-size: 1.5rem;
 }
-@media (min-width: 700px) {
-  .id__head, .say__head, .rec__head, .plan__head,
-  .log__head, .why__head, .day__head, .inv__head, .sign__head { font-size: 1.9rem; }
-}
-
-.id__body, .say__body, .rec__body, .log__body,
-.why__body, .day__body, .sign__body {
-  margin: 0;
-  max-width: var(--doc);
-  font-size: 1.0625rem;
-  line-height: 1.62;
-  color: var(--text-body);
-}
-
-/* Headings and the narrower structures take the same measure. The run sheet
-   and the contents index are allowed the full width: they are ruled rows, not
-   running prose, and the width is what makes them read as a record. */
-.id__head, .say__head, .rec__head, .plan__head,
-.log__head, .why__head, .day__head, .inv__head, .sign__head,
-.rec__list, .rec__source, .rec__rule,
-.funnel, .why__quote, .inv__note, .sign__alt { max-width: var(--doc); }
-.run__line, .run__title { max-width: var(--doc); }
-
-/* ---------- 1. identity line ------------------------------------------ */
-
-.id { padding-top: 2rem; }
-.id__head { font-size: 1.75rem; }
-@media (min-width: 700px) { .id__head { font-size: 2.5rem; } }
-.id .btn { margin-top: 1.75rem; }
-
-/* ---------- 2. presenting problem ------------------------------------- */
-/* Paper, first of two uses on the page. */
-
-.say {
-  background: var(--paper-100);
-  max-width: none;
-  padding-inline: 0;
-  padding-block: 3rem;
-}
-@media (min-width: 700px) { .say { padding-block: 4.5rem; } }
-
-/* ---------- the chart index: the signature element -------------------- */
-/* A physical chart is navigated by the tabs on its edge, so this page is too.
-   It is the page's only navigation below 760px, and the only answer to "where
-   am I" in a 7,600px scroll. Nothing here is a new primitive: navy ink, green
-   annotation, the sans face, square corners. */
-
-.index {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  background: var(--n-0);
-  border-bottom: 1px solid var(--rule);
-}
-
-.index__list {
-  list-style: none;
-  margin: 0 auto;
-  padding: 0 var(--gut);
-  max-width: var(--wide);
-  display: flex;
-  gap: 2px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-}
-.index__list::-webkit-scrollbar { display: none; }
-
-.index__tab { flex: 0 0 auto; }
-
-.index__tab a {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 0.85rem;
-  border-bottom: 2px solid transparent;
-  color: var(--text-muted);
-  font-size: 0.8125rem;
-  font-weight: var(--fw-medium);
-  white-space: nowrap;
-  text-decoration: none;
-  transition: color 160ms ease-out, border-color 160ms ease-out;
-}
-.index__tab a:hover { color: var(--text-strong); }
-
-/* Filled, not tinted: position has to survive greyscale and a colour blind
-   reader, and aria-current carries the same fact to a screen reader. */
-.index__tab.is-on a {
-  color: var(--text-strong);
-  border-bottom-color: var(--green-500);
-  font-weight: var(--fw-semibold);
-}
-
-@media (min-width: 700px) { .index__list { padding-inline: 2rem; } }
-
-/* No fixed side rail. It was tried and removed for a reason worth recording:
-   a rail on the right edge either sits on top of the section grounds, where
-   dark labels vanish on the navy section and on the map, or it needs a gutter
-   of its own, which stops the coloured grounds short of the viewport edge and
-   reads as a background that failed to load. The grounds reaching the edge
-   matters more than the tabs being on the edge, so the strip stays at the top
-   at every width, where it is legible over anything and overlaps nothing. */
-
-@media (prefers-reduced-motion: reduce) {
-  .index__tab a { transition: none; }
-}
-
-/* ---------- full bleeds ----------------------------------------------- */
-/* The three moments that break the chart. Edge to edge, no container. */
-
-.bleed { margin: 0; }
-.bleed img { display: block; width: 100%; height: auto; }
-.bleed--life img,
-.bleed--dark img { width: auto; }
-
-.bleed--wide { background: var(--navy-900); }
-.bleed--wide img { max-height: 78vh; object-fit: cover; object-position: center; }
-
-.bleed__cap {
-  display: grid;
-  gap: 0.15rem;
-  max-width: var(--wide);
-  margin-inline: auto;
-  padding: 1rem var(--gut) 2.5rem;
-  color: var(--text-muted);
-  font-size: 0.875rem;
-}
-@media (min-width: 700px) { .bleed__cap { padding-inline: 2rem; } }
-
-.bleed__figure {
+.testimony__attr {
+  margin-top: var(--sp-4);
   font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 2rem;
-  color: var(--text-strong);
-  letter-spacing: -0.01em;
-}
-.bleed__note { color: var(--text-faint); font-size: 0.8125rem; }
-.bleed__text { color: var(--text-body); margin-top: 0.5rem; max-width: var(--doc); }
-
-/* On the ink ground the caption must invert, or the coverage claim and the
-   largest number on the page disappear into the background. Measured before:
-   figure 1.14:1, caption 1.66:1. */
-.bleed--wide .bleed__cap { color: var(--navy-200); }
-.bleed--wide .bleed__figure { color: var(--n-0); }
-.bleed--wide .bleed__note { color: var(--navy-300); }
-.bleed--wide .bleed__text { color: var(--navy-200); }
-
-/* One phone at the size it is actually held. */
-.bleed--life {
-  background: var(--paper-100);   /* second and last use of paper */
-  padding: 2.5rem var(--gut);
-  display: grid;
-  justify-items: center;
-  gap: 1.25rem;
-}
-.bleed--life img { width: 300px; max-width: 100%; }
-.bleed__cap--life {
-  max-width: 26rem;
-  padding: 0;
-  text-align: center;
-  color: var(--text-body);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-faint);
 }
 
-/* The routed day. Light ground: the quote section above now owns the page's
-   one dark moment, and stacking two navy blocks with a white one between them
-   read as choppy rather than paced. */
-.bleed--dark {
-  background: var(--n-50);
-  padding: 2.5rem var(--gut) 3rem;
-  display: grid;
-  justify-items: center;
-  gap: 1.25rem;
-}
-/* The route capture is a full phone screen, taller than the old crop, so it
-   is held a little narrower to keep its height in check. */
-.bleed--dark img { width: 280px; max-width: 100%; }
-@media (min-width: 700px) { .bleed--dark img { width: 320px; } }
-.bleed__cap--dark { padding: 0; color: var(--text-body); text-align: center; }
+/* ---------- coverage caption ------------------------------------------ */
 
-/* ---------- 4. the record --------------------------------------------- */
+.source-note { margin-bottom: var(--sp-10); }
+/* .territory__map, .territory__closing and .record-stats went with the
+   150 / 87 lifetime-days stats block, which was pulled because neither figure
+   could be sourced. */
 
-.rec__list {
-  list-style: none;
-  margin: 1.75rem 0 0;
-  padding: 0;
-  border-top: 1px solid var(--rule);
-}
-.rec__list li {
-  padding: 0.7rem 0;
-  border-bottom: 1px solid var(--hair);
-  color: var(--text-strong);
-  font-size: 0.9375rem;
-}
-.rec__source { margin: 1rem 0 0; font-size: 0.9375rem; color: var(--text-body); }
-.rec__rule {
-  margin: 1.5rem 0 0;
-  padding-left: 0.9rem;
-  border-left: 1px solid var(--green-500);
-  color: var(--text-strong);
-  font-size: 0.9375rem;
-}
+/* The pinned walkthrough stepper (.wt-*) lived here. It was removed with the
+   component: one hundred and fifty lines styling a scroll-pinned stepper,
+   including a progress bar animating width. Nothing has rendered a .wt-
+   class since the flow became six plain lines. */
 
-/* ---------- 5. the run sheet ------------------------------------------ */
-/* The only place numbers appear, because here the order is information. */
+/* ---------- funnel ---------------------------------------------------- */
 
-
-.run {
-  list-style: none;
-  margin: 1.75rem 0 0;
-  padding: 0;
-  border-top: 1px solid var(--rule);
-}
-.run__step {
-  display: grid;
-  grid-template-columns: 2.25rem 1fr;
-  gap: 0 0.9rem;
-  padding: 0.9rem 0;
-  border-bottom: 1px solid var(--hair);
-}
-.run__num {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 0.8125rem;
-  color: var(--text-muted);      /* --text-faint measured 3.0:1 on white */
-  padding-top: 0.15rem;
-}
-.run__title {
-  margin: 0;
-  font-size: 0.9375rem;
-  font-weight: var(--fw-semibold);
-  color: var(--text-strong);
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.run__line { margin: 0.15rem 0 0; font-size: 0.9375rem; color: var(--text-body); }
-
-/* The one step we perform. Labelled, not only coloured, so it survives
-   greyscale, a colour blind reader and a printout. */
-.run__step--ours { border-left: 1px solid var(--green-500); padding-left: 0.9rem; margin-left: -0.9rem; }
-.run__by {
-  font-size: 0.6875rem;
-  font-weight: var(--fw-semibold);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--green-700);
-}
-
-/* ---------- 7. the calls, and the funnel ------------------------------ */
-
-.funnel { margin-top: 1.75rem; border-top: 1px solid var(--rule); }
+.funnel { margin: 0; }
+.funnel__rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
 .funnel__row {
   display: grid;
-  grid-template-columns: 3.25rem 1fr;
-  align-items: baseline;
-  gap: 0 0.75rem;
-  padding: 0.65rem 0 0.85rem;
-  border-bottom: 1px solid var(--hair);
+  grid-template-columns: 3rem 1fr;
+  align-items: center;
+  gap: var(--sp-4);
+  opacity: 0;
+  transform: translateY(6px);
+}
+.funnel__row.is-in {
+  opacity: 1; transform: none;
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
 }
 .funnel__value {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 1rem;
-  color: var(--text-strong);
-}
-.funnel__label { font-size: 0.9375rem; color: var(--text-body); }
-.funnel__bar {
-  grid-column: 2;
-  height: 2px;
-  background: var(--green-500);
-  width: var(--w);
-  min-width: 4px;          /* two of two hundred still has to be visible */
-  transform: scaleX(0);
-  transform-origin: left center;
-  margin-top: 0.5rem;
-}
-
-/* The single authored motion on the site. scaleX, never width. */
-.funnel.is-shown .funnel__bar {
-  transform: scaleX(1);
-  transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: calc(var(--i) * 70ms);
-}
-@media (prefers-reduced-motion: reduce) {
-  .funnel__bar { transform: scaleX(1); }
-  .funnel.is-shown .funnel__bar { transition: none; }
-}
-.funnel__note { margin: 0.9rem 0 0; font-size: 0.8125rem; color: var(--text-muted); }
-
-/* ---------- 8. why homes say yes -------------------------------------- */
-
-.why__quote { margin: 1.75rem 0 0; padding: 0 0 0 1rem; border-left: 1px solid var(--green-500); }
-.why__quote p {
-  margin: 0;
   font-family: var(--font-display);
-  font-size: 1.1875rem;
-  line-height: 1.45;
+  font-size: var(--fs-h2);
+  line-height: 1;
+  color: var(--text-strong);
+  text-align: right;
+}
+.funnel__bar {
+  width: var(--w);
+  min-width: max-content;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-sm);
+  background: var(--navy-600);
+  color: var(--text-inverse);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-snug);
+  white-space: nowrap;
+}
+.funnel__row.is-emphasis .funnel__bar { background: var(--navy-200); color: var(--navy-800); }
+.funnel__row.is-result .funnel__bar { background: var(--green-700); }
+.funnel__caption {
+  display: block;
+  margin-top: var(--sp-5);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
   color: var(--text-strong);
 }
-.why__quote cite {
+.funnel__source {
   display: block;
-  margin-top: 0.6rem;
-  font-style: normal;
-  font-size: 0.8125rem;
+  margin-top: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-faint);
+}
+@media (prefers-reduced-motion: reduce) { .funnel__row { opacity: 1; transform: none; } }
+
+/* ---------- record ---------------------------------------------------- */
+
+/* The record's own shape.
+   Field names and what each covers, as a hairline grid: the rules are the gap,
+   so every cell shares an edge and the block reads as one object rather than
+   six. Six cells exactly, so the grid never has a hole in it: five fields plus
+   the source. It replaced a row list, which said the same thing but read as a
+   table of contents for something the reader still could not picture. */
+
+.rec {
+  list-style: none;
+  margin: var(--sp-10) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  /* The gap is the rule. One pixel of the border colour showing between cells
+     that carry the section's own ground. */
+  gap: var(--border-w);
+  background: var(--border-dark);
+  border: var(--border-w) solid var(--border-dark);
+}
+@media (min-width: 560px) { .rec { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .rec { grid-template-columns: repeat(3, 1fr); } }
+
+.rec__cell {
+  background: var(--surface-dark);
+  padding: var(--sp-6) var(--sp-6) var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.rec__field {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-heading);
+  color: var(--text-inverse);
+}
+.rec__gloss {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body);
+  color: var(--text-inverse-muted);
+  max-width: 34ch;
+}
+
+/* The source cell is the one that points outward, so it carries the green. */
+.rec__cell--source .rec__field { color: var(--green-300); }
+.rec__cell--source .rec__gloss { color: var(--text-inverse); }
+
+.rec__note { margin-top: var(--sp-8); }
+
+/* Two phones, the input and what it returns. */
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); align-items: end; }
+.pair__item { margin: 0; }
+.pair__cap {
+  margin-top: var(--sp-4);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
   color: var(--text-muted);
 }
+.pair .shot--phone { max-width: 100%; }
 
-/* ---------- 10. contents ---------------------------------------------- */
 
-.inv__list {
-  list-style: none;
-  margin: 1.75rem 0 0;
-  padding: 0;
-  border-top: 1px solid var(--rule);
-  columns: 1;
+.record__body { color: var(--text-inverse-muted); }
+.record__rule { font-size: var(--fs-body-sm); color: var(--text-inverse-muted); border-left: var(--rule-w) solid var(--green-400); padding-left: var(--sp-4); max-width: var(--measure-narrow); }
+.record-list { margin: 0; border-top: var(--border-w) solid var(--border-dark); }
+.record-list__row { display: flex; justify-content: space-between; gap: var(--sp-6); padding: var(--sp-4) 0; border-bottom: var(--border-w) solid var(--border-dark); }
+.record-list__row dt { color: var(--text-inverse-muted); font-size: var(--fs-body-sm); }
+.record-list__row dd { margin: 0; color: var(--green-300); font-size: var(--fs-body-sm); }
+
+/* ---------- questions ------------------------------------------------- */
+
+.qa { display: grid; gap: var(--sp-8); }
+@media (min-width: 768px) { .qa { grid-template-columns: 1fr 1fr; gap: var(--sp-10) var(--sp-16); } }
+.qa__q { font-family: var(--font-sans); font-size: var(--fs-body); font-weight: var(--fw-semibold); color: var(--text-strong); margin-bottom: var(--sp-2); }
+
+/* ---------- form ------------------------------------------------------ */
+
+.field { display: flex; flex-direction: column; gap: var(--sp-2); }
+.field__label { font-size: var(--fs-caption); font-weight: var(--fw-medium); color: var(--text-muted); }
+.field__input {
+  min-height: 44px; padding: var(--sp-3) var(--sp-4); font: inherit;
+  color: var(--text-body); background: var(--surface-card);
+  border: var(--border-w) solid var(--border-default);
+  border-radius: var(--radius-control);
+  transition: var(--transition-control);
 }
-@media (min-width: 800px) { .inv__list { columns: 2; column-gap: 3rem; } }
-.inv__list li {
-  padding: 0.65rem 0;
-  border-bottom: 1px solid var(--hair);
-  font-size: 0.9375rem;
-  color: var(--text-strong);
-  break-inside: avoid;
-}
-.inv__note { margin: 1.25rem 0 0; font-size: 0.9375rem; color: var(--text-muted); }
-
-/* ---------- 11. signature block --------------------------------------- */
-
-.sign { padding-bottom: 4rem; }
-.sign__cta { margin-top: 1.75rem; }
-.sign__alt { margin-top: 2.5rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; }
-.sign__alt summary {
-  cursor: pointer;
-  font-size: 0.9375rem;
-  color: var(--text-link);
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-}
-.sign__alt summary::marker { color: var(--text-faint); }
-.sign__alt .field { display: grid; gap: 0.3rem; margin-top: 0.9rem; }
-.sign__alt .field__label { font-size: 0.8125rem; color: var(--text-muted); }
-.sign__alt .field__input {
-  width: 100%;
-  padding: 0.6rem 0.7rem;
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  font: inherit;
-  font-size: 1rem;              /* 16px: never trigger the iOS zoom on focus */
-  background: var(--n-0);
-  color: var(--text-strong);
-}
-.sign__alt .field__input:focus-visible { border-color: var(--green-600); }
-.sign__alt .btn { margin-top: 1rem; }
-.field__notice { margin-top: 0.9rem; font-size: 0.875rem; color: var(--text-body); }
-
-/* ---------- header rail ----------------------------------------------- */
-
-.rail { border-bottom: 1px solid var(--hair); }
-.rail__inner {
-  max-width: var(--wide);
-  margin-inline: auto;
-  padding: 0.85rem var(--gut);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-@media (min-width: 700px) { .rail__inner { padding-inline: 2rem; } }
-.rail__mark { height: 24px; width: auto; margin-right: auto; }
-
-/* No menu on a phone. The page scrolls past all three links anyway, and the
-   action repeats at the close. */
-.rail__nav { display: none; }
-@media (min-width: 760px) {
-  .rail__nav { display: flex; gap: 1.5rem; margin-right: 0.5rem; }
-  .rail__nav a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    font-size: 0.9375rem;
-    color: var(--text-body);
-    border-bottom: 0;
-  }
-  .rail__nav a:hover { color: var(--text-strong); }
-}
-.rail__cta { min-height: 44px; padding-inline: 1rem; font-size: 0.875rem; }
+.field__input:focus { border-color: var(--border-focus); box-shadow: var(--shadow-focus); outline: none; }
 
 /* ---------- footer ---------------------------------------------------- */
 
-.foot { background: var(--navy-900); color: var(--navy-200); margin-top: 0; }
-.foot__inner {
-  max-width: var(--wide);
-  margin-inline: auto;
-  padding: 3rem var(--gut) 2rem;
+/* The footer as a ruled index, the same device as the inventory block: a
+   hairline across the top of every column with its label sitting on it, so the
+   four columns read as one band rather than four loose stacks.
+   Two things were wrong before this. Links are flex column children, so they
+   stretched to the full column width, and the base link style puts a
+   border-bottom on an anchor: the result was eleven full width rules stacked
+   down the footer, reading as empty form fields. And the contact block was the
+   only column without a head, so it sat there looking unfinished. */
+
+.site-footer {
+  padding-top: var(--section-y-tight);
+  padding-bottom: var(--sp-8);
+}
+
+.site-footer__inner {
   display: grid;
-  gap: 2rem;
+  gap: var(--sp-8);
+  padding-bottom: var(--sp-12);
 }
-@media (min-width: 700px) {
-  .foot__inner { grid-template-columns: 1.4fr 1fr 1fr 1fr; padding-inline: 2rem; }
+/* Phone: brand across the top, then the three lists two up, from the narrowest
+   width. A single column of eleven links is a long scroll for nothing, and the
+   longest label here is "Inspection records", which fits a half column at
+   320px. Contact takes the full width on the bottom row so the mono address
+   never has to wrap. */
+.site-footer__inner { grid-template-columns: repeat(2, 1fr); }
+.site-footer__brand,
+.site-footer__contact { grid-column: 1 / -1; }
+@media (min-width: 1024px) {
+  .site-footer__inner {
+    grid-template-columns: minmax(15rem, 1.5fr) repeat(3, 1fr);
+    gap: var(--sp-10);
+  }
+  .site-footer__brand,
+  .site-footer__contact { grid-column: auto; }
 }
-.foot__tagline { margin: 0.9rem 0 0; font-size: 0.875rem; color: var(--navy-200); max-width: 22rem; }
-.foot__col { display: grid; align-content: start; }
-.foot__colhead { margin: 0 0 0.25rem; font-size: 0.875rem; color: var(--n-0); font-weight: var(--fw-semibold); }
-/* Footer links are touch targets too. Height comes from the row, not padding
-   guesswork, so the column keeps its rhythm. */
-.foot a {
+
+/* The band. Every column starts on the same rule, brand included. */
+.site-footer__brand,
+.site-footer__col {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  border-top: var(--border-w) solid var(--border-dark);
+  padding-top: var(--sp-5);
+}
+
+.site-footer__brand img { height: 46px; width: auto; }
+.site-footer__tagline {
+  color: var(--text-inverse-muted);
+  max-width: 32ch;
+  margin: var(--sp-4) 0 0;
+}
+
+.site-footer__col .eyebrow {
+  margin-bottom: var(--sp-3);
+  color: var(--text-inverse-muted);
+}
+
+.site-footer a {
+  align-self: start;
+  color: var(--text-inverse);
+  font-size: var(--fs-body-sm);
+  /* Transparent by default: the rule is the hover, not the resting state. */
+  border-bottom: var(--border-w) solid transparent;
+  padding-block: var(--sp-2);
+  transition: color var(--dur-fast, 140ms) var(--ease-standard),
+              border-color var(--dur-fast, 140ms) var(--ease-standard);
+}
+.site-footer a:hover { color: var(--green-300); border-bottom-color: var(--green-400); }
+.site-footer a:focus-visible {
+  outline: var(--border-w) solid var(--green-400);
+  outline-offset: 3px;
+  border-bottom-color: transparent;
+}
+
+/* Contact values are record data, so they keep mono. */
+.site-footer__contact a,
+.site-footer__location {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+}
+.site-footer__location {
+  color: var(--text-inverse-muted);
+  padding-block: var(--sp-2);
+}
+
+.site-footer__base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--sp-2) var(--sp-6);
+  padding-top: var(--sp-6);
+  border-top: var(--border-w) solid var(--border-dark);
+}
+.site-footer__base .caption { color: var(--text-inverse-muted); margin: 0; }
+
+@media (max-width: 899px) {
+  /* Tap targets. Inline flex so the hover rule still hugs the text. */
+  .site-footer a { min-height: 44px; display: inline-flex; align-items: center; }
+}
+
+/* ---------- legal pages ------------------------------------------------ */
+
+.legal { max-width: var(--measure); }
+.legal section + section { margin-top: var(--sp-10); }
+.legal__h {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  color: var(--text-strong);
+  margin-bottom: var(--sp-4);
+}
+.legal__p { margin-bottom: var(--sp-4); color: var(--text-body); }
+.legal__p:last-child { margin-bottom: 0; }
+
+/* ---------- close ------------------------------------------------------ */
+
+.close__intro { margin-bottom: var(--sp-12); }
+.close__panels { align-items: start; }
+
+/* The fallback form, opened.
+   It used to live inside the split's right column, where opening it stacked
+   four fields into half the page with the other half empty. It now sits under
+   the split at full container width, ruled off so it reads as a second path
+   rather than part of the booking panel, and the fields pair up. */
+.fallback {
+  margin-top: var(--sp-12);
+  border-top: var(--border-w) solid var(--border-hairline);
+  padding-top: var(--sp-6);
+}
+.fallback__body { max-width: var(--container-max); }
+
+.cform {
+  display: grid;
+  gap: var(--sp-5);
+}
+@media (min-width: 720px) {
+  /* Three short fields stack down the left, the message takes the whole right
+     column beside them. Pairing them off instead left Email alone with an empty
+     cell next to it. */
+  .cform {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-5) var(--sp-8);
+  }
+  .cform .field--wide {
+    grid-column: 2;
+    grid-row: 1 / 4;
+  }
+  .cform .field--wide textarea {
+    height: 100%;
+    min-height: 100%;
+    resize: vertical;
+  }
+  .cform__foot,
+  .cform__notice {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- section spacing on the left grid --------------------------- */
+
+.eyebrow { display: block; margin-bottom: var(--sp-6); }
+
+.strip { margin-top: 0; }
+.territory__map { margin-block: var(--sp-12) var(--sp-4); }
+.territory__figures { margin-top: var(--sp-12); }
+.figures { display: grid; gap: var(--sp-8); }
+@media (min-width: 600px) { .figures { grid-template-columns: 1fr 1fr; gap: var(--sp-10); } }
+
+.record__source {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-micro);
+  color: var(--text-inverse-muted);
+  letter-spacing: var(--ls-mono);
+}
+.close__intro { margin-bottom: 0; }
+
+/* ---------------------------------------------------------------------------
+   Coverage field
+   The map the product draws, in a framed panel. It was a drawn SVG over nine
+   hundred invented coordinates, with six real place names on made up positions
+   and a ring labelled "already worked" round twelve of them. Under a caption
+   reading "licensed homes, Phoenix metro" that was a false factual claim, so
+   the drawing is gone and the real screen sits in the same frame.
+   --------------------------------------------------------------------------- */
+
+.cvg {
+  margin: var(--sp-8) 0 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-50);
+  border: var(--rule-w, 1px) solid var(--paper-200);
+  border-radius: var(--radius-lg);
+}
+
+/* The map is wider than the panel is tall, so it crops rather than letterboxes
+   and the crop holds the centre of the metro. */
+.cvg--shot img {
+  display: block;
+  width: 100%;
+  height: clamp(19rem, 31vw, 27rem);
+  object-fit: cover;
+  object-position: 50% 48%;
+}
+
+/* On a phone the panel is too narrow to crop: cropping would cut the west and
+   east ends of the metro off. Match the panel to the map's own aspect so the
+   whole territory stays in frame. The caption already says where this is. */
+@media (max-width: 700px) {
+  .cvg {
+    margin-top: var(--sp-6);
+  }
+  .cvg--shot img {
+    height: auto;
+    aspect-ratio: 1.798;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   One placement, laid out
+   Replaced a pinned stepper. Numbered rail on the left carries the order, copy
+   next to it, screen on the right. Same shape every row so the sequence reads
+   as a sequence; the variation is in the screens.
+   --------------------------------------------------------------------------- */
+
+.steps {
+  list-style: none;
+  margin: var(--sp-10) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: var(--sp-5);
+  padding: var(--sp-8) 0;
+  border-top: var(--rule-w, 1px) solid var(--border-hairline);
+}
+.step:first-child { border-top: 0; padding-top: 0; }
+
+.step__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+.step__num {
+  font-size: var(--fs-caption);
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+}
+.step__icon { display: block; width: 28px; height: 28px; }
+
+.step__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
+  color: var(--text-strong);
+  margin: 0 0 var(--sp-2);
+}
+.step__note {
+  margin-top: var(--sp-3);
+  padding-left: var(--sp-4);
+  border-left: var(--rule-w, 1px) solid var(--accent-rule);
+  color: var(--text-muted);
+  font-size: var(--fs-body-sm);
+}
+/* Two columns on a phone but three children: without this the media lands
+   back in the 3.5rem rail column and renders 56px wide. */
+.step__media {
+  grid-column: 2;
+  margin-top: var(--sp-6);
+  /* grid items default to min-width:auto, so a wide child refuses to shrink
+     and pushes the row past the viewport */
+  min-width: 0;
+}
+.step__media .placeholder { min-height: 200px; }
+
+@media (min-width: 900px) {
+  .step {
+    grid-template-columns: 3.5rem minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+  .step__media { grid-column: auto; margin-top: 0; }
+  .step__media .shot--phone { max-width: 15rem; margin-inline: 0; }
+}
+
+/* The snapping route carousel that preceded the flow list lived here. It was
+   removed with the component: stops joined by a line whose width animated,
+   which is the layout thrash the detector flags and which nothing rendered. */
+
+/* ---------------------------------------------------------------------------
+   One placement: six short lines, all visible, no interaction.
+   --------------------------------------------------------------------------- */
+
+.flow { display: grid; gap: var(--sp-10); margin-top: var(--sp-8); }
+
+.flow__list { list-style: none; margin: 0; padding: 0; }
+
+.flow__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: var(--sp-4);
+  padding: var(--sp-5) 0;
+}
+/* one continuous spine down the numbers */
+.flow__step::before {
+  content: "";
+  position: absolute;
+  left: 0.62rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-hairline);
+}
+.flow__step:first-child::before { top: 50%; }
+.flow__step:last-child::before { bottom: 50%; }
+
+.flow__num {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.15rem;
+  border-radius: var(--radius-pill);
+  background: var(--green-700);
+  color: var(--text-inverse);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+}
+.flow__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+.flow__line { margin: var(--sp-1) 0 0; color: var(--text-body); }
+
+@media (min-width: 900px) {
+  .flow { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; gap: var(--sp-16); }
+  .flow__media .shot--phone { max-width: 16rem; margin-inline: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   Header over the hero
+   A white bar above a navy hero was two unrelated blocks stacked. The header
+   now sits on the hero and only takes a surface once you scroll past it.
+   --------------------------------------------------------------------------- */
+
+.site-header {
+  position: fixed;
+  /* A fixed element with no horizontal anchoring is shrink to fit, so the bar
+     was only as wide as its own links and the scrolled background covered part
+     of the window. Sticky did not need this; fixed does. */
+  inset-inline: 0;
+  /* The bar carries its own ground by default. It was transparent by default,
+     which is right over the navy hero and catastrophic anywhere else: on the
+     FAQ, privacy and 404 pages there is no hero, so white nav links and a white
+     logo sat on a white page and the only visible thing in the header was the
+     green button. Defaulting to the surface fails safe: a page that forgets to
+     declare a hero gets a legible header, not an invisible one. */
+  background: rgba(var(--scrim-900), 0.92);
+  backdrop-filter: var(--blur-panel);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  transition: background var(--dur-base) var(--ease-standard),
+              border-color var(--dur-base) var(--ease-standard);
+}
+.site-header__nav a,
+.site-header__logo { color: var(--text-inverse); }
+.site-header__nav a:hover { color: #fff; }
+.site-header__toggle svg path { stroke: #fff; }
+
+/* Only a page that opens on the hero lets the bar go transparent, and only
+   until you scroll past it. */
+body:has(.hero) .site-header:not(.is-stuck) {
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+
+/* The hero owns the top of the page, so it clears the fixed header itself.
+   Every other page has no hero to do that, so the clearance goes on main. */
+.hero { padding-top: var(--header-h); }
+body:not(:has(.hero)) main { padding-top: var(--header-h); }
+@media (min-width: 900px) {
+  body:not(:has(.hero)) main { padding-top: var(--header-h-lg); }
+}
+
+/* The FAQ and privacy heads had no top padding of their own: with a static
+   header above them that was fine, with a fixed one the h1 sat under the bar. */
+.page-head { padding-top: var(--section-y-tight); }
+
+/* ---------------------------------------------------------------------------
+   The home card: the object every section is built from
+   --------------------------------------------------------------------------- */
+
+.hero__card {
+  position: relative;
+  z-index: 1;
+  margin: var(--sp-10) 0 0;
+}
+
+.hcard {
+  margin: 0;
+  max-width: 24rem;
+  padding: var(--sp-6);
+  background: rgba(var(--scrim-900), 0.82);
+  border: var(--border-w) solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-lg);
+  backdrop-filter: var(--blur-panel);
+}
+.hcard__top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); }
+.hcard__kind {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+.hcard__flag {
+  font-size: var(--fs-micro);
+  padding: 0.2rem var(--sp-3);
+  border-radius: var(--radius-pill);
+  background: var(--green-700);
+  color: #fff;
+}
+.hcard__place {
+  margin: var(--sp-4) 0 var(--sp-5);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  color: #fff;
+}
+.hcard__rows { margin: 0; }
+.hcard__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+  border-top: var(--border-w) solid rgba(255, 255, 255, 0.1);
+}
+.hcard__row dt { color: rgba(255, 255, 255, 0.62); font-size: var(--fs-body-sm); }
+.hcard__row dd { margin: 0; color: #fff; font-size: var(--fs-body-sm); }
+.hcard__foot {
+  margin: var(--sp-5) 0 0;
+  font-size: var(--fs-micro);
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 1.5;
+}
+
+@media (min-width: 900px) {
+  /* copy left, the object right. .hero__inner stays the container, so the grid
+     goes on a wrapper inside it and the gutters are preserved. */
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 24rem;
+    gap: var(--sp-16);
+    align-items: center;
+  }
+  .hero__copy { min-width: 0; }
+  .hero__card { margin: 0; min-width: 0; }
+}
+
+
+
+/* ---------------------------------------------------------------------------
+   The one step we perform
+   A text label beside the step title, never a colour on its own: it has to
+   survive a greyscale print and a colour blind reader.
+   --------------------------------------------------------------------------- */
+
+.flow__by {
+  display: inline-block;
+  margin-left: var(--sp-3);
+  vertical-align: middle;
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green-800);
+  background: var(--green-50, rgba(0, 166, 118, 0.1));
+  border: var(--rule-w, 1px) solid var(--green-600);
+  border-radius: var(--radius-sm, 3px);
+  padding: 2px var(--sp-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Inventory, as a specification
+   Eleven flat bullets in two columns read as a presentation slide: nothing told
+   the reader which items belonged together, so the block scanned as a feature
+   dump. Grouped under the page's own three subjects, ruled, it reads as a spec
+   sheet. Still never an icon and caption grid.
+   --------------------------------------------------------------------------- */
+
+.spec {
+  margin-top: var(--sp-10);
+  display: grid;
+  gap: var(--sp-10);
+}
+@media (min-width: 860px) {
+  .spec {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-12);
+  }
+}
+
+.spec__group {
+  border-top: var(--border-w) solid var(--rule, var(--border-default));
+  padding-top: var(--sp-4);
+}
+
+.spec__heading {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 var(--sp-2);
+}
+
+.spec__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.spec__list li {
+  padding: var(--sp-4) 0;
+  border-bottom: var(--border-w) solid var(--border-hairline);
+  color: var(--text-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+.inv__note {
+  margin-top: var(--sp-8);
+  color: var(--text-muted);
+}
+
+
+/* ---------------------------------------------------------------------------
+   Attached exhibit
+   A product screen at container width with its caption beneath, never inside a
+   device frame illustration. The caption carries the mono treatment because it
+   is saying something about the record, and it is where "illustrative" is said.
+   --------------------------------------------------------------------------- */
+
+.exhibit {
+  margin: var(--sp-12) 0 0;
+}
+.exhibit img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: var(--border-w) solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+}
+.exhibit--dark img { border-color: var(--border-dark); }
+
+.exhibit__cap {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-muted);
+}
+.surface-dark .exhibit__cap { color: var(--text-inverse-muted); }
+
+
+/* ---------------------------------------------------------------------------
+   Back to top
+   One control, both widths. It is not a second call to action: the header is
+   fixed, so "Book a demo" is already on screen at every scroll position, and a
+   floating button repeating it would be the same action twice with the reader
+   having to choose between them.
+   --------------------------------------------------------------------------- */
+
+.to-top {
+  position: fixed;
+  right: max(var(--gutter), calc((100vw - var(--container-max)) / 2));
+  bottom: var(--sp-8);
+  z-index: var(--z-raised);
+
   display: inline-flex;
   align-items: center;
+  gap: var(--sp-3);
   min-height: 44px;
-  color: var(--navy-200);
-  font-size: 0.875rem;
-  border-bottom: 0;
+  padding: 0 var(--sp-5);
+
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-inverse);
+  background: var(--navy-900);
+  border: var(--border-w) solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 10px 28px rgba(11, 26, 48, 0.28);
+  cursor: pointer;
+
+  /* Out of the way until there is something to go back to. Translate and
+     opacity only, and visibility so it cannot be clicked or tabbed while it is
+     invisible. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition:
+    opacity var(--dur-base) var(--ease-standard),
+    transform var(--dur-base) var(--ease-standard),
+    visibility 0s linear var(--dur-base),
+    background var(--dur-fast, 140ms) var(--ease-standard);
 }
-.foot a:hover { color: var(--n-0); }
-.foot__place { display: inline-flex; align-items: center; min-height: 44px; font-size: 0.875rem; }
-.foot__base {
-  max-width: var(--wide);
-  margin-inline: auto;
-  padding: 1.25rem var(--gut) 2.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  display: grid;
-  gap: 0.4rem;
+
+.to-top.is-shown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
 }
-@media (min-width: 700px) { .foot__base { padding-inline: 2rem; } }
-/* Measured in characters, not rems: at 12px a 34rem column runs to 91
-   characters, which is past the readable measure even though the same
-   column is correct for 17px body text. */
-.foot__base p { margin: 0; max-width: 68ch; font-size: 0.75rem; color: var(--navy-300); }
+
+.to-top:hover { background: var(--navy-800); }
+.to-top:focus-visible {
+  outline: var(--border-w) solid var(--green-400);
+  outline-offset: 3px;
+}
+
+/* On a phone the label would crowd the thumb zone, so the arrow carries it and
+   the text stays for assistive technology. The control keeps its 44px. */
+@media (max-width: 599px) {
+  .to-top {
+    right: var(--gutter);
+    bottom: var(--sp-6);
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+  .to-top__label {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .to-top { transition: opacity var(--dur-base) var(--ease-standard), visibility 0s; transform: none; }
+  .to-top.is-shown { transform: none; }
+}

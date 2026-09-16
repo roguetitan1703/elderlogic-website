@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import StructuredData from "@/components/StructuredData";
+import ToTop from "@/components/ToTop";
 import { meta } from "@/content/copy";
 import { siteUrl, isProduction } from "@/content/site";
 import "./globals.css";
@@ -60,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Design system tokens. Never hard-code a value that has a token. */}
         <link rel="stylesheet" href="/ds/styles.css" />
+        <StructuredData />
       </head>
       {/* Header and footer live here rather than in each page, so a route
           added later cannot ship without them. */}
@@ -67,6 +72,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         {children}
         <SiteFooter />
+        <ToTop />
+        {/* Page views and Core Web Vitals, from Vercel. No cookie, no consent
+            banner, no third party: it is first party to the deployment and
+            collects nothing that identifies a visitor, which is what keeps it
+            compatible with the privacy policy as written. Inert off Vercel. */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

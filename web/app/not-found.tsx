@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { close, nav } from "@/content/copy";
+import { close, nav, notFound } from "@/content/copy";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -14,39 +14,33 @@ export const metadata: Metadata = {
  */
 export default function NotFound() {
   return (
-    <>
-
-      <main id="top">
-        <section className="section">
-          <div className="container">
-                        <div className="intro">
-              <h1 className="display-2 intro__heading">This page is not here.</h1>
-              <div className="stack">
-                <p className="lead">
-                  The link may be old, or the address may have a typo in it. Everything on
-                  the site is one of these:
-                </p>
-                <nav className="stack-tight">
-                  {nav.links.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-                <div className="actions">
-                  <Link className="btn btn--primary" href={"/" + nav.ctaHref}>
-                    {close.cta}
+    <main id="top" tabIndex={-1}>
+      <section className="section">
+        <div className="container">
+          <span className="eyebrow">404</span>
+          <div className="intro">
+            <h1 className="display-2 intro__heading">{notFound.heading}</h1>
+            <div className="stack">
+              <p className="lead">{notFound.body}</p>
+              <nav className="stack-tight">
+                {nav.items.map((item) => (
+                  <Link key={item.href} href={item.href}>
+                    {item.label}
                   </Link>
-                  <Link className="arrow-link" href="/">
-                    Back to the start <span aria-hidden="true">&#8594;</span>
-                  </Link>
-                </div>
+                ))}
+              </nav>
+              <div className="actions">
+                <Link className="btn btn--primary" href={close.cta.href}>
+                  {close.cta.label}
+                </Link>
+                <Link className="arrow-link" href="/">
+                  {notFound.back} <span aria-hidden="true">&#8594;</span>
+                </Link>
               </div>
             </div>
           </div>
-        </section>
-      </main>
-
-    </>
+        </div>
+      </section>
+    </main>
   );
 }

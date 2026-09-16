@@ -20,7 +20,7 @@ export default function ContactForm() {
 
   return (
     <form
-      className="stack-tight"
+      className="cform"
       id="contact"
       noValidate
       onSubmit={(e) => {
@@ -29,7 +29,10 @@ export default function ContactForm() {
       }}
     >
       {close.fields.map((f) => (
-        <label key={f.name} className="field">
+        <label
+          key={f.name}
+          className={`field ${f.type === "textarea" ? "field--wide" : ""}`.trim()}
+        >
           <span className="field__label">{f.label}</span>
           {f.type === "textarea" ? (
             <textarea name={f.name} rows={4} className="field__input" />
@@ -39,12 +42,14 @@ export default function ContactForm() {
         </label>
       ))}
 
-      <button type="submit" className="btn btn--quiet">
-        {close.submit}
-      </button>
+      <div className="cform__foot">
+        <button type="submit" className="btn btn--quiet">
+          {close.submit}
+        </button>
+      </div>
 
       {handedOff && (
-        <p className="field__notice" role="status">
+        <p className="field__notice cform__notice" role="status">
           Sending is not connected yet. Email{" "}
           <a href={`mailto:${footer.email}`}>{footer.email}</a> and we will pick it up
           from there.

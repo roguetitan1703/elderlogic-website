@@ -13,7 +13,7 @@ export default function Privacy() {
   return (
     <>
 
-      <main id="top">
+      <main id="top" tabIndex={-1}>
         <section className="section page-head">
           <div className="container">
             <h1 className="display-3">{privacy.title}</h1>
