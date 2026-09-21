@@ -331,12 +331,7 @@ export const inventory = {
       ],
     },
     {
-      /* Her own review gave two groups, not three. Marketing visits had been
-         split out as a third, which left a panel carrying two lines beside
-         panels carrying four and five: it read as a section we ran out of
-         material for. Her heading, widened by three words to cover both
-         halves of the day, and the two marketing lines joined the list. */
-      heading: "Placement and marketing visits, start to finish",
+      heading: "Placement, start to finish",
       icon: "placement-search",
       items: [
         "Client assessment and placement workflow",
@@ -344,6 +339,16 @@ export const inventory = {
         "Search every residential care home in the area",
         "Concierge Outreach Service to gather availability, pricing, and details",
         "Viable options and pre-tour planning in one place",
+      ],
+    },
+    {
+      /* Two lines, where the panels beside it carry four and five. Both are
+         core on the client's own pricing sheet and neither can be padded out
+         without inventing product. Open with her: what else is in this half
+         of the day. The panel is not merged away in the meantime. */
+      heading: "Marketing visits",
+      icon: "pre-tour",
+      items: [
         "Marketing visit planning and routing",
         "Interactive mapping and custom route creation",
       ],
@@ -402,20 +407,20 @@ export const close = {
   body: "Book a demo and we will walk your team through a placement and a marketing visit day in ElderLogic, and answer what your team needs to know.",
   cta: { label: "Book a demo", href: "/#book" },
   secondary: { label: "Read the FAQ", href: "/faq" },
-  /** The form is the booking, so it carries the site's one CTA wording and
-   *  says what happens next. The empty white calendar card that used to sit
-   *  here was the largest thing in the closing argument and it was blank.
-   *  When the scheduling account exists the calendar takes this column and
-   *  the form moves under it. */
-  formHeading: "Tell us where to reach you",
-  formIntro: "We will come back with a time. We read these ourselves.",
+  /** The slot the calendar drops into. Marked, so nothing has to be
+   *  improvised when the account exists. */
+  schedulerLabel: "Scheduling calendar",
+  schedulerPlaceholder: "Calendar to be connected",
+  /** The second path, inside the panel rather than below it. */
+  fallbackToggle: "Rather not book a time? Leave your details instead",
+  fallbackIntro: "We will come back to you. We read these ourselves.",
   fields: [
     { name: "name", label: "Name", type: "text" },
     { name: "organisation", label: "Organisation", type: "text" },
     { name: "email", label: "Email", type: "email" },
     { name: "message", label: "Message", type: "textarea" },
   ],
-  submit: "Book a demo",
+  submit: "Send",
 };
 
 /* --------------------------------------------------------------- FAQ. */

@@ -595,10 +595,17 @@
 /* ---------- close ------------------------------------------------------ */
 
 
-/* The fallback form used to sit here: below the panel, behind a rule, behind
-   a disclosure, a screen and a half of paper away from the thing it was the
-   fallback to. It was also the only part of the block that worked. It is now
-   the right column of the panel itself, and this block is gone. */
+/* The second path, inside the panel now rather than a screen of paper below
+   it. Ruled off from the actions above it so it still reads as the
+   alternative, not as part of the booking. */
+.fallback {
+  margin-top: var(--sp-6);
+  border-top: var(--border-w) solid rgba(255, 255, 255, 0.16);
+  padding-top: var(--sp-5);
+}
+.fallback__summary { color: var(--text-inverse-muted); }
+.fallback__summary:hover { color: var(--text-inverse); }
+.fallback__body { margin-top: var(--sp-5); }
 
 .cform {
   display: grid;
@@ -1483,7 +1490,8 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 /* Stacked, the mask's peak lands across the form instead of in the gutter
    between the two columns, so the map comes back another step. */
 @media (max-width: 899px) { .cta__ground { opacity: 0.07; } }
-.cta__copy { display: flex; flex-direction: column; gap: var(--sp-5); align-self: center; }
+.cta__copy { display: flex; flex-direction: column; gap: var(--sp-5); }
+.cta .actions { margin-top: var(--sp-2); }
 .cta__heading { margin: 0; color: var(--text-inverse); max-width: 20ch; text-wrap: balance; }
 .cta__body { margin: 0; color: var(--text-inverse-muted); max-width: 46ch; }
 .cta .arrow-link:link,
@@ -1491,18 +1499,27 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 .cta .arrow-link:hover { color: var(--text-inverse); }
 .cta .arrow-link span { color: var(--green-400); }
 
-/* The booking, on the panel's own ground. No second card: fields are fields,
-   drawn straight on the navy with a hairline and a low-alpha fill, so the
-   block has one edge instead of an edge inside an edge. */
-.cta__book { display: flex; flex-direction: column; gap: var(--sp-3); min-width: 0; }
-.cta__form-heading {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: var(--fs-lead);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-snug);
-  color: var(--text-inverse);
+/* The calendar slot. It was a white card with a 60px drop shadow sitting
+   inside this card, which put the brightest, highest thing in the block on
+   the one part of it that has no content yet. It is a well now: recessed into
+   the panel's own ground, hairline edge, no shadow, so the panel reads as one
+   surface with a space held in it. The calendar drops in here unchanged, and
+   when it does the fill and the border stop mattering. */
+.booking {
+  display: grid;
+  place-items: center;
+  min-height: 20rem;
+  padding: var(--sp-6);
+  background: rgba(255, 255, 255, 0.05);
+  border: var(--border-w) solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-xl);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-inverse-muted);
 }
+.booking p { margin: 0; }
+
 .cta__form-intro {
   margin: 0 0 var(--sp-3);
   color: var(--text-inverse-muted);

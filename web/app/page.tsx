@@ -260,18 +260,18 @@ export default function Home() {
       </section>
 
       {/* Close: the one place on the page a reader is asked to act, so it is
-          the strongest block on it. A dark panel that bookends the hero.
+          the strongest block on it. A dark panel that bookends the hero, the
+          invitation beside the calendar slot.
 
-          One panel, one card. What used to sit on the right was a white card
-          inside this card, 450px of it, saying the calendar was not connected:
-          the largest single element in the closing argument and it was blank.
-          Underneath, behind a rule and a disclosure, sat the form that is the
-          only thing here that actually works. They have swapped places. The
-          form is the booking now, it carries the site's one CTA wording, and
-          nothing hangs off the bottom of the panel.
+          The calendar slot used to be a white card with a drop shadow sitting
+          inside this card: an edge inside an edge, and the brightest thing in
+          the block was the part that has no content yet. It is a well now,
+          recessed into the panel's own ground, so the panel has one edge. The
+          slot itself is unchanged and the calendar drops straight into it.
 
-          When the scheduling account exists the calendar takes this column and
-          the form moves beneath it. */}
+          The second path used to sit below the panel, behind a rule and a
+          screen of paper. It is inside the panel, under the actions it is the
+          alternative to. <details> so it works with no script. */}
       <section className="section surface-paper" id="book">
         <div className="container">
           <div className="cta">
@@ -279,16 +279,29 @@ export default function Home() {
             <Reveal className="cta__copy">
               <h2 className="display-2 cta__heading">{close.heading}</h2>
               <p className="lead cta__body">{close.body}</p>
-              <a className="arrow-link cta__link" href={close.secondary.href}>
-                {close.secondary.label} <span aria-hidden="true">&#8594;</span>
-              </a>
+              <div className="actions">
+                <a className="btn btn--primary btn--lg" href="#scheduler">
+                  {close.cta.label}
+                </a>
+                <a className="arrow-link cta__link" href={close.secondary.href}>
+                  {close.secondary.label} <span aria-hidden="true">&#8594;</span>
+                </a>
+              </div>
+
+              <details className="fallback">
+                <summary className="fallback__summary">{close.fallbackToggle}</summary>
+                <div className="fallback__body">
+                  <p className="cta__form-intro">{close.fallbackIntro}</p>
+                  <ContactForm />
+                </div>
+              </details>
             </Reveal>
 
-            <Reveal className="cta__book">
-              <h3 className="cta__form-heading">{close.formHeading}</h3>
-              <p className="cta__form-intro">{close.formIntro}</p>
-              <ContactForm />
-            </Reveal>
+            {/* The slot the calendar drops into. Not role="img": until it
+                exists the honest thing to announce is the note itself. */}
+            <div className="booking" id="scheduler">
+              <p className="mono">{close.schedulerPlaceholder}</p>
+            </div>
           </div>
         </div>
       </section>
