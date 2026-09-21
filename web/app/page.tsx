@@ -1,16 +1,19 @@
 import {
+  inventory,
   hero,
   concierge,
   meeting,
   territory,
   marketingVisits,
   record,
-  inventory,
   close,
   walkthrough,
+  reporting,
 } from "@/content/copy";
+import Inventory from "@/components/Inventory";
 import Route from "@/components/Route";
 import ContactForm from "@/components/ContactForm";
+import Picture from "@/components/Picture";
 import Reveal from "@/components/Reveal";
 import Shot from "@/components/Shot";
 import Funnel from "@/components/Funnel";
@@ -108,6 +111,8 @@ export default function Home() {
                   width={marketingVisits.image.width}
                   height={marketingVisits.image.height}
                   kind="phone"
+                  /* Two of these side by side, so half the column each. */
+                  sizes="(max-width: 899px) 46vw, 16rem"
                 />
                 <figcaption className="pair__cap">{marketingVisits.imageCaption}</figcaption>
               </figure>
@@ -118,6 +123,8 @@ export default function Home() {
                   width={marketingVisits.routeImage.width}
                   height={marketingVisits.routeImage.height}
                   kind="phone"
+                  /* Two of these side by side, so half the column each. */
+                  sizes="(max-width: 899px) 46vw, 16rem"
                 />
                 <figcaption className="pair__cap">{marketingVisits.routeCaption}</figcaption>
               </figure>
@@ -126,7 +133,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why a home takes the meeting: the payoff, with the home's own words. */}
+      {/* Why a home takes the meeting. The line on the right is ElderLogic's
+          own opening message, not a home's testimonial, so it is set as ours:
+          no blockquote, no attribution, no endorsement styling. */}
       <section className="section section--ruled">
         <div className="container">
           <div className="split">
@@ -134,9 +143,9 @@ export default function Home() {
               <h2 className="display-2 intro__heading">{meeting.heading}</h2>
               <p className="lead measure">{meeting.body}</p>
             </Reveal>
-            <Reveal className="testimony">
-              <blockquote className="testimony__text">{meeting.quote}</blockquote>
-              <p className="testimony__attr">{meeting.attribution}</p>
+            <Reveal className="opener">
+              <p className="opener__text">{meeting.message}</p>
+              <p className="opener__hook">{meeting.hook}</p>
             </Reveal>
           </div>
         </div>
@@ -180,89 +189,96 @@ export default function Home() {
 
           <Reveal>
             <figure className="exhibit exhibit--dark">
-              <picture>
-                {/* Below 760px the wide crop renders the card at about 180px
-                    across and none of it can be read, so the phone gets a crop
-                    of the same file framed on the card. */}
-                <source
-                  media="(max-width: 760px)"
-                  srcSet={record.image.narrowSrc}
-                  width={record.image.narrowWidth}
-                  height={record.image.narrowHeight}
-                />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+              {/* Below 760px the wide crop renders the card at about 180px
+                  across and none of it can be read, so the phone gets a crop
+                  of the same file framed on the card. Two separate images, so
+                  each gets its own format and width ladder. */}
+              <div className="exhibit__wide">
+                <Picture
                   src={record.image.src}
                   alt={record.image.alt}
-                  width={record.image.width}
-                  height={record.image.height}
-                  loading="lazy"
-                  decoding="async"
+                  sizes="(max-width: 1100px) 92vw, 1000px"
                 />
-              </picture>
+              </div>
+              <div className="exhibit__narrow">
+                <Picture
+                  src={record.image.narrowSrc}
+                  alt={record.image.alt}
+                  sizes="92vw"
+                />
+              </div>
               <figcaption className="exhibit__cap mono">{record.caption}</figcaption>
             </figure>
           </Reveal>
         </div>
       </section>
 
-      {/* What is actually being bought. A ruled index, never an icon grid. */}
-      <section className="section" id="inventory">
+      {/* What is actually being bought, as panels a reader can take in at
+          their own pace. Side by side on a wide screen; one swipeable row on
+          a phone, with the next panel always in view. */}
+      <section className="section surface-subtle" id="inventory">
         <div className="container">
           <Reveal className="intro">
             <h2 className="display-2 intro__heading">{inventory.heading}</h2>
           </Reveal>
           <Reveal>
-            <div className="spec">
-              {inventory.groups.map((group) => (
-                <section key={group.heading} className="spec__group">
-                  <h3 className="spec__heading">{group.heading}</h3>
-                  <ul className="spec__list">
-                    {group.items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
-            </div>
-            <p className="caption inv__note">{inventory.note}</p>
+            <Inventory />
+            <p className="inv__note">{inventory.note}</p>
           </Reveal>
         </div>
       </section>
 
-      {/* Close: one path. Booking is the action; the form is a fallback for
-          someone who will not pick a time, folded away until they ask for it.
+      {/* Reporting. Optional, and the thing leadership asks about. Not in the
+          top nav, by the client's instruction. No pricing: this is content,
+          not a list of priced add-ons. */}
+      <section className="section" id="reporting">
+        <div className="container">
+          <Reveal className="stack">
+            <span className="tag">{reporting.label}</span>
+            <h2 className="display-2 reporting__heading">{reporting.heading}</h2>
+          </Reveal>
+          <Reveal>
+            <ul className="reports">
+              {reporting.blocks.map((block) => (
+                <li key={block.title} className="reports__item">
+                  <h3 className="reports__title">{block.title}</h3>
+                  <p className="reports__line">{block.line}</p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Close: the one place on the page a reader is asked to act, so it is
+          the strongest block on it. A dark panel that bookends the hero, the
+          invitation beside the calendar slot. The fallback form sits outside
+          the panel on the light ground, where fields are easiest to read.
           <details> so it works with no script. */}
       <section className="section surface-paper" id="book">
         <div className="container">
-          <div className="split">
-            <Reveal className="stack close__intro">
-              <h2 className="display-2 intro__heading">{close.heading}</h2>
-              <p className="lead measure">{close.body}</p>
-              <a className="btn btn--primary btn--lg" href="#scheduler">
-                {close.cta.label}
-              </a>
-              <a className="arrow-link" href={close.secondary.href}>
-                {close.secondary.label} <span aria-hidden="true">&#8594;</span>
-              </a>
-            </Reveal>
-
-            <Reveal className="stack">
-              <div
-                className="booking"
-                id="scheduler"
-                role="img"
-                aria-label={close.schedulerLabel}
-              >
-                <span className="mono">{close.schedulerPlaceholder}</span>
+          <div className="cta">
+            <div className="cta__ground" aria-hidden="true" />
+            <Reveal className="cta__copy">
+              <h2 className="display-2 cta__heading">{close.heading}</h2>
+              <p className="lead cta__body">{close.body}</p>
+              <div className="actions">
+                <a className="btn btn--primary btn--lg" href="#scheduler">
+                  {close.cta.label}
+                </a>
+                <a className="arrow-link cta__link" href={close.secondary.href}>
+                  {close.secondary.label} <span aria-hidden="true">&#8594;</span>
+                </a>
               </div>
             </Reveal>
+
+            {/* The slot the calendar drops into. Not role="img": until it
+                exists the honest thing to announce is the note itself. */}
+            <div className="booking" id="scheduler">
+              <p className="mono">{close.schedulerPlaceholder}</p>
+            </div>
           </div>
 
-          {/* The fallback sits under the split, not inside its right column.
-              Folded away it is one line either way, but opened inside the
-              column it squeezed four fields into half the page while the other
-              half sat empty. Full width, and the fields pair up. */}
           <details className="fallback">
             <summary className="fallback__summary">{close.fallbackToggle}</summary>
             <div className="fallback__body">

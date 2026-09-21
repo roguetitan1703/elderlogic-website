@@ -179,15 +179,92 @@
 
 /* ---------- questions page -------------------------------------------- */
 
-.page-head { padding-bottom: var(--section-y-tight); }
+.page-head { padding-top: var(--section-y-tight); padding-bottom: var(--sp-8); }
+/* With the caption under the FAQ heading removed at the client's request, the
+   head's own padding and the next section's stacked into a hole between the
+   heading and the first question. The list follows the heading directly. */
+.page-head + .section--tight { padding-top: 0; }
 
-.qa-list { margin: 0; display: grid; gap: 0; border-top: var(--border-w) solid var(--border-hairline); }
-.qa-list__item { padding-block: var(--sp-8); border-bottom: var(--border-w) solid var(--border-hairline); display: grid; gap: var(--sp-3); }
-@media (min-width: 900px) {
-  .qa-list__item { grid-template-columns: 5fr 7fr; gap: var(--sp-12); align-items: start; }
+/* ---------- FAQ accordion ---------------------------------------------
+   Ruled rows, no cards. The question is the whole row and the whole row is
+   the target, which is why the summary carries the padding rather than a
+   span inside it. */
+.qa {
+  border-top: var(--border-w) solid var(--border-hairline);
 }
-.qa-list__q { font-family: var(--font-display); font-size: var(--fs-h2); color: var(--text-strong); line-height: var(--lh-heading); }
-.qa-list__a { margin: 0; color: var(--text-body); max-width: var(--measure); }
+.qa__item {
+  border-bottom: var(--border-w) solid var(--border-hairline);
+}
+.qa__q {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-6);
+  padding-block: var(--sp-6);
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  color: var(--text-strong);
+}
+/* Safari draws its own triangle and ignores list-style on the summary box. */
+.qa__q::-webkit-details-marker { display: none; }
+.qa__q:hover { color: var(--brand-ink); }
+.qa__q:focus-visible {
+  outline: var(--border-w) solid var(--border-focus);
+  outline-offset: 4px;
+}
+
+/* A plus that becomes a minus. Two rules, drawn rather than typed, so it sits
+   on the optical centre at any font size and never picks up a font fallback. */
+.qa__mark {
+  position: relative;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  align-self: center;
+  color: var(--text-muted);
+}
+.qa__mark::before,
+.qa__mark::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+}
+.qa__mark::after { transform: rotate(90deg); }
+.qa__item[open] .qa__mark::after { transform: rotate(0deg); }
+.qa__q:hover .qa__mark { color: var(--brand-ink); }
+
+.qa__a {
+  padding-bottom: var(--sp-7);
+  padding-right: var(--sp-8);
+}
+.qa__a p {
+  margin: 0;
+  max-width: var(--measure);
+  color: var(--text-body);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .qa__mark::after { transition: transform var(--dur-base) var(--ease-standard); }
+  .qa__item[open] .qa__a {
+    animation: qa-in var(--dur-reveal) var(--ease-standard) both;
+  }
+}
+@keyframes qa-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (min-width: 900px) {
+  .qa__a { padding-right: 25%; }
+}
 
 /* ---------- support strip --------------------------------------------- */
 
@@ -202,25 +279,6 @@
 .strip__footnote {
   margin-top: var(--sp-8); padding-top: var(--sp-4);
   border-top: var(--border-w) solid var(--border-hairline);
-}
-
-/* ---------- quote ----------------------------------------------------- */
-
-.testimony { border-left: var(--rule-w) solid var(--accent-rule); padding-left: var(--sp-6); }
-.testimony__text {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--fs-h1);
-  line-height: var(--lh-heading);
-  letter-spacing: var(--ls-heading);
-  color: var(--text-strong);
-}
-.testimony__attr {
-  margin-top: var(--sp-4);
-  font-family: var(--font-mono);
-  font-size: var(--fs-micro);
-  letter-spacing: var(--ls-mono);
-  color: var(--text-faint);
 }
 
 /* ---------- coverage caption ------------------------------------------ */
@@ -238,11 +296,11 @@
 /* ---------- funnel ---------------------------------------------------- */
 
 .funnel { margin: 0; }
-.funnel__rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.funnel__rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-4); }
 .funnel__row {
   display: grid;
   grid-template-columns: 3rem 1fr;
-  align-items: center;
+  align-items: end;
   gap: var(--sp-4);
   opacity: 0;
   transform: translateY(6px);
@@ -257,20 +315,41 @@
   line-height: 1;
   color: var(--text-strong);
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
-.funnel__bar {
-  width: var(--w);
-  min-width: max-content;
-  padding: var(--sp-2) var(--sp-4);
-  border-radius: var(--radius-sm);
-  background: var(--navy-600);
-  color: var(--text-inverse);
+.funnel__body { display: flex; flex-direction: column; gap: var(--sp-2); min-width: 0; }
+.funnel__label {
   font-size: var(--fs-body-sm);
   line-height: var(--lh-snug);
-  white-space: nowrap;
+  color: var(--text-body);
 }
-.funnel__row.is-emphasis .funnel__bar { background: var(--navy-200); color: var(--navy-800); }
-.funnel__row.is-result .funnel__bar { background: var(--green-700); }
+/* The track is the whole of the first row's count, so every fill is read
+   against the same length and the fall is visible at a glance. */
+.funnel__track {
+  display: block;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(var(--scrim-900), 0.08);
+  overflow: hidden;
+}
+/* Exactly proportional. The only floor is the smallest mark that can be seen,
+   so a count of 1 reads as present rather than as nothing. */
+.funnel__fill {
+  display: block;
+  height: 100%;
+  width: max(var(--w), 4px);
+  border-radius: inherit;
+  background: var(--navy-600);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+.funnel__row.is-in .funnel__fill {
+  transform: none;
+  transition: transform calc(var(--dur-reveal) * 2) var(--ease-out);
+  transition-delay: inherit;
+}
+.funnel__row.is-result .funnel__fill { background: var(--brand); }
+.funnel__row.is-result .funnel__label { color: var(--text-strong); font-weight: var(--fw-medium); }
 .funnel__caption {
   display: block;
   margin-top: var(--sp-5);
@@ -341,6 +420,15 @@
 .rec__cell--source .rec__field { color: var(--green-300); }
 .rec__cell--source .rec__gloss { color: var(--text-inverse); }
 
+/* Four fields and the source make five cells. Left alone, a three-column
+   grid leaves a hole in the second row. The source spans two columns wherever
+   there is more than one, which closes the hole and gives the one cell that
+   points outward, to the state's own record, the most room. */
+@media (min-width: 560px) { .rec__cell--source { grid-column: span 2; } }
+@media (min-width: 1000px) {
+  .rec__cell--source .rec__gloss { max-width: 44ch; font-size: var(--fs-body); }
+}
+
 .rec__note { margin-top: var(--sp-8); }
 
 /* Two phones, the input and what it returns. */
@@ -363,12 +451,6 @@
 .record-list__row { display: flex; justify-content: space-between; gap: var(--sp-6); padding: var(--sp-4) 0; border-bottom: var(--border-w) solid var(--border-dark); }
 .record-list__row dt { color: var(--text-inverse-muted); font-size: var(--fs-body-sm); }
 .record-list__row dd { margin: 0; color: var(--green-300); font-size: var(--fs-body-sm); }
-
-/* ---------- questions ------------------------------------------------- */
-
-.qa { display: grid; gap: var(--sp-8); }
-@media (min-width: 768px) { .qa { grid-template-columns: 1fr 1fr; gap: var(--sp-10) var(--sp-16); } }
-.qa__q { font-family: var(--font-sans); font-size: var(--fs-body); font-weight: var(--fw-semibold); color: var(--text-strong); margin-bottom: var(--sp-2); }
 
 /* ---------- form ------------------------------------------------------ */
 
@@ -503,8 +585,6 @@
 
 /* ---------- close ------------------------------------------------------ */
 
-.close__intro { margin-bottom: var(--sp-12); }
-.close__panels { align-items: start; }
 
 /* The fallback form, opened.
    It used to live inside the split's right column, where opening it stacked
@@ -561,7 +641,6 @@
   color: var(--text-inverse-muted);
   letter-spacing: var(--ls-mono);
 }
-.close__intro { margin-bottom: 0; }
 
 /* ---------------------------------------------------------------------------
    Coverage field
@@ -717,8 +796,9 @@
   height: 1.5rem;
   margin-top: 0.15rem;
   border-radius: var(--radius-pill);
-  background: var(--green-700);
-  color: var(--text-inverse);
+  background: var(--brand);
+  color: var(--on-brand);
+  font-weight: var(--fw-semibold);
   font-size: 10px;
   letter-spacing: 0.02em;
 }
@@ -730,6 +810,17 @@
   color: var(--text-strong);
 }
 .flow__line { margin: var(--sp-1) 0 0; color: var(--text-body); }
+
+/* The last step is where the arc lands: the family chooses a home. It gets a
+   ringed marker and the display face so the list resolves rather than stops. */
+.flow__step--end .flow__num { box-shadow: 0 0 0 4px var(--green-100); }
+.flow__step--end .flow__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-heading);
+}
+.flow__step--end .flow__line { color: var(--text-strong); }
 
 @media (min-width: 900px) {
   .flow { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; gap: var(--sp-16); }
@@ -783,7 +874,6 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 
 /* The FAQ and privacy heads had no top padding of their own: with a static
    header above them that was fine, with a fixed one the h1 sat under the bar. */
-.page-head { padding-top: var(--section-y-tight); }
 
 /* ---------------------------------------------------------------------------
    The home card: the object every section is built from
@@ -815,8 +905,9 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
   font-size: var(--fs-micro);
   padding: 0.2rem var(--sp-3);
   border-radius: var(--radius-pill);
-  background: var(--green-700);
-  color: #fff;
+  background: var(--brand);
+  color: var(--on-brand);
+  font-weight: var(--fw-semibold);
 }
 .hcard__place {
   margin: var(--sp-4) 0 var(--sp-5);
@@ -862,17 +953,21 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
    survive a greyscale print and a colour blind reader.
    --------------------------------------------------------------------------- */
 
+.flow__head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
 .flow__by {
   display: inline-block;
-  margin-left: var(--sp-3);
-  vertical-align: middle;
   font-size: var(--fs-micro);
   font-weight: var(--fw-semibold);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--green-800);
   background: var(--green-50, rgba(0, 166, 118, 0.1));
-  border: var(--rule-w, 1px) solid var(--green-600);
+  border: var(--rule-w, 1px) solid var(--brand);
   border-radius: var(--radius-sm, 3px);
   padding: 2px var(--sp-2);
 }
@@ -885,50 +980,7 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
    sheet. Still never an icon and caption grid.
    --------------------------------------------------------------------------- */
 
-.spec {
-  margin-top: var(--sp-10);
-  display: grid;
-  gap: var(--sp-10);
-}
-@media (min-width: 860px) {
-  .spec {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--sp-12);
-  }
-}
 
-.spec__group {
-  border-top: var(--border-w) solid var(--rule, var(--border-default));
-  padding-top: var(--sp-4);
-}
-
-.spec__heading {
-  font-family: var(--font-sans);
-  font-size: var(--fs-body-sm);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-eyebrow);
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin: 0 0 var(--sp-2);
-}
-
-.spec__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.spec__list li {
-  padding: var(--sp-4) 0;
-  border-bottom: var(--border-w) solid var(--border-hairline);
-  color: var(--text-body);
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-}
-
-.inv__note {
-  margin-top: var(--sp-8);
-  color: var(--text-muted);
-}
 
 
 /* ---------------------------------------------------------------------------
@@ -1152,15 +1204,288 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
    the column beside it needs.
    --------------------------------------------------------------------------- */
 
+/* The record exhibit ships two different crops of the same screen: a wide one
+   for a desktop column and a tall one framed on the card, because the wide
+   crop renders at about 180px across on a phone and cannot be read. They were
+   one <picture> with a media <source>, which meant one format ladder for both.
+   Two elements, swapped here, so each gets its own AVIF and WebP widths. */
+.exhibit__narrow { display: none; }
+@media (max-width: 760px) {
+  .exhibit__wide { display: none; }
+  .exhibit__narrow { display: block; }
+}
+
+/* The 404's route list. These were unstyled links in a stack, 26px tall with
+   4px between them, on the one page whose entire job is getting somebody to
+   tap one of them. Ruled rows at a full tap target instead. */
+.lost-nav {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--border-w) solid var(--border-hairline);
+}
+.lost-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  min-height: 56px;
+  padding: var(--sp-2) 0;
+  border-bottom: var(--border-w) solid var(--border-hairline);
+  color: var(--text-strong);
+  text-decoration: none;
+}
+.lost-nav a span { color: var(--text-muted); }
+.lost-nav a:hover { color: var(--brand-ink); }
+.lost-nav a:hover span { color: var(--brand-ink); }
+
+
+/* ===========================================================================
+   Client review, 17 September 2026
+   =========================================================================== */
+
+.surface-subtle { background: var(--surface-subtle); }
+
+/* A small factual label: "Optional". Not a status on a home, ever. */
+.tag {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem var(--sp-3);
+  border-radius: var(--radius-pill);
+  border: var(--border-w) solid var(--green-200);
+  background: var(--green-50);
+  color: var(--green-800);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-mono);
+}
+
+/* ---------- why homes say yes: our opening message --------------------
+   ElderLogic's own line, not a home's endorsement, so no quote rule, no
+   attribution. The hook sits under it as its caption. */
+.opener { align-self: center; display: flex; flex-direction: column; gap: var(--sp-5); }
+.opener__text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  color: var(--text-strong);
+  text-wrap: balance;
+}
+.opener__hook {
+  margin: 0;
+  padding-top: var(--sp-4);
+  border-top: var(--border-w) solid var(--border-default);
+  color: var(--text-muted);
+  max-width: 38ch;
+}
+
+/* ---------- what your team gets ----------------------------------------
+   Panels. Side by side at 900px and up with nothing hidden; below that one
+   row, swiped at the reader's pace, bleeding to the screen edge so the next
+   panel always shows. The row pulls out of the container's gutter and puts
+   the gutter back as padding, so the first panel still aligns with the text
+   above it. */
+.inv { margin-top: var(--sp-10); }
+
+.inv__index {
+  display: flex;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-5);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.inv__index::-webkit-scrollbar { display: none; }
+.inv__tab {
+  flex: none;
+  min-height: 44px;
+  padding: 0 var(--sp-4);
+  border-radius: var(--radius-pill);
+  border: var(--border-w) solid var(--border-default);
+  background: var(--surface-card);
+  color: var(--text-body);
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  cursor: pointer;
+}
+.inv__tab[aria-current="true"] {
+  background: var(--navy-800);
+  border-color: var(--navy-800);
+  color: var(--text-inverse);
+}
+.inv__tab:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+
+.inv__rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(86%, 26rem);
+  gap: var(--sp-4);
+  margin-inline: calc(-1 * var(--gutter));
+  padding: var(--sp-1) var(--gutter) var(--sp-4);
+  scroll-padding-inline: var(--gutter);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.inv__rail::-webkit-scrollbar { display: none; }
+.inv__rail:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+@media (min-width: 768px) {
+  .inv__rail { margin-inline: calc(-1 * var(--gutter-lg)); padding-inline: var(--gutter-lg); scroll-padding-inline: var(--gutter-lg); }
+}
+@media (min-width: 900px) {
+  .inv__index { display: none; }
+  .inv__rail {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-inline: 0;
+    padding: 0;
+    overflow: visible;
+  }
+}
+
+.inv__panel {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-6);
+  background: var(--surface-card);
+  border: var(--border-w) solid var(--border-hairline);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 1px 2px rgba(var(--scrim-900), 0.04), 0 10px 30px rgba(var(--scrim-900), 0.06);
+}
+.inv__top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); }
+.inv__icon { width: 40px; height: 40px; }
+.inv__count { font-size: var(--fs-micro); letter-spacing: var(--ls-mono); color: var(--text-muted); }
+.inv__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  color: var(--text-strong);
+  text-wrap: balance;
+}
+.inv__list { list-style: none; margin: 0; padding: 0; }
+.inv__list li {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0;
+  border-top: var(--border-w) solid var(--border-hairline);
+  color: var(--text-body);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body);
+}
+.inv__tick { margin-top: 0.2em; color: var(--brand); }
+.inv__note { margin: var(--sp-8) 0 0; color: var(--text-muted); font-size: var(--fs-body-sm); }
+
+/* ---------- reporting ---------------------------------------------------- */
+.reporting__heading { margin: 0; max-width: 22ch; text-wrap: balance; }
+.reports {
+  list-style: none;
+  margin: var(--sp-10) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-4);
+}
+@media (min-width: 760px) { .reports { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.reports__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-6);
+  border: var(--border-w) solid var(--border-default);
+  border-radius: var(--radius-xl);
+  background: var(--surface-card);
+}
+.reports__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--text-strong);
+}
+.reports__line { margin: 0; color: var(--text-body); font-size: var(--fs-body-sm); line-height: var(--lh-body); }
+
+/* ---------- the close ----------------------------------------------------
+   The one place the reader is asked to act, so it is the strongest block on
+   the page: a dark panel that bookends the hero, with the same map faintly
+   behind it, and the calendar slot as a white card inside. */
+.cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  gap: var(--sp-8);
+  padding: clamp(1.5rem, 5vw, 4rem);
+  border-radius: var(--radius-2xl);
+  background: var(--navy-900);
+  color: var(--text-inverse);
+}
+/* The navy comes from .cta itself. This layer is only the map, desaturated
+   and faint, and faded out on the left where the heading sits. The filter is
+   on this layer alone: applied to a layer that also carried the navy gradient
+   it greyed the navy too, and the panel rendered charcoal. */
+.cta__ground {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("/product/map-2x-960.webp") 70% center / cover no-repeat;
+  filter: grayscale(1) brightness(1.6);
+  opacity: 0.16;
+  -webkit-mask-image: linear-gradient(100deg, transparent 25%, #000 75%);
+  mask-image: linear-gradient(100deg, transparent 25%, #000 75%);
+}
+@media (min-width: 900px) {
+  .cta { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; gap: var(--sp-12); }
+}
+.cta__copy { display: flex; flex-direction: column; gap: var(--sp-5); }
+.cta__heading { margin: 0; color: var(--text-inverse); max-width: 20ch; text-wrap: balance; }
+.cta__body { margin: 0; color: var(--text-inverse-muted); max-width: 46ch; }
+.cta .actions { margin-top: var(--sp-2); }
+.cta .arrow-link:link,
+.cta .arrow-link:visited,
+.cta .arrow-link:hover { color: var(--text-inverse); }
+.cta .arrow-link span { color: var(--green-400); }
+
 .booking {
   display: grid;
   place-items: center;
-  min-height: 17rem;
+  min-height: 20rem;
   padding: var(--sp-6);
-  background: var(--surface-card, #fff);
-  border: var(--border-w) solid var(--border-default);
-  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   font-size: var(--fs-caption);
   letter-spacing: var(--ls-mono);
   color: var(--text-muted);
 }
+.booking p { margin: 0; }
+
+
+/* ---------- light header variant ----------------------------------------
+   The client's white bar with the full-colour logo. Opaque from the top of
+   the page, over the hero as well, because a white bar that turns transparent
+   over navy is the two-blocks-stacked problem the dark header was built to
+   avoid. While the phone menu is open the bar joins the navy panel, so it goes
+   dark again and the white logo comes back.
+
+   The selector carries :has() and :not(.is-open) to outrank the hero rule
+   that makes the dark bar transparent at the top of the page. */
+.logo--colour { display: none; }
+
+body:has(.site-header--light) .site-header.site-header--light:not(.is-open) {
+  background: var(--surface-card);
+  backdrop-filter: none;
+  border-bottom-color: var(--border-hairline);
+  box-shadow: 0 1px 12px rgba(var(--scrim-900), 0.06);
+}
+.site-header--light:not(.is-open) .logo--white { display: none; }
+.site-header--light:not(.is-open) .logo--colour { display: block; }
+.site-header--light:not(.is-open) .site-header__nav a { color: var(--text-body); }
+.site-header--light:not(.is-open) .site-header__nav a:hover { color: var(--text-strong); }
+.site-header--light:not(.is-open) .site-header__toggle { color: var(--text-strong); }
+.site-header--light:not(.is-open) .site-header__toggle:focus-visible { outline-color: var(--border-focus); }

@@ -248,6 +248,35 @@ the site. It is also step four of the sequence in asset 08.
 
 ---
 
+# 07b. Correction to 07, the map with the home card open
+
+**Added 19 September 2026. Supersedes 07.8, which was wrong.**
+
+Work from your edited version of 07, the file with Sun Ridge Assisted Living
+in it. It is on the site now as two crops:
+
+- `home-record.jpg`, 1681 x 936, the wide version
+- `home-record-tall.jpg`, 692 x 519, tight on the card
+
+Send both back at exactly those sizes, cut from the same corrected file.
+
+07.8 told you to keep `Website: Empty` and `Tags: Nothing selected`. That was
+our mistake, not yours. They are the map tool's empty placeholders, and the
+pencil beside Website is that tool's own edit button. On the site they make the
+data look incomplete and make the tool recognisable.
+
+| # | Edit |
+|---|---|
+| 07b.1 | **Delete the whole `Website: Empty` line**, including the pencil icon. Close the gap so the rows below move up. |
+| 07b.2 | **Delete the whole `Tags: Nothing selected` line.** Close the gap. The card ends on the email row, then `Navigate` and `Copy address`. |
+| 07b.3 | **Clear the ghost text.** Zoomed in, faint pieces of the old wording show underneath `Yes`, `Current`, `4 since 2019`, `None` and the email address. The new values were typed over the old ones. Paint each of those areas back to clean card white first, then set the value again. Check at 400%. |
+| 07b.3a | **Remove the close cross** at the top right of the card, and paint the corner back to card white. It is generic, but with the lines above gone it is the last piece of the map tool's own furniture. |
+| 07b.4 | **`Licence` becomes `License`**, American spelling, to match the rest of the site. |
+| 07b.5 | **Send two versions.** Version A exactly as above. Version B also deletes the three rows `License`, `Inspections` and `Open enforcement`, closing the gaps. The client has not yet confirmed she can show state inspection data in an illustration, and B means we do not need a second round whichever way she answers. |
+| 07b.6 | **Leave alone:** the home name, address, `Mobile:` line, email, `ALTCS: Yes`, `Navigate`, `Copy address`, and the map. Two of those are still being decided with the client and will come as a separate note if they change. |
+
+---
+
 # Do not bother with these
 
 Duplicates and superseded captures. Nothing needs doing to any of them.

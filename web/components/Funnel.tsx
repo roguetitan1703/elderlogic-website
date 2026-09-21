@@ -3,48 +3,57 @@
 import { concierge } from "@/content/copy";
 
 const { funnel } = concierge;
-const max = funnel.rows[0].value;
+const max = Math.max(...funnel.rows.map((row) => row.value));
 
 /**
- * The narrowing, as proportional bars: the count outside on the left, what it
- * means inside the bar, the bar's length carrying the fall. Rows stage in once.
+ * The narrowing, as a proportional chart.
  *
- * Two weights, because the last two rows are a different kind of thing: navy
- * for the reach, green for what lands on the customer's desk. The pale weight
- * went with the "40 ruled out" row, which did not subtract and is gone.
+ * Each row is the count, what it means, and a track whose fill is the count's
+ * share of the first row. The fill length is exactly proportional and nothing
+ * else is allowed to change it.
  *
- * Every string here comes from copy.ts. The aria-label and the caption used to
- * be written into this file and said "in the radius" for two months, which no
- * copy review ever saw because no copy review reads components.
+ * That is the fix for the version before this one, which put the label inside
+ * the bar and set the bar to `min-width: max-content`. With five rows it only
+ * distorted the short end. With the client's seven rows it inverted it: the bar
+ * reading "family's perfect fit" for a count of 1 drew wider than the bar for
+ * 20, because the bar had to fit its words. A chart whose shape contradicts its
+ * numbers is worse than no chart. So the words sit above the track, and the
+ * track only ever carries the number.
+ *
+ * The steepness is the point. A count of 1 is half a percent of 200 and is
+ * drawn as the smallest visible mark, not rounded up to look respectable.
+ *
+ * Rows and values are data in copy.ts. `result` rows, from viable options
+ * onward, are the ones that land on the customer's team, and carry the green.
  */
 export default function Funnel({ active }: { active: boolean }) {
   return (
     <figure className="funnel" aria-label={funnel.label}>
       <ol className="funnel__rows">
-        {funnel.rows.map((row, i) => {
-          const isResult = i >= funnel.rows.length - 2;
-          return (
-            <li
-              key={row.label}
-              className={[
-                "funnel__row",
-                isResult ? "is-result" : "",
-                active ? "is-in" : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              style={{ transitionDelay: active ? `${i * 110}ms` : "0ms" }}
-            >
-              <span className="funnel__value">{row.value}</span>
-              <span
-                className="funnel__bar"
-                style={{ ["--w" as string]: `${Math.max((row.value / max) * 100, 14)}%` }}
-              >
-                {row.label}
+        {funnel.rows.map((row, i) => (
+          <li
+            key={`${row.value}-${row.label}`}
+            className={[
+              "funnel__row",
+              "result" in row && row.result ? "is-result" : "",
+              active ? "is-in" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            style={{ transitionDelay: active ? `${i * 90}ms` : "0ms" }}
+          >
+            <span className="funnel__value">{row.value}</span>
+            <span className="funnel__body">
+              <span className="funnel__label">{row.label}</span>
+              <span className="funnel__track" aria-hidden="true">
+                <span
+                  className="funnel__fill"
+                  style={{ ["--w" as string]: `${(row.value / max) * 100}%` }}
+                />
               </span>
-            </li>
-          );
-        })}
+            </span>
+          </li>
+        ))}
       </ol>
       <figcaption>
         <span className="funnel__caption">{funnel.caption}</span>

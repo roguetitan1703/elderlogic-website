@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     url: "/",
     title: meta.shareTitle,
     description: meta.description,
-    images: [{ url: "/share-card.png", width: 1200, height: 630, alt: meta.shareTitle }],
+    images: [{ url: "/share-card.png", width: 1200, height: 630, alt: meta.shareImageAlt }],
   },
   twitter: {
     card: "summary_large_image",
@@ -62,8 +62,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        {/* Design system tokens. Never hard-code a value that has a token. */}
-        <link rel="stylesheet" href="/ds/styles.css" />
+        {/* The two faces the first viewport is set in, fetched in parallel
+            with the stylesheet instead of after it. Everything else the page
+            needs is declared in ds/tokens.css and loads normally. Preloading
+            more than the critical faces makes the page slower, not faster. */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href="/ds/fonts/SourceSerif4-400_600-latin.woff2"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href="/ds/fonts/IBMPlexSans-450-latin.woff2"
+          crossOrigin=""
+        />
+        {/* Design system tokens. Never hard-code a value that has a token.
+            One file, built by scripts/build-ds.py from ds/tokens/. Edit the
+            token files, not this bundle, and re-run the script. */}
+        <link rel="stylesheet" href="/ds/tokens.css" />
         <StructuredData />
       </head>
       {/* Header and footer live here rather than in each page, so a route

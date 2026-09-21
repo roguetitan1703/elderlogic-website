@@ -1,0 +1,42 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body { position: relative; overflow: hidden; background: #131f33; }
+
+  /* The map is texture, not a claim: no labels, no pins, no caption. It is
+     the same capture the coverage section uses, pushed back far enough that
+     it reads as ground. */
+  .ground {
+    position: absolute; inset: 0;
+    background: url("../web/public/product/map-2x.jpg") right center / cover no-repeat;
+    opacity: .34; filter: grayscale(1) brightness(1.5) contrast(.62);
+  }
+  .fade {
+    position: absolute; inset: 0;
+    background: linear-gradient(95deg, #131f33 0%, #131f33 34%, rgba(19,31,51,.90) 54%, rgba(19,31,51,.55) 100%);
+  }
+  .card { position: relative; height: 100%; padding: 62px 72px 58px; display: flex; flex-direction: column; }
+  .logo { height: 46px; width: auto; align-self: flex-start; }
+  h1 {
+    margin-top: auto;
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 600; font-size: 78px; line-height: 1.08;
+    letter-spacing: -.015em; color: #fff; max-width: 19ch;
+  }
+  .foot {
+    margin-top: auto; padding-top: 44px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 17px; letter-spacing: .04em; color: rgba(255,255,255,.62);
+  }
+  .foot b { color: #fff; font-weight: 600; letter-spacing: 0; font-family: "IBM Plex Sans", system-ui, sans-serif; }
+</style>
+<div class="ground"></div><div class="fade"></div>
+<div class="card">
+  <img class="logo" src="../web/public/logo-white.svg" alt="">
+  <h1>Placement and marketing visits for hospice teams.</h1>
+  <p class="foot"><b>ElderLogic</b> &nbsp;Arizona</p>
+</div>

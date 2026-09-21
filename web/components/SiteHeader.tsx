@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { footer, nav } from "@/content/copy";
+import { headerTheme } from "@/content/site";
 
 /**
  * The header, and on a phone the only navigation there is.
@@ -15,6 +16,20 @@ import { footer, nav } from "@/content/copy";
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [stuck, setStuck] = useState(false);
+  const [theme, setTheme] = useState(headerTheme);
+
+  /* Lets the client compare both headers on the live preview without a
+     second deployment: ?header=light or ?header=dark, kept for the tab. */
+  useEffect(() => {
+    try {
+      const asked = new URLSearchParams(window.location.search).get("header");
+      if (asked === "light" || asked === "dark") sessionStorage.setItem("header", asked);
+      const kept = sessionStorage.getItem("header");
+      if (kept === "light" || kept === "dark") setTheme(kept);
+    } catch {
+      /* Storage blocked: the default stands. */
+    }
+  }, []);
   const panel = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
 
@@ -71,11 +86,27 @@ export default function SiteHeader() {
 
   return (
     <>
-      <header className={`site-header ${stuck ? "is-stuck" : ""} ${open ? "is-open" : ""}`}>
+      <a className="skip-link" href="#top">
+        {nav.menu.skip}
+      </a>
+      <header
+        className={[
+          "site-header",
+          theme === "light" ? "site-header--light" : "",
+          stuck ? "is-stuck" : "",
+          open ? "is-open" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <div className="container site-header__inner">
           <a href="/" className="site-header__logo" aria-label="ElderLogic, home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-white.svg" alt="ElderLogic" width={168} height={38} />
+            {/* Both lockups are always in the markup and CSS shows one, so
+                switching themes, or opening the menu over a light bar, never
+                waits on an image request. 250 x 100 is the files' own ratio. */}
+            <img className="logo--white" src="/logo-white.svg" alt="" width={100} height={40} />
+            <img className="logo--colour" src="/logo-colour.svg" alt="" width={100} height={40} />
           </a>
 
           <nav className="site-header__nav" aria-label="Primary">
@@ -115,7 +146,7 @@ export default function SiteHeader() {
         className={`site-menu ${open ? "is-open" : ""}`}
         hidden={!open}
       >
-        <nav className="site-menu__nav" aria-label="Primary, expanded">
+        <nav className="site-menu__nav" aria-label="Menu">
           {nav.items.map((item, i) => (
             <a
               key={item.href}

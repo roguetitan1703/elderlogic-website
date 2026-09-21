@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { privacy } from "@/content/privacy";
+import { pageMetadata } from "@/content/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description:
     "How ElderLogic collects, uses and shares information through its sites and app.",
-  openGraph: { title: "Privacy Policy", description: "How ElderLogic collects, uses and shares information through its sites and app.", url: "/privacy" },
-  alternates: { canonical: "/privacy" },
-};
+  path: "/privacy",
+});
 
 export default function Privacy() {
   return (

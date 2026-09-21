@@ -136,14 +136,14 @@ a.btn:active { text-decoration: none; border-bottom-color: transparent; }
 .btn:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
 .btn:active { transform: translateY(1px); }
 
-.btn--primary { background: var(--green-700); border-color: var(--green-700); }
+.btn--primary { background: var(--brand); border-color: var(--brand); }
 .btn--primary,
 a.btn--primary:link,
 a.btn--primary:visited,
 a.btn--primary:hover,
 a.btn--primary:focus,
-a.btn--primary:active { color: var(--text-inverse); }
-.btn--primary:hover { background: var(--green-800); border-color: var(--green-800); }
+a.btn--primary:active { color: var(--on-brand); }
+.btn--primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
 
 .btn--quiet { background: transparent; border-color: var(--border-default); }
 .btn--quiet,
@@ -198,6 +198,14 @@ a.btn--quiet:active { color: var(--text-strong); }
 
 /* ---------- media ----------------------------------------------------- */
 
+/* <picture> is an inline box with no size of its own. Wrapping an image in one
+   therefore silently breaks any rule that sized that image against its parent:
+   .hero__field's height: 100% started resolving against the picture instead of
+   .hero__media, and the hero map rendered at its own aspect ratio down the
+   page. display: contents removes the box entirely, so the <img> lays out as
+   the direct child it used to be and every existing selector still holds. */
+picture { display: contents; }
+
 .shot img {
   display: block;
   width: 100%;
@@ -224,21 +232,15 @@ a.btn--quiet:active { color: var(--text-strong); }
   filter: drop-shadow(0 20px 40px rgba(11, 26, 48, 0.22));
 }
 
-/* On a phone, a phone inside a phone is redundant: drop the device and let the
-   screen run to the column. */
+/* Below 900px the capture sits left in its column rather than centred. The
+   image keeps its own device frame and nothing is drawn around it: a hairline
+   rectangle over a PNG with transparent rounded corners reads as a translucent
+   box floating off the phone, because the border follows the file's bounding
+   box and the device inside it does not. */
 @media (max-width: 899px) {
   .shot--phone {
     max-width: 22rem;
     margin-inline: 0;
-    padding: 0;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
-  }
-  .shot--phone img {
-    border: var(--border-w) solid var(--border-hairline);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 18px 40px rgba(11, 26, 48, 0.14);
   }
 }
 
@@ -340,6 +342,19 @@ a.btn--quiet:active { color: var(--text-strong); }
 }
 
 
+/* WCAG 2.5.8 puts the floor for a pointer target at 24x24 CSS px, and the
+   header and footer links were 22px tall on a mouse-driven viewport. The
+   block below raises the same links to 44px wherever a finger is the pointer,
+   so this must stay above it: declared after, it wins on source order and
+   quietly undoes every touch target it names. */
+.site-header__nav a,
+.site-footer a,
+.site-footer__contact a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
 /* ---------- touch targets ---------------------------------------------
    44px minimum wherever a finger is the pointer. Applied by input type, not
    by width, so a touch laptop gets it too. */
@@ -372,7 +387,6 @@ a.btn--quiet:active { color: var(--text-strong); }
 
 .fallback { margin-top: var(--sp-4); }
 /* A button in a stack must not stretch to the column width. */
-.close__intro .btn { align-self: start; }
 /* The right column grows when the fallback opens; the copy must not drift
    to the vertical centre when it does. */
 #book.section .split { align-items: start; }
@@ -404,4 +418,48 @@ a.btn--quiet:active { color: var(--text-strong); }
   background: var(--surface-inset);
   color: var(--text-body);
   font-size: var(--fs-body-sm);
+}
+
+/* Text for a screen reader only. Not display:none and not visibility:hidden,
+   both of which remove it from the accessibility tree as well as the page.
+   Used where a control's visible label is shorter than the phrase somebody
+   navigating by voice or by heading actually needs. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link. Off screen until focused, then it lands over the header at the
+   top left. It must sit above .site-header, which is fixed and has its own
+   stacking context. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  transform: translateY(-120%);
+  padding: var(--sp-3) var(--sp-5);
+  background: var(--brand-ink, #006b4c);
+  color: #fff;
+  border: 0;
+  border-bottom-right-radius: var(--radius-md);
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+.skip-link:focus-visible,
+.skip-link:focus {
+  transform: translateY(0);
+  outline: var(--border-w) solid #fff;
+  outline-offset: -4px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .skip-link { transition: transform var(--dur-base) var(--ease-standard); }
 }

@@ -26,11 +26,24 @@ export const meta = {
    *  one was 71: "for hospice teams in Arizona" was being cut mid phrase in
    *  results, which is the half that says who this is for. */
   title: "ElderLogic: hospice placement and marketing visits in Arizona",
+  /** Metadata is not a place to be interesting. A search result and an
+   *  unwrapped link are both read by someone who has never heard of us, in
+   *  one second, next to nine competitors. Every title and description on
+   *  this site therefore says what the product is before it says anything
+   *  clever about it. The three share surfaces show together, so they must
+   *  not repeat each other either:
+   *    card image  what it is, big
+   *    shareTitle  what it is, for search-shaped reading
+   *    description what it is, plus what is actually in it */
+  shareTitle: "ElderLogic: hospice placement software for Arizona",
+  /** Describes the card, which carries its own headline. */
+  shareImageAlt: "ElderLogic. Placement and marketing visits for hospice teams.",
   /** The one line under the title in a search result. 160 characters. */
-  /** Shown on the share card. Shorter than the meta title, which truncates. */
-  shareTitle: "Every licensed home in Arizona, on one map",
+  /** The client's own sentence, from the close of her pricing sheet. It says
+   *  what the product is better than ours did, so it is used as written. It
+   *  does not name Arizona; the title does. Shared with footer.tagline. */
   description:
-    "Every licensed senior living home in Arizona, with the record the state holds on each one. We reach the homes for you and hand your team the ones that said yes.",
+    "ElderLogic Concierge provides hospice teams with the tools, data and support to simplify senior living placement and grow community relationships.",
 };
 
 /**
@@ -68,6 +81,8 @@ export const nav = {
   /** The phone menu. It is a panel, not a dropdown, so it has room for the
    *  things a dropdown never has room for. */
   menu: {
+    /** First thing in the tab order on every page. Visible only on focus. */
+    skip: "Skip to content",
     open: "Menu",
     close: "Close",
     /** Sits above the contact details at the foot of the panel. */
@@ -79,7 +94,7 @@ export const nav = {
 
 export const hero = {
   heading: "Work every licensed home in Arizona",
-  sub: "We reach out to the homes, agree a room and a price, and hand your team the ones that said yes.",
+  sub: "We reach out to the homes, confirm room availability and pricing, and hand your team the ones that said yes.",
   primary: { label: "Book a demo", href: "/#book" },
   secondary: { label: "See how it works", href: "/#walkthrough" },
 };
@@ -93,59 +108,76 @@ export const homeCard = {
   status: "Room today",
   place: "Assisted living, Mesa",
   rows: [
-    { label: "Licence", value: "Current" },
+    { label: "License", value: "Current" },
     { label: "Inspections", value: "4 since 2019" },
     { label: "Open enforcement", value: "None" },
     { label: "Room", value: "Available now" },
-    { label: "Price agreed", value: "$4,200 / mo" },
+    /* "Confirmed", not "agreed": the hero line now says we confirm room
+       availability and pricing, and the card uses the same verb. */
+    { label: "Price confirmed", value: "$4,200 / mo" },
   ],
-  note: "Illustrative. Every field comes from the state record or the home itself.",
+  /** The old note said every field came from the state record or the home
+   *  itself. The client corrected it: room and price come from ElderLogic,
+   *  not the state. They stay on the card because they are the two fields that
+   *  show what ElderLogic adds; without them this is only a state record. The
+   *  note says whose each field is, and nothing about how it was got. */
+  note: "Illustrative. License and inspection fields are the state’s. Room and price are confirmed by ElderLogic.",
 };
 
 /* ---------------------------------------------------------- Coverage. */
 
 export const territory = {
   heading: "Your liaisons know a dozen homes. Here is the rest.",
-  body: "When a resident starts to decline, the home decides which hospice gets the call. Every home nobody has visited is a referral going to someone else.",
-  caption: "Licensed homes, Phoenix metro. 2,621 statewide, August 2026.",
+  body: "When a resident needs hospice care, relationships matter. Every residential care home your team hasn’t visited is a potential referral relationship being built by someone else.",
+  caption: "Licensed residential care homes, Phoenix metro. 2,621 statewide, August 2026.",
   mapAlt:
-    "The ElderLogic map, showing licensed senior living homes across the Phoenix metro.",
+    "The ElderLogic map, showing licensed residential care homes across the Phoenix metro.",
 };
 
 /* ---------------------------------------------------------- Outreach. */
 
 export const concierge = {
-  /** Sanctioned exception to the channel rule. The line says the customer
-   *  does not work a phone list. It names their old way, never ours. */
-  heading: "Your team never works a phone list.",
-  body: "A patient needs a bed. We reach every home that fits and ask who has a room and what it costs.",
+  /** Still the sanctioned exception to the channel rule: it names the
+   *  customer's old way, never ours. The client's rewording. */
+  heading: "Your team isn’t limited to their phone list.",
+  body: "A patient needs a bed. We reach every residential care home in the area, then filter the results based on the patient’s needs, availability, and cost.",
   body2:
-    "A rep wants a day out. We reach those homes first and build the route around the ones who said come.",
-  /** A single descending sequence, so the arithmetic holds. The earlier
-   *  "40 ruled out by your team" row did not subtract to 60 and appears in
-   *  none of the client's own materials. That claim lives in step 02 of the
-   *  flow instead. Provenance on these five is still unconfirmed. */
+    "Your team is planning a day of outreach. We reach those homes first and build the route around the ones interested in meeting.",
+  /** The client's own figures, which closes the provenance question these rows
+   *  carried for weeks. Row count and values are data: the component draws
+   *  whatever is here. `result` marks the rows that land on the customer's
+   *  team, from viable options onward.
+   *
+   *  OPEN with the client: viable options and pre-tour are both 10. Drawn
+   *  exactly as given, so those two bars are the same length. */
   funnel: {
     rows: [
-      { value: 200, label: "in the search" },
-      { value: 60, label: "contacted" },
+      { value: 200, label: "in the search grid" },
+      { value: 60, label: "qualified for outreach" },
       { value: 20, label: "replied" },
-      { value: 5, label: "room and price agreed" },
-      { value: 2, label: "toured" },
+      { value: 10, label: "viable options", result: true },
+      { value: 10, label: "pre-tour", result: true },
+      { value: 3, label: "family tour", result: true },
+      { value: 1, label: "family’s perfect fit", result: true },
     ],
-    caption: "One placement search, Phoenix area.",
+    /** "Phoenix area" came off: these are the client's numbers now, and nothing
+     *  says they come from one Phoenix search. */
+    caption: "One placement search.",
     /** Read in place of the bars. It lives here, not in the component, because
      *  it is copy: it said "radius" for two months and no copy pass saw it. */
-    label: "How two hundred homes in one search become two the family tours.",
+    label: "How two hundred residential care homes in one search become one family’s perfect fit.",
   },
 };
 
 /* --------------------------------------------------- Marketing visits. */
 
 export const marketingVisits = {
-  heading: "Reps walk in expected, not cold.",
-  body: "Pick a morning and an area. The homes come back routed, with contact details and inspection history on each.",
-  note: "A family tour runs the same way, so the home meets your liaison and a family on one afternoon.",
+  /** "Cold call" contains the word the channel rule bans. It is an idiom for
+   *  the old way of doing it, the same kind of exception as the phone list
+   *  heading, and it is the client's line. */
+  heading: "Marketing visits start with an invitation, not a cold call.",
+  body: "Pick a morning and an area. We contact the homes first and build the route around those interested in meeting, with contact details and inspection history for each.",
+  note: "Family tours work the same way. Your team pre-tours the viable options first, then families tour the homes they want to see.",
   image: {
     /* The HPC capture as it was taken, device frame included, with the white
        surround flood filled to transparent so it sits on any ground. The
@@ -175,45 +207,44 @@ export const marketingVisits = {
 /* --------------------------------------------------- Why homes say yes. */
 
 export const meeting = {
-  heading: "Why homes say yes",
-  body: "Homes pay agents to fill rooms. You fill them free, so the meeting is easy to get and they remember you.",
-  /** The only outside voice on this site. Public use is not yet confirmed
-   *  with the client. Do not ship without that confirmation. */
-  quote:
-    "We do our own placements, saving you from paying any placement agent fees. Can't wait to meet!",
-  attribution: "A home, replying to a hospice that got in touch.",
+  heading: "Why homes say yes to a marketing visit",
+  body: "The right message warms up the introduction before your team ever walks through the door. Instead of asking for a meeting cold, we lead with something residential care homes value: the opportunity for future placements without placement agent fees.",
+  /** ElderLogic's own outreach message, in the client's words. It was carried
+   *  for weeks as a home's testimonial awaiting permission to publish. It is
+   *  not one and never was: it is what we lead with. So it is set as our
+   *  message, with no endorsement styling and no attribution to a home. */
+  message:
+    "“We do our own placements, saving you from paying any placement agent fees. Can’t wait to meet!”",
+  hook: "The hook that turns a cold visit into a warm introduction.",
 };
 
 /* --------------------------------------------------------- The flow. */
 
 export const walkthrough = {
   heading: "One placement, start to finish",
+  /** Seven steps, the client's. The arc now ends on the family, not on a
+   *  record being updated, and the list is built to let that land. */
   steps: [
-    { icon: "assessment-form", title: "Assessment", line: "One form on a phone." },
-    {
-      icon: "placement-search",
-      title: "Search",
-      line: "Every home that fits, minus the ones you have ruled out.",
-    },
+    { icon: "assessment-form", title: "Assessment", line: "One form, mobile or desktop." },
+    { icon: "placement-search", title: "Search", line: "Every residential care home in the area." },
     {
       icon: "outreach-log",
-      title: "Outreach",
-      line: "Who has a room, at what price.",
+      title: "Concierge Outreach Service",
+      line: "We contact the homes and filter the responses.",
       /** The one step ElderLogic performs. Carried by a text label, not by
        *  colour alone, so it survives greyscale and a colour blind reader. */
       by: "ElderLogic",
     },
-    { icon: "facilities", title: "Shortlist", line: "The homes that said yes." },
+    { icon: "facilities", title: "Viable options", line: "Room, price, and resident needs confirmed." },
+    { icon: "pre-tour", title: "Pre-tour", line: "Your team visits the viable options first." },
+    { icon: "family-tour", title: "Family tour", line: "Your team tours selected homes with the family." },
     {
-      icon: "pre-tour",
-      title: "Route",
-      /** The family half used to be a seventh step and was cut with the flow
-       *  down to six. It is the only line that says a family ever touches this
-       *  product, and no routing tool does it, so it is reclaimed here rather
-       *  than lost: same step, one more clause. */
-      line: "The day, in driving order, on a phone. The family gets the same one.",
+      icon: "move-in",
+      title: "Family’s perfect fit",
+      line: "The family chooses the home that’s right for them.",
+      /** The end of the arc. Marked so the list can give it room. */
+      end: true,
     },
-    { icon: "move-in", title: "Move-in", line: "Client, home, price, date." },
   ],
   /** The flow gets its own screen. It used to borrow the marketing visits
    *  phone, which put the same image on the page twice. */
@@ -229,33 +260,30 @@ export const walkthrough = {
 
 export const record = {
   heading: "Every inspection the state has published",
-  body: "Not just today's licence. The whole history, on every home. Placing a patient into a home with open enforcement is real exposure, and this is where your team sees it.",
-  /** The shape of the record, not its contents. Field names and what each one
-   *  covers: no values, because the values belong to a real home and this page
-   *  does not reproduce one. Complaints came out because it is the one field
-   *  that describes the home rather than the state's findings about it, and it
-   *  sits closest to the rating line this product does not cross. */
+  body: "Not just today’s license. The whole history, on every residential care home. Placing a patient into a home with open enforcement is real exposure, and this is where your team sees it.",
+  /** Four fields and the source, in the client's words. Capacity came out with
+   *  her rewrite, and Complaints before it. Four plus the source is five cells,
+   *  so the source spans two columns wherever the grid has more than one: it is
+   *  the cell that points outward, so it earns the room. */
   carries: [
-    { field: "Licensing", gloss: "The current licence, and every one before it" },
-    { field: "Inspections", gloss: "Every visit the state has made, with its date" },
-    { field: "Violations", gloss: "What was found, and when" },
-    { field: "Enforcement", gloss: "Any action the state has taken" },
-    { field: "Capacity", gloss: "Licensed beds and the care levels allowed" },
+    { field: "Licensing", gloss: "Current license and licensing history." },
+    { field: "Inspections", gloss: "Every AZDHS inspection, with its date." },
+    { field: "Violations", gloss: "What the state found, and when." },
+    { field: "Enforcement", gloss: "Any enforcement action taken by the state." },
   ],
-  /** The sixth cell. The claim the AZDHS button in the route screen evidences. */
   access: {
     field: "The source",
-    gloss: "AZDHS sits on every stop. One tap opens the state's own file.",
+    gloss: "AZDHS is one tap away at every stop, opening the state’s own record.",
   },
   ruleLine:
-    "We do not score or rank homes. Your team reads the record and decides.",
+    "ElderLogic displays the state’s findings as reported. We don’t score or rank homes. Your team reviews the record and decides.",
   /** The record on a home, in the product. Every identifying value is a demo
    *  value, which is why the caption says so: the home, the address, the number
    *  and the email are invented, and the licensing rows are illustrative. What
    *  is real is the shape of the card and where it sits in the workflow. */
   image: {
     src: "/product/home-record.jpg",
-    alt: "A home selected on the ElderLogic map, with its record open: licence, inspections and open enforcement, beside the contact details.",
+    alt: "A residential care home selected on the ElderLogic map, with its record open: license, inspections and open enforcement, beside the contact details.",
     width: 1681,
     height: 936,
     /** The same card, cropped close. At 390px the wide version renders the
@@ -275,46 +303,94 @@ export const record = {
  */
 export const inventory = {
   heading: "What your team gets",
-  /** Grouped, not a flat list. Eleven bullets in a column read as a feature
-   *  dump: nothing tells the reader which of them belong together, so the whole
-   *  block scans as a slide. The three groups are the page's own spine, so by
-   *  the time the reader arrives here they already know what each one means. */
+  /** Each group is a panel with its own branded icon and a count, so the
+   *  section reads as three things you get rather than one long list. On a
+   *  phone the panels sit side by side in a row the reader swipes through at
+   *  their own pace, with the next one always showing at the edge.
+   *
+   *  Groups one and two are the client's, verbatim. The third is kept although
+   *  her review rewrote only two: both its lines are core on her own pricing
+   *  sheet, and dropping it would leave marketing visits out of the inventory
+   *  altogether. Visit verification came out of it: on the pricing sheet it is
+   *  a paid add-on, and it now lives in the reporting section. */
   groups: [
     {
-      heading: "Every home in Arizona",
+      heading: "Every residential care home in Arizona",
+      icon: "facilities",
       items: [
-        "The Arizona senior living database, kept current",
-        "Validated contact information for every home",
-        "Home details and placement information",
+        "A statewide database, continuously maintained and updated",
+        "Owner and licensing information from AZDHS",
+        /* OPEN with the client. This names the outreach channel, against her
+           own standing rule. Her pricing sheet's line says the same without
+           it: "Community contact information & historical AZDHS data".
+           Shipped as she wrote it until she chooses. */
+        "Mobile numbers researched and validated by ElderLogic",
+        "Inspection, violation, and enforcement history",
       ],
     },
     {
-      heading: "A placement, start to finish",
+      heading: "Placement, start to finish",
+      icon: "placement-search",
       items: [
         "Client assessment and placement workflow",
-        "Client records in one place, without the complexity of a CRM",
-        "Home search and matching against a client's needs",
-        "Outreach and response collection",
-        "Client pre-tour routes",
+        "Client records in one place, without the clutter of a CRM",
+        "Search every residential care home in the area",
+        "Concierge Outreach Service to gather availability, pricing, and details",
+        "Viable options and pre-tour planning in one place",
       ],
     },
     {
       heading: "Marketing visits",
+      icon: "pre-tour",
       items: [
         "Marketing visit planning and routing",
         "Interactive mapping and custom route creation",
-        "Visit verification, to confirm your team visited the homes they logged",
       ],
     },
   ],
-  note: "It does not replace your EMR or your CRM. It runs alongside them.",
+  /** Read by a screen reader as the swipeable row's name. */
+  railLabel: "What your team gets, by area",
+  /** "Included" is the plain word for what the count means. */
+  countSuffix: "included",
+  note: "ElderLogic does not replace your EMR or your CRM. It runs alongside them.",
+};
+
+/* ---------------------------------------------------------- Reporting. */
+
+/**
+ * Optional, and a thing leadership asks for. The client's heading and her three
+ * blocks. Written as content, not as a list of priced add-ons: her pricing sheet
+ * sells two and splits verification differently, which does not matter here.
+ * No pricing, which is the site's standing rule and does not bend for this
+ * section. Not in the top nav, by her instruction.
+ */
+export const reporting = {
+  label: "Optional",
+  heading: "Need more visibility? Add reporting.",
+  blocks: [
+    {
+      title: "Placement reporting",
+      line: "Placement activity and outcomes from assessment through placement.",
+    },
+    {
+      title: "Marketing visit reporting",
+      line: "Planned versus completed marketing visits and field activity.",
+    },
+    {
+      title: "Pre-tour visit verification and reporting",
+      line: "Planned versus completed pre-tour visits with verification of field activity.",
+    },
+  ],
 };
 
 /* ------------------------------------------------------------- Close. */
 
 export const close = {
-  heading: "See your own territory",
-  body: "Name an area your liaisons cover. We open the map on it and you see every home in it, and which ones nobody has contacted.",
+  /** "See your own territory" is gone: it offered to open the map on a named
+   *  area, and that is not something the product does yet. The invitation now
+   *  promises only a walkthrough of what the page has already shown. */
+  heading: "See one placement, from assessment to the family’s perfect fit.",
+  body: "Book a demo and we will walk your team through a placement and a marketing visit day in ElderLogic, and answer what your team needs to know.",
   cta: { label: "Book a demo", href: "/#book" },
   secondary: { label: "Read the FAQ", href: "/faq" },
   fallbackToggle: "Rather not book a time? Leave your details instead",
@@ -336,36 +412,73 @@ export const close = {
 
 export const questions = {
   heading: "FAQ",
-  intro:
-    "The things a hospice team asks before the first conversation. If yours is not here, email us and we will answer it.",
+  /** The browser tab and the search result, which "FAQ" alone tells nobody
+   *  anything about. The brand is appended by the layout's title template. */
+  metaTitle: "Questions about placement and marketing visits",
   backLink: { label: "Back to the site", href: "/" },
   metaDescription:
-    "What a hospice team asks before the first conversation: coverage, contacting homes, what it replaces, and how it works on a phone.",
+    "Answers about ElderLogic placement and marketing visit software: coverage in Arizona, contacting homes, what it replaces, and how it works on a phone.",
   /** Sits under the FAQ list, above the one call to action. It was hardcoded
    *  into the FAQ page and never reached a copy review. */
-  closeLead: "See it on your own territory.",
+  closeLead: "Still have a question?",
   closeBody:
-    "We open the map on the area your liaisons cover and you see what is in it.",
+    "Book a demo and ask it directly. We walk you through ElderLogic on the questions your team actually has.",
+  /** Ordered the way a hospice executive actually asks them: what is it and
+   *  where, then what my team has to do, then what is inside it, then how we
+   *  begin. Five answers are the client's, verbatim, marked below. The rest are
+   *  ours, and she has not seen them yet: they should go to her before launch.
+   *  "Can we see which homes nobody has worked?" came out with the territory
+   *  close: it offered the same feature, which the product does not have. */
   items: [
     {
+      /* Client's. */
       q: "Which states do you cover?",
-      a: "Arizona. Every licensed senior living home in the state.",
+      a: "Arizona. We maintain statewide residential care home records, with active licensed homes available for search and outreach.",
     },
     {
-      q: "Do we have to contact the homes ourselves?",
-      a: "No. Your team receives the homes that have confirmed a room and a price. You can still contact any home directly at any point.",
+      q: "Who on our team uses it?",
+      a: "Liaisons and reps in the field, and whoever handles placement. It is built to be used on a phone between stops, not written up afterwards at a desk.",
     },
     {
+      /* Client's, including the change to the question itself. */
+      q: "Do we have to contact the homes ourselves for availability?",
+      a: "Not initially. Our Concierge Outreach Service contacts the homes for you and gathers availability, pricing, and responses. Your team also has the contact information and can reach any home directly whenever needed.",
+    },
+    {
+      q: "What does a marketing visit day look like?",
+      a: "Pick a morning and an area. We contact the homes first and build the route around those interested in meeting, with contact details and inspection history for each. Family tours work the same way.",
+    },
+    {
+      q: "What is in a residential care home’s record?",
+      a: "Current license and licensing history, every AZDHS inspection with its date, what the state found and when, and any enforcement action taken by the state. AZDHS is one tap away at every stop, opening the state’s own record.",
+    },
+    {
+      q: "How current is the record?",
+      a: "The record belongs to the state. We keep ours current against it, and the state’s own record is always one tap away, so you are never taking our word for it.",
+    },
+    {
+      /* Client's. */
       q: "Do you rate the homes?",
-      a: "No. The state publishes a record, we show it to you, and your team decides.",
+      a: "No. The State of Arizona reports its findings, and ElderLogic displays them as reported. We don’t score or rank homes. Your team reviews the information and decides.",
     },
     {
-      q: "Does it replace our EMR or CRM?",
-      a: "No. It handles placement and marketing visit work and runs alongside what you already have.",
+      q: "What is visit verification?",
+      a: "It confirms your team visited the homes they logged, so the visits you report on are the visits that happened. It comes with the optional reporting.",
     },
     {
+      /* Client's, including the question. The em dash in her answer is a
+         comma here: the site carries no dashes. */
+      q: "Does it replace our existing CRM or EMR?",
+      a: "No. ElderLogic is purpose-built for placement and marketing visits, work your EMR or CRM wasn’t designed to handle.",
+    },
+    {
+      /* Client's. */
       q: "Does it work on a phone?",
-      a: "Yes. Assessments, routes, home records and post-visit forms. That is where the work happens.",
+      a: "Absolutely. Your team works in the field, so ElderLogic goes with them. Assessments, home records, search results, and routes are all accessible right from their phone.",
+    },
+    {
+      q: "How do we start?",
+      a: "Book a demo. We walk your team through a placement and a marketing visit day in ElderLogic, and answer what you need to know before anything else.",
     },
   ],
 };
@@ -394,7 +507,10 @@ export const toTop = {
 };
 
 export const footer = {
-  tagline: "Placement and marketing visits for hospice teams in Arizona.",
+  /** The client's line, word for word the close of her pricing sheet, so the
+   *  site and the sheet now say the same thing. Also the meta description. */
+  tagline:
+    "ElderLogic Concierge provides hospice teams with the tools, data and support to simplify senior living placement and grow community relationships.",
   columns: [
     {
       heading: "Product",
@@ -420,5 +536,5 @@ export const footer = {
   legal: "© 2026 ElderLogic",
   /** Sits opposite the copyright on the base rule, which otherwise carried one
    *  item across the full width of the page. */
-  baseNote: "Placement and marketing visit software. Arizona only.",
+  baseNote: "Serving hospice teams across Arizona.",
 };

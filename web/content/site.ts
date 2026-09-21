@@ -39,3 +39,69 @@ export const siteUrl = resolveSiteUrl().replace(/\/+$/, "");
 export const isProduction =
   !!process.env.NEXT_PUBLIC_SITE_URL &&
   (process.env.VERCEL_ENV === "production" || !process.env.VERCEL_ENV);
+
+/**
+ * Metadata for a sub-page.
+ *
+ * Next does NOT deep-merge `openGraph`: a page that declares its own replaces
+ * the root's outright. Both sub-pages declared a title, a description and a
+ * url, and so silently dropped og:image, og:type, og:site_name and og:locale.
+ * Posting the FAQ link anywhere showed no card at all. `twitter` was the
+ * mirror image: neither page declared one, so both inherited the home page's
+ * title and description and contradicted their own og tags in the same head.
+ *
+ * So neither block is written by hand any more. Give this a title, a
+ * description and a path; it returns a complete, consistent pair.
+ */
+export function pageMetadata({
+  title,
+  description,
+  path,
+}: {
+  title: string;
+  description: string;
+  /** Leading slash, no origin. */
+  path: string;
+}) {
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website" as const,
+      siteName: "ElderLogic",
+      locale: "en_US",
+      url: path,
+      title,
+      description,
+      images: [
+        {
+          url: "/share-card.png",
+          width: 1200,
+          height: 630,
+          alt: "ElderLogic. Placement and marketing visits for hospice teams.",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image" as const,
+      title,
+      description,
+      images: ["/share-card.png"],
+    },
+  };
+}
+
+/**
+ * Which header the site ships with.
+ *
+ * "light" is the client's choice: a white bar carrying the full-colour logo.
+ * "dark" is the header as originally built, which dissolves into the navy hero
+ * and takes a surface only once you scroll. Both are kept so the two can still
+ * be compared, but light is what the site ships.
+ *
+ * Either can be previewed on any build by adding ?header=light or ?header=dark
+ * to the URL. The choice then holds for the rest of that browser tab. Once she
+ * has decided, set it here and the query becomes irrelevant.
+ */
+export const headerTheme: "dark" | "light" = "light";

@@ -1,39 +1,28 @@
 import type { Metadata } from "next";
 import { questions, close } from "@/content/copy";
+import Accordion from "@/components/Accordion";
 import StructuredData from "@/components/StructuredData";
+import { pageMetadata } from "@/content/site";
 
-export const metadata: Metadata = {
-  title: questions.heading,
+export const metadata: Metadata = pageMetadata({
+  title: questions.metaTitle,
   description: questions.metaDescription,
-  openGraph: {
-    title: questions.heading,
-    description: questions.metaDescription,
-    url: "/faq",
-  },
-  alternates: { canonical: "/faq" },
-};
+  path: "/faq",
+});
 
 export default function Questions() {
   return (
     <main id="top" tabIndex={-1}>
       <StructuredData page="faq" />
       <section className="section page-head">
-        <div className="container stack">
+        <div className="container">
           <h1 className="display-2">{questions.heading}</h1>
-          <p className="lead measure">{questions.intro}</p>
         </div>
       </section>
 
       <section className="section--tight">
         <div className="container">
-          <dl className="qa-list">
-            {questions.items.map((item) => (
-              <div key={item.q} className="qa-list__item">
-                <dt className="qa-list__q">{item.q}</dt>
-                <dd className="qa-list__a">{item.a}</dd>
-              </div>
-            ))}
-          </dl>
+          <Accordion />
         </div>
       </section>
 
