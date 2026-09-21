@@ -1408,47 +1408,112 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 .inv__note { margin: var(--sp-8) 0 0; color: var(--text-muted); font-size: var(--fs-body-sm); }
 
 /* ---------- reporting ----------------------------------------------------
-   Three bordered cards in a row, each holding a title and one line, directly
-   under a section that is already three panels: the foot of the page read as
-   a card wall, and the cards were mostly empty space around nine words.
+   An optional add-on, so it is a band and not a peer of the sections above
+   it: shorter type, tighter vertical space, and no display heading. It shares
+   the paper ground with the close beneath it, which read as one section when
+   they were simply stacked, so the two are separated by space and a hairline
+   rather than by a change of colour.
 
-   A ledger instead. The question a leader asks is the content and it is set as
-   content; the report that answers it is named under it. Hairline between the
-   rows, no borders around anything, so the three read as one instrument. */
-.reporting__heading { margin: 0; max-width: 18ch; text-wrap: balance; }
-.reports {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+   The figure is the section's argument. "Planned against completed" is what
+   leadership is buying, so it is drawn rather than described. */
+.band { padding-block: var(--section-y-tight); }
+.band__inner { display: grid; gap: var(--sp-10); align-items: center; }
+@media (min-width: 900px) {
+  .band__inner { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--sp-12); }
 }
-.reports__item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  padding: var(--sp-6) 0;
-  border-top: var(--border-w) solid var(--border-default);
-}
-.reports__item:first-child { border-top: 0; padding-top: 0; }
-.reports__item:last-child { padding-bottom: 0; }
-.reports__ask {
+.band__copy { display: flex; flex-direction: column; gap: var(--sp-3); }
+.band__heading {
   margin: 0;
   font-family: var(--font-display);
-  font-size: var(--fs-h3);
+  font-size: var(--fs-h2);
   line-height: var(--lh-heading);
   color: var(--text-strong);
   text-wrap: balance;
 }
+.band__lede { margin: 0 0 var(--sp-4); color: var(--text-body); font-size: var(--fs-lead); }
+
+/* The rule that separates this band from the close on the same ground. */
+.section--after-band { border-top: var(--border-w) solid var(--border-default); }
+
+.reports { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.reports__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding: var(--sp-4) 0;
+  border-top: var(--border-w) solid var(--border-default);
+}
+.reports__item:first-child { border-top: 0; }
+.reports__item:last-child { padding-bottom: 0; }
 .reports__title {
-  margin: var(--sp-2) 0 0;
+  margin: 0;
   font-family: var(--font-sans);
   font-size: var(--fs-body-sm);
   font-weight: var(--fw-semibold);
   line-height: var(--lh-snug);
-  color: var(--brand-ink);
+  color: var(--text-strong);
 }
 .reports__line { margin: 0; color: var(--text-muted); font-size: var(--fs-body-sm); line-height: var(--lh-body); }
+
+/* ---------- the week of visits ------------------------------------------
+   Five columns, Monday to Friday. A hollow circle is a visit that was
+   planned, a filled one is a visit that happened, and the check marks one
+   that was verified. No counts: the shape of the week is the whole point and
+   a number would invite a reader to add them up. */
+.visits { margin: 0; display: flex; flex-direction: column; gap: var(--sp-6); }
+.visits__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--sp-3);
+  align-items: start;
+  padding: var(--sp-6) var(--sp-5);
+  background: var(--surface-card);
+  border: var(--border-w) solid var(--border-hairline);
+  border-radius: var(--radius-xl);
+}
+.visits__day { display: flex; flex-direction: column; align-items: center; gap: var(--sp-4); }
+.visits__label {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.visits__dots { display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); }
+.visits__dot {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-strong);
+  background: transparent;
+}
+.visits__dot--done,
+.visits__dot--verified { background: var(--brand); border-color: var(--brand); }
+/* Navy on the bright green, 6.23:1, the same pair the step numbers use. */
+.visits__dot--verified { color: var(--on-brand); }
+.visits__dot svg { width: 14px; height: 14px; }
+
+.visits__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3) var(--sp-6);
+}
+.visits__cap { color: var(--text-muted); font-size: var(--fs-caption); }
+.visits__legend { display: flex; flex-wrap: wrap; gap: var(--sp-5); }
+/* Opposite the caption when they fit on one line; under it, left aligned with
+   it, when they do not. Pushed right on its own row it read as a stray. */
+@media (min-width: 700px) { .visits__legend { margin-left: auto; } }
+.visits__key {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--text-muted);
+  font-size: var(--fs-caption);
+}
+.visits__key .visits__dot { width: 12px; height: 12px; border-width: 1.5px; }
 
 /* ---------- the close ----------------------------------------------------
    The one place the reader is asked to act, so it is the strongest block on

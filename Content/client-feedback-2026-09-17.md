@@ -457,6 +457,28 @@ home page this means after the inventory and before the close.
 | 5 | Title Case on the nav and sentence case everywhere else: right? | **Answered 19 Sep.** "Right. I mean Title Case; you're right." Nav items are Title Case; see 00:46 |
 | 6 | Her white navbar mockup, as the brief for that change | Open |
 
+## 22 September: reporting, the close, and the calendar
+
+The reporting section failed twice because it had three report names and no
+reason to exist. The reason is who asks for it, so it is written for them:
+"For leadership: planned against completed, across your whole team." Her three
+names and lines sit under that, and the section is a band rather than a peer
+of the sections above it, because it is an optional add-on.
+
+Her phrase is also the graphic. One week of marketing visits, Monday to
+Friday: hollow circle planned, filled circle completed, a check on the two
+that were verified. No counts and no names, so nothing is invented, and a
+reader answers the only question leadership is asking in one glance.
+
+The close heading restated the flow section's own heading, so it read as one
+more section rather than the invitation at the end of one. It is now "Walk
+through a placement with us."
+
+The booking calendar is connected to the agency's Calendly while hers is being
+made. One constant in site.ts.
+
+---
+
 ## 19 September: the domain
 
 Registered under the original **elderlogic.biz** account and managed through

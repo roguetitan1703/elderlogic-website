@@ -14,6 +14,7 @@ import Inventory from "@/components/Inventory";
 import Route from "@/components/Route";
 import ContactForm from "@/components/ContactForm";
 import Scheduler from "@/components/Scheduler";
+import VisitWeek from "@/components/VisitWeek";
 import Picture from "@/components/Picture";
 import Reveal from "@/components/Reveal";
 import Shot from "@/components/Shot";
@@ -238,18 +239,18 @@ export default function Home() {
           page read as one long card wall. This is a ledger instead: the
           question a leader actually asks, set as the content, with the report
           that answers it named underneath. Hairlines, no boxes. */}
-      <section className="section" id="reporting">
+      <section className="section band surface-paper" id="reporting">
         <div className="container">
-          <div className="split">
-            <Reveal className="stack">
-              <h2 className="display-2 reporting__heading">{reporting.heading}</h2>
-              <p className="lead measure">{reporting.lede}</p>
+          <div className="band__inner">
+            <Reveal className="band__figure">
+              <VisitWeek />
             </Reveal>
-            <Reveal>
+            <Reveal className="band__copy">
+              <h2 className="band__heading">{reporting.heading}</h2>
+              <p className="band__lede">{reporting.lede}</p>
               <ul className="reports">
                 {reporting.blocks.map((block) => (
                   <li key={block.title} className="reports__item">
-                    <p className="reports__ask">{block.ask}</p>
                     <h3 className="reports__title">{block.title}</h3>
                     <p className="reports__line">{block.line}</p>
                   </li>
@@ -273,7 +274,7 @@ export default function Home() {
           The second path used to sit below the panel, behind a rule and a
           screen of paper. It is inside the panel, under the actions it is the
           alternative to. <details> so it works with no script. */}
-      <section className="section surface-paper" id="book">
+      <section className="section surface-paper section--after-band" id="book">
         <div className="container">
           <div className="cta">
             <div className="cta__ground" aria-hidden="true" />

@@ -21,7 +21,12 @@ export default function Scheduler() {
     );
   }
 
-  const src = `${schedulerUrl}${schedulerUrl.includes("?") ? "&" : "?"}hide_gdpr_banner=1&background_color=ffffff&primary_color=00825b`;
+  /* hide_event_type_details drops the name and duration header, which is the
+     agency's name until the client's own account exists; hide_gdpr_banner
+     drops the cookie notice that otherwise covers the calendar on a first
+     visit. Both are available on every Calendly plan. Colour parameters are
+     not, so the calendar keeps Calendly's own blue. */
+  const src = `${schedulerUrl}${schedulerUrl.includes("?") ? "&" : "?"}hide_event_type_details=1&hide_gdpr_banner=1`;
 
   return (
     <div className="booking booking--live" id="scheduler">

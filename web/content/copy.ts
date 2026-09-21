@@ -379,11 +379,32 @@ export const inventory = {
  */
 export const reporting = {
   heading: "Need more visibility? Add reporting.",
-  /** Replaces the "Optional" pill, which was a label doing a sentence's job.
-   *  It also says the thing that makes three short reports feel deliberate
-   *  rather than thin: the work is already recorded, this is the showing. */
-  lede:
-    "Every placement and every visit is already recorded as your team works. Reporting is how you show it to the people who ask.",
+  /** Reporting kept failing as a section because it had three names and no
+   *  reason to exist. The reason is who asks for it. This line names them and
+   *  says what they get in one phrase of the client's own. */
+  lede: "For leadership: planned against completed, across your whole team.",
+  /** One week of marketing visits, drawn. "Planned against completed" is the
+   *  whole of what leadership buys here, so the section shows it rather than
+   *  describing it: a hollow circle is a visit that was planned, a filled one
+   *  is a visit that happened, and a check marks one that was verified. No
+   *  counts, no names, no invented screen. A diagram of the idea, the same
+   *  way the route line is. */
+  week: {
+    caption: "One week of marketing visits.",
+    days: [
+      { day: "Mon", visits: ["verified", "done", "done", "planned"] },
+      { day: "Tue", visits: ["done", "done", "planned"] },
+      { day: "Wed", visits: ["verified", "done", "done", "done"] },
+      { day: "Thu", visits: ["done", "planned", "planned"] },
+      { day: "Fri", visits: ["done", "done"] },
+    ],
+    /** Read instead of the circles by anything that cannot see them. */
+    alt: "One week of marketing visits, Monday to Friday. Each day shows the visits planned for it and which of them were completed, with two marked as verified.",
+    legend: [
+      { state: "planned", label: "Planned" },
+      { state: "done", label: "Completed" },
+    ],
+  },
   /** Each report is written as the question it answers, in the words the
    *  person asking uses. The question is the content; the name is the label
    *  on the thing they buy. Her three names, unchanged. */
@@ -412,8 +433,10 @@ export const close = {
   /** "See your own territory" is gone: it offered to open the map on a named
    *  area, and that is not something the product does yet. The invitation now
    *  promises only a walkthrough of what the page has already shown. */
-  heading: "See one placement, from assessment to the family’s perfect fit.",
-  body: "Book a demo and we will walk your team through a placement and a marketing visit day in ElderLogic, and answer what your team needs to know.",
+  /* The old heading restated the flow section's own heading, so the close read
+     as one more section rather than as the invitation at the end of one. */
+  heading: "Walk through a placement with us.",
+  body: "One placement, from the first assessment to the family’s perfect fit, and one day of marketing visits. Your questions answered as we go.",
   cta: { label: "Book a demo", href: "/#book" },
   secondary: { label: "Read the FAQ", href: "/faq" },
   /** The slot the calendar drops into. Marked, so nothing has to be
@@ -421,7 +444,7 @@ export const close = {
   schedulerLabel: "Scheduling calendar",
   schedulerPlaceholder: "Calendar to be connected",
   /** The second path, inside the panel rather than below it. */
-  fallbackToggle: "Rather not book a time? Leave your details instead",
+  fallbackToggle: "Rather send a note first?",
   fallbackIntro: "We will come back to you. We read these ourselves.",
   fields: [
     { name: "name", label: "Name", type: "text" },
