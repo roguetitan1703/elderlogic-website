@@ -25,6 +25,11 @@ const max = Math.max(...funnel.rows.map((row) => row.value));
  *
  * Rows and values are data in copy.ts. `result` rows, from viable options
  * onward, are the ones that land on the customer's team, and carry the green.
+ *
+ * A row may carry `also`: a second label on the same track. The client's list
+ * had viable options and pre-tour as separate rows of ten, and two bars of
+ * identical length read as a drawing error rather than as the point, which is
+ * that nothing drops out at that step.
  */
 export default function Funnel({ active }: { active: boolean }) {
   return (
@@ -44,7 +49,12 @@ export default function Funnel({ active }: { active: boolean }) {
           >
             <span className="funnel__value">{row.value}</span>
             <span className="funnel__body">
-              <span className="funnel__label">{row.label}</span>
+              <span className="funnel__label">
+                {row.label}
+                {"also" in row && row.also ? (
+                  <span className="funnel__also">{row.also}</span>
+                ) : null}
+              </span>
               <span className="funnel__track" aria-hidden="true">
                 <span
                   className="funnel__fill"

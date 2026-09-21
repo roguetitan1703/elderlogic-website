@@ -42,3 +42,4 @@ Assets/
 # agent tooling, not part of the site
 .claude/
 .impeccable/
+a11y-report.json

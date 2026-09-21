@@ -93,7 +93,7 @@ export const nav = {
 /* ------------------------------------------------------------- Hero. */
 
 export const hero = {
-  heading: "Work every licensed home in Arizona",
+  heading: "Work Every Licensed Home in Arizona",
   sub: "We reach out to the homes, confirm room availability and pricing, and hand your team the ones that said yes.",
   primary: { label: "Book a demo", href: "/#book" },
   secondary: { label: "See how it works", href: "/#walkthrough" },
@@ -147,18 +147,19 @@ export const concierge = {
    *  carried for weeks. Row count and values are data: the component draws
    *  whatever is here. `result` marks the rows that land on the customer's
    *  team, from viable options onward.
-   *
-   *  OPEN with the client: viable options and pre-tour are both 10. Drawn
-   *  exactly as given, so those two bars are the same length. */
+   */
   funnel: {
     rows: [
-      { value: 200, label: "in the search grid" },
-      { value: 60, label: "qualified for outreach" },
-      { value: 20, label: "replied" },
-      { value: 10, label: "viable options", result: true },
-      { value: 10, label: "pre-tour", result: true },
-      { value: 3, label: "family tour", result: true },
-      { value: 1, label: "family’s perfect fit", result: true },
+      { value: 200, label: "In the search grid" },
+      { value: 60, label: "Qualified for outreach" },
+      { value: 20, label: "Replied" },
+      /* Her list had "viable options" and "pre-tour" as two rows of ten. Two
+         bars of identical length read as a drawing error, when the point is
+         the opposite: nothing is lost here, every viable option is visited.
+         One row, both labels, and the flat step said out loud. */
+      { value: 10, label: "Viable options", also: "every one pre-toured", result: true },
+      { value: 3, label: "Family tour", result: true },
+      { value: 1, label: "Family’s perfect fit", result: true },
     ],
     /** "Phoenix area" came off: these are the client's numbers now, and nothing
      *  says they come from one Phoenix search. */
@@ -330,7 +331,12 @@ export const inventory = {
       ],
     },
     {
-      heading: "Placement, start to finish",
+      /* Her own review gave two groups, not three. Marketing visits had been
+         split out as a third, which left a panel carrying two lines beside
+         panels carrying four and five: it read as a section we ran out of
+         material for. Her heading, widened by three words to cover both
+         halves of the day, and the two marketing lines joined the list. */
+      heading: "Placement and marketing visits, start to finish",
       icon: "placement-search",
       items: [
         "Client assessment and placement workflow",
@@ -338,12 +344,6 @@ export const inventory = {
         "Search every residential care home in the area",
         "Concierge Outreach Service to gather availability, pricing, and details",
         "Viable options and pre-tour planning in one place",
-      ],
-    },
-    {
-      heading: "Marketing visits",
-      icon: "pre-tour",
-      items: [
         "Marketing visit planning and routing",
         "Interactive mapping and custom route creation",
       ],
@@ -351,8 +351,6 @@ export const inventory = {
   ],
   /** Read by a screen reader as the swipeable row's name. */
   railLabel: "What your team gets, by area",
-  /** "Included" is the plain word for what the count means. */
-  countSuffix: "included",
   note: "ElderLogic does not replace your EMR or your CRM. It runs alongside them.",
 };
 
@@ -366,20 +364,30 @@ export const inventory = {
  * section. Not in the top nav, by her instruction.
  */
 export const reporting = {
-  label: "Optional",
   heading: "Need more visibility? Add reporting.",
+  /** Replaces the "Optional" pill, which was a label doing a sentence's job.
+   *  It also says the thing that makes three short reports feel deliberate
+   *  rather than thin: the work is already recorded, this is the showing. */
+  lede:
+    "Every placement and every visit is already recorded as your team works. Reporting is how you show it to the people who ask.",
+  /** Each report is written as the question it answers, in the words the
+   *  person asking uses. The question is the content; the name is the label
+   *  on the thing they buy. Her three names, unchanged. */
   blocks: [
     {
+      ask: "How many placements did we make, and how long did each one take?",
       title: "Placement reporting",
-      line: "Placement activity and outcomes from assessment through placement.",
+      line: "Activity and outcomes, from assessment through to the family’s perfect fit.",
     },
     {
+      ask: "Which homes did our team visit, and how much of the plan got done?",
       title: "Marketing visit reporting",
-      line: "Planned versus completed marketing visits and field activity.",
+      line: "Planned against completed marketing visits, and the field activity behind them.",
     },
     {
+      ask: "Did the pre-tour happen before the family toured?",
       title: "Pre-tour visit verification and reporting",
-      line: "Planned versus completed pre-tour visits with verification of field activity.",
+      line: "Planned against completed pre-tour visits, with verification of the visit itself.",
     },
   ],
 };
@@ -394,19 +402,20 @@ export const close = {
   body: "Book a demo and we will walk your team through a placement and a marketing visit day in ElderLogic, and answer what your team needs to know.",
   cta: { label: "Book a demo", href: "/#book" },
   secondary: { label: "Read the FAQ", href: "/faq" },
-  fallbackToggle: "Rather not book a time? Leave your details instead",
-  fallbackIntro: "We will come back to you. We read these ourselves.",
-  /** The slot the calendar drops into. Marked, so nothing has to be
-   *  improvised when the account exists. */
-  schedulerLabel: "Scheduling calendar",
-  schedulerPlaceholder: "Calendar to be connected",
+  /** The form is the booking, so it carries the site's one CTA wording and
+   *  says what happens next. The empty white calendar card that used to sit
+   *  here was the largest thing in the closing argument and it was blank.
+   *  When the scheduling account exists the calendar takes this column and
+   *  the form moves under it. */
+  formHeading: "Tell us where to reach you",
+  formIntro: "We will come back with a time. We read these ourselves.",
   fields: [
     { name: "name", label: "Name", type: "text" },
     { name: "organisation", label: "Organisation", type: "text" },
     { name: "email", label: "Email", type: "email" },
     { name: "message", label: "Message", type: "textarea" },
   ],
-  submit: "Send",
+  submit: "Book a demo",
 };
 
 /* --------------------------------------------------------------- FAQ. */

@@ -228,33 +228,50 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Reporting. Optional, and the thing leadership asks about. Not in the
-          top nav, by the client's instruction. No pricing: this is content,
-          not a list of priced add-ons. */}
-      <section className="section" id="reporting">
+      {/* Reporting: the thing leadership asks about. Not in the top nav, by
+          the client's instruction. No pricing: this is content, not a list of
+          priced add-ons.
+
+          Deliberately not a row of three cards. The section above it is
+          already panels, and a second identical grid made the foot of the
+          page read as one long card wall. This is a ledger instead: the
+          question a leader actually asks, set as the content, with the report
+          that answers it named underneath. Hairlines, no boxes. */}
+      <section className="section surface-paper" id="reporting">
         <div className="container">
-          <Reveal className="stack">
-            <span className="tag">{reporting.label}</span>
-            <h2 className="display-2 reporting__heading">{reporting.heading}</h2>
-          </Reveal>
-          <Reveal>
-            <ul className="reports">
-              {reporting.blocks.map((block) => (
-                <li key={block.title} className="reports__item">
-                  <h3 className="reports__title">{block.title}</h3>
-                  <p className="reports__line">{block.line}</p>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+          <div className="split">
+            <Reveal className="stack">
+              <h2 className="display-2 reporting__heading">{reporting.heading}</h2>
+              <p className="lead measure">{reporting.lede}</p>
+            </Reveal>
+            <Reveal>
+              <ul className="reports">
+                {reporting.blocks.map((block) => (
+                  <li key={block.title} className="reports__item">
+                    <p className="reports__ask">{block.ask}</p>
+                    <h3 className="reports__title">{block.title}</h3>
+                    <p className="reports__line">{block.line}</p>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* Close: the one place on the page a reader is asked to act, so it is
-          the strongest block on it. A dark panel that bookends the hero, the
-          invitation beside the calendar slot. The fallback form sits outside
-          the panel on the light ground, where fields are easiest to read.
-          <details> so it works with no script. */}
+          the strongest block on it. A dark panel that bookends the hero.
+
+          One panel, one card. What used to sit on the right was a white card
+          inside this card, 450px of it, saying the calendar was not connected:
+          the largest single element in the closing argument and it was blank.
+          Underneath, behind a rule and a disclosure, sat the form that is the
+          only thing here that actually works. They have swapped places. The
+          form is the booking now, it carries the site's one CTA wording, and
+          nothing hangs off the bottom of the panel.
+
+          When the scheduling account exists the calendar takes this column and
+          the form moves beneath it. */}
       <section className="section surface-paper" id="book">
         <div className="container">
           <div className="cta">
@@ -262,30 +279,17 @@ export default function Home() {
             <Reveal className="cta__copy">
               <h2 className="display-2 cta__heading">{close.heading}</h2>
               <p className="lead cta__body">{close.body}</p>
-              <div className="actions">
-                <a className="btn btn--primary btn--lg" href="#scheduler">
-                  {close.cta.label}
-                </a>
-                <a className="arrow-link cta__link" href={close.secondary.href}>
-                  {close.secondary.label} <span aria-hidden="true">&#8594;</span>
-                </a>
-              </div>
+              <a className="arrow-link cta__link" href={close.secondary.href}>
+                {close.secondary.label} <span aria-hidden="true">&#8594;</span>
+              </a>
             </Reveal>
 
-            {/* The slot the calendar drops into. Not role="img": until it
-                exists the honest thing to announce is the note itself. */}
-            <div className="booking" id="scheduler">
-              <p className="mono">{close.schedulerPlaceholder}</p>
-            </div>
-          </div>
-
-          <details className="fallback">
-            <summary className="fallback__summary">{close.fallbackToggle}</summary>
-            <div className="fallback__body">
-              <p className="caption">{close.fallbackIntro}</p>
+            <Reveal className="cta__book">
+              <h3 className="cta__form-heading">{close.formHeading}</h3>
+              <p className="cta__form-intro">{close.formIntro}</p>
               <ContactForm />
-            </div>
-          </details>
+            </Reveal>
+          </div>
         </div>
       </section>
     </main>

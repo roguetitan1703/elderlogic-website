@@ -136,14 +136,14 @@ a.btn:active { text-decoration: none; border-bottom-color: transparent; }
 .btn:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
 .btn:active { transform: translateY(1px); }
 
-.btn--primary { background: var(--brand); border-color: var(--brand); }
+.btn--primary { background: var(--btn-bg); border-color: var(--btn-bg); }
 .btn--primary,
 a.btn--primary:link,
 a.btn--primary:visited,
 a.btn--primary:hover,
 a.btn--primary:focus,
-a.btn--primary:active { color: var(--on-brand); }
-.btn--primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
+a.btn--primary:active { color: var(--on-btn); }
+.btn--primary:hover { background: var(--btn-bg-hover); border-color: var(--btn-bg-hover); }
 
 .btn--quiet { background: transparent; border-color: var(--border-default); }
 .btn--quiet,

@@ -11,8 +11,11 @@ import { inventory } from "@/content/copy";
  * look at. Not an accordion, which hides everything until asked. Not an icon
  * grid, which trades the content for decoration.
  *
- * So each group is a panel: its branded icon, a count, its heading, and its
- * items. On a wide screen the panels sit side by side and nothing is hidden.
+ * So each group is a panel: its branded icon, its heading, and its items. The
+ * count that used to sit opposite the icon ("5 included") is gone: it read as
+ * a score on a package, it invited a reader to compare two numbers that were
+ * never meant to be compared, and the list underneath already says how much
+ * there is. On a wide screen the panels sit side by side and nothing is hidden.
  * On a phone they sit in one row the reader swipes through, with the next
  * panel always showing at the edge so it is obvious there is more. An index
  * above names every group and jumps to it, and marks the one in view.
@@ -88,11 +91,8 @@ export default function Inventory() {
                 width={40}
                 height={40}
               />
-              <span className="inv__count mono">
-                {group.items.length} {inventory.countSuffix}
-              </span>
+              <h3 className="inv__title">{group.heading}</h3>
             </div>
-            <h3 className="inv__title">{group.heading}</h3>
             <ul className="inv__list">
               {group.items.map((item) => (
                 <li key={item}>

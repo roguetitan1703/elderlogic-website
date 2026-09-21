@@ -43,7 +43,7 @@ export default function ContactForm() {
       ))}
 
       <div className="cform__foot">
-        <button type="submit" className="btn btn--quiet">
+        <button type="submit" className="btn btn--primary">
           {close.submit}
         </button>
       </div>

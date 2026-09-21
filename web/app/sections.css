@@ -348,6 +348,15 @@
   transition: transform calc(var(--dur-reveal) * 2) var(--ease-out);
   transition-delay: inherit;
 }
+/* The second label on a shared track: viable options and pre-tour are the
+   same ten, so they are one bar. The label says why it does not narrow. */
+.funnel__also {
+  display: block;
+  margin-top: 0.15em;
+  font-size: var(--fs-micro);
+  color: var(--text-muted);
+  font-weight: var(--fw-regular);
+}
 .funnel__row.is-result .funnel__fill { background: var(--brand); }
 .funnel__row.is-result .funnel__label { color: var(--text-strong); font-weight: var(--fw-medium); }
 .funnel__caption {
@@ -586,17 +595,10 @@
 /* ---------- close ------------------------------------------------------ */
 
 
-/* The fallback form, opened.
-   It used to live inside the split's right column, where opening it stacked
-   four fields into half the page with the other half empty. It now sits under
-   the split at full container width, ruled off so it reads as a second path
-   rather than part of the booking panel, and the fields pair up. */
-.fallback {
-  margin-top: var(--sp-12);
-  border-top: var(--border-w) solid var(--border-hairline);
-  padding-top: var(--sp-6);
-}
-.fallback__body { max-width: var(--container-max); }
+/* The fallback form used to sit here: below the panel, behind a rule, behind
+   a disclosure, a screen and a half of paper away from the thing it was the
+   fallback to. It was also the only part of the block that worked. It is now
+   the right column of the panel itself, and this block is gone. */
 
 .cform {
   display: grid;
@@ -959,17 +961,27 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
   flex-wrap: wrap;
   gap: var(--sp-3);
 }
+/* Who does step 03. It was a bordered box with a tinted fill and a 3px
+   radius, sitting beside a heading: a hard little rectangle in a page that has
+   no other hard rectangles, and it read as a badge stuck on rather than as
+   part of the line. Now it is the mark itself: a brand dot and the name, no
+   box, no fill, aligned on the heading's baseline. */
 .flow__by {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
   font-size: var(--fs-micro);
   font-weight: var(--fw-semibold);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--green-800);
-  background: var(--green-50, rgba(0, 166, 118, 0.1));
-  border: var(--rule-w, 1px) solid var(--brand);
-  border-radius: var(--radius-sm, 3px);
-  padding: 2px var(--sp-2);
+  color: var(--brand-ink);
+}
+.flow__by::before {
+  content: "";
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: var(--radius-pill);
+  background: var(--brand);
 }
 
 /* ---------------------------------------------------------------------------
@@ -1338,7 +1350,11 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
   .inv__index { display: none; }
   .inv__rail {
     grid-auto-flow: row;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Not repeat(3): the number of panels is content, and hardcoding three
+       left two panels sitting in two thirds of the container with an empty
+       column beside them the moment the client's review took it to two. */
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    align-items: start;
     margin-inline: 0;
     padding: 0;
     overflow: visible;
@@ -1356,9 +1372,12 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
   border-radius: var(--radius-xl);
   box-shadow: 0 1px 2px rgba(var(--scrim-900), 0.04), 0 10px 30px rgba(var(--scrim-900), 0.06);
 }
-.inv__top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); }
-.inv__icon { width: 40px; height: 40px; }
-.inv__count { font-size: var(--fs-micro); letter-spacing: var(--ls-mono); color: var(--text-muted); }
+/* The icon used to sit alone on a row with "5 included" opposite it, and the
+   heading came underneath. That row was a header band on a card, and the count
+   in it invited a reader to compare two panels by number. Icon and heading are
+   one line now, and the panel starts with what it is. */
+.inv__top { display: flex; align-items: flex-start; gap: var(--sp-4); }
+.inv__icon { width: 40px; height: 40px; flex: none; }
 .inv__title {
   margin: 0;
   font-family: var(--font-display);
@@ -1381,34 +1400,48 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 .inv__tick { margin-top: 0.2em; color: var(--brand); }
 .inv__note { margin: var(--sp-8) 0 0; color: var(--text-muted); font-size: var(--fs-body-sm); }
 
-/* ---------- reporting ---------------------------------------------------- */
-.reporting__heading { margin: 0; max-width: 22ch; text-wrap: balance; }
+/* ---------- reporting ----------------------------------------------------
+   Three bordered cards in a row, each holding a title and one line, directly
+   under a section that is already three panels: the foot of the page read as
+   a card wall, and the cards were mostly empty space around nine words.
+
+   A ledger instead. The question a leader asks is the content and it is set as
+   content; the report that answers it is named under it. Hairline between the
+   rows, no borders around anything, so the three read as one instrument. */
+.reporting__heading { margin: 0; max-width: 18ch; text-wrap: balance; }
 .reports {
   list-style: none;
-  margin: var(--sp-10) 0 0;
+  margin: 0;
   padding: 0;
-  display: grid;
-  gap: var(--sp-4);
+  display: flex;
+  flex-direction: column;
 }
-@media (min-width: 760px) { .reports { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .reports__item {
   display: flex;
   flex-direction: column;
   gap: var(--sp-2);
-  padding: var(--sp-6);
-  border: var(--border-w) solid var(--border-default);
-  border-radius: var(--radius-xl);
-  background: var(--surface-card);
+  padding: var(--sp-6) 0;
+  border-top: var(--border-w) solid var(--border-default);
+}
+.reports__item:first-child { border-top: 0; padding-top: 0; }
+.reports__item:last-child { padding-bottom: 0; }
+.reports__ask {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  color: var(--text-strong);
+  text-wrap: balance;
 }
 .reports__title {
-  margin: 0;
+  margin: var(--sp-2) 0 0;
   font-family: var(--font-sans);
-  font-size: var(--fs-lead);
+  font-size: var(--fs-body-sm);
   font-weight: var(--fw-semibold);
   line-height: var(--lh-snug);
-  color: var(--text-strong);
+  color: var(--brand-ink);
 }
-.reports__line { margin: 0; color: var(--text-body); font-size: var(--fs-body-sm); line-height: var(--lh-body); }
+.reports__line { margin: 0; color: var(--text-muted); font-size: var(--fs-body-sm); line-height: var(--lh-body); }
 
 /* ---------- the close ----------------------------------------------------
    The one place the reader is asked to act, so it is the strongest block on
@@ -1433,37 +1466,70 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: url("/product/map-2x-960.webp") 70% center / cover no-repeat;
+  /* The mask used to run transparent on the left to solid on the right, which
+     put the densest part of the map directly under the booking column. Behind
+     type and a heading it was texture; behind four input fields it was noise,
+     and the fields looked mottled. It now peaks in the middle of the panel and
+     falls away under both columns. */
+  background: url("/product/map-2x-960.webp") 45% center / cover no-repeat;
   filter: grayscale(1) brightness(1.6);
-  opacity: 0.16;
-  -webkit-mask-image: linear-gradient(100deg, transparent 25%, #000 75%);
-  mask-image: linear-gradient(100deg, transparent 25%, #000 75%);
+  opacity: 0.14;
+  -webkit-mask-image: linear-gradient(100deg, transparent 8%, #000 42%, rgba(0, 0, 0, 0.35) 66%, transparent 92%);
+  mask-image: linear-gradient(100deg, transparent 8%, #000 42%, rgba(0, 0, 0, 0.35) 66%, transparent 92%);
 }
 @media (min-width: 900px) {
-  .cta { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; gap: var(--sp-12); }
+  .cta { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: start; gap: var(--sp-12); }
 }
-.cta__copy { display: flex; flex-direction: column; gap: var(--sp-5); }
+/* Stacked, the mask's peak lands across the form instead of in the gutter
+   between the two columns, so the map comes back another step. */
+@media (max-width: 899px) { .cta__ground { opacity: 0.07; } }
+.cta__copy { display: flex; flex-direction: column; gap: var(--sp-5); align-self: center; }
 .cta__heading { margin: 0; color: var(--text-inverse); max-width: 20ch; text-wrap: balance; }
 .cta__body { margin: 0; color: var(--text-inverse-muted); max-width: 46ch; }
-.cta .actions { margin-top: var(--sp-2); }
 .cta .arrow-link:link,
 .cta .arrow-link:visited,
 .cta .arrow-link:hover { color: var(--text-inverse); }
 .cta .arrow-link span { color: var(--green-400); }
 
-.booking {
-  display: grid;
-  place-items: center;
-  min-height: 20rem;
-  padding: var(--sp-6);
-  background: var(--surface-card);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-  font-size: var(--fs-caption);
-  letter-spacing: var(--ls-mono);
-  color: var(--text-muted);
+/* The booking, on the panel's own ground. No second card: fields are fields,
+   drawn straight on the navy with a hairline and a low-alpha fill, so the
+   block has one edge instead of an edge inside an edge. */
+.cta__book { display: flex; flex-direction: column; gap: var(--sp-3); min-width: 0; }
+.cta__form-heading {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--text-inverse);
 }
-.booking p { margin: 0; }
+.cta__form-intro {
+  margin: 0 0 var(--sp-3);
+  color: var(--text-inverse-muted);
+  font-size: var(--fs-body-sm);
+}
+/* One column: the panel's right half is too narrow for the two the form uses
+   at full container width, and the message box needs its own row. */
+.cta .cform { grid-template-columns: 1fr; gap: var(--sp-4); }
+.cta .cform .field--wide { grid-column: auto; grid-row: auto; }
+.cta .cform .field--wide textarea { height: auto; min-height: 0; }
+.cta .field__label { color: var(--text-inverse-muted); }
+.cta .field__input {
+  background: rgba(255, 255, 255, 0.07);
+  /* --border-dark is 14% white, which is a divider value. A field's boundary
+     is a control boundary and has to clear 3:1 against what is behind it. */
+  border-color: rgba(255, 255, 255, 0.42);
+  color: var(--text-inverse);
+}
+.cta .field__input::placeholder { color: rgba(255, 255, 255, 0.55); }
+.cta .field__input:focus {
+  border-color: var(--green-400);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 3px rgba(47, 185, 141, 0.28);
+}
+.cta .cform__foot { margin-top: var(--sp-2); }
+.cta .cform__notice { color: var(--text-inverse-muted); }
+.cta .cform__notice a { color: var(--green-400); }
 
 
 /* ---------- light header variant ----------------------------------------
@@ -1477,11 +1543,17 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
    that makes the dark bar transparent at the top of the page. */
 .logo--colour { display: none; }
 
+/* A white bar on a white section has no edge, and half this page's sections
+   are white. The hairline was --border-hairline, which is the lightest rule in
+   the system and disappears against the surface it is meant to separate from,
+   and the shadow under it was 6% and did nothing. A real rule and a shadow
+   with an offset: the bar now sits above the page on white, on paper and on
+   the subtle grey alike. */
 body:has(.site-header--light) .site-header.site-header--light:not(.is-open) {
   background: var(--surface-card);
   backdrop-filter: none;
-  border-bottom-color: var(--border-hairline);
-  box-shadow: 0 1px 12px rgba(var(--scrim-900), 0.06);
+  border-bottom-color: var(--border-default);
+  box-shadow: 0 1px 2px rgba(var(--scrim-900), 0.05), 0 6px 20px rgba(var(--scrim-900), 0.07);
 }
 .site-header--light:not(.is-open) .logo--white { display: none; }
 .site-header--light:not(.is-open) .logo--colour { display: block; }

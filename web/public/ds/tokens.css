@@ -120,7 +120,7 @@
 :root{
 /* --- brand base --------------------------------------------------------- */
 --green-50:#eaf7f2;--green-100:#cdece1;--green-200:#9ad9c3;--green-300:#63c9a7;
---green-400:#2fb98d;--green-500:#00B07D;--green-550:#00A071;--green-600:#00875f;--green-700:#006b4c;--green-800:#04503a;
+--green-400:#2fb98d;--green-500:#00B07D;--green-550:#00A071;--green-600:#00875f;--green-650:#00825B;--green-700:#006b4c;--green-800:#04503a;
 --navy-50:#eef2f8;--navy-100:#dbe3ef;--navy-200:#b3c1da;--navy-300:#7f96c0;
 --navy-400:#4a6a9e;--navy-500:#2a5289;--navy-600:#1c4073;--navy-700:#16335c;--navy-800:#102544;--navy-900:#0b1a30;
 /* --- neutrals (cool, faintly navy-tinted) ------------------------------- */
@@ -136,10 +136,17 @@
 
 /* --- semantic aliases -------------------------------------------------- */
 /* The brand green is #00B07D (client, 17 September 2026). It fails as a
-   ground for white text, at 2.80:1, so anything that sits on it is navy:
-   6.23:1. --on-brand is that navy. Text that is itself green uses
-   --brand-ink, which is dark enough to read on white. */
+   ground for white text, at 2.80:1, so small marks that sit on it carry navy
+   instead: 6.23:1. --on-brand is that navy, and it is right on a step number
+   or a badge, where the mark is a few characters wide.
+
+   It was wrong on the button. A full size navy label on bright green reads as
+   two brand colours fighting rather than as one action, and it was the first
+   thing the reviewer named. The primary button therefore uses its own pair:
+   white on #00825B, 4.83:1, which is the same green one step deeper. The
+   bright green stays the accent everywhere it does not have to carry text. */
 --brand:var(--green-500);--brand-hover:var(--green-550);--on-brand:var(--navy-900);
+--btn-bg:var(--green-650);--btn-bg-hover:var(--green-700);--on-btn:var(--n-0);
 --brand-ink:var(--green-700);--brand-deep:var(--navy-600);
 
 /* Secondary text is two steps darker than the scale's midpoint on purpose.
