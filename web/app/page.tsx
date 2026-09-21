@@ -13,6 +13,7 @@ import {
 import Inventory from "@/components/Inventory";
 import Route from "@/components/Route";
 import ContactForm from "@/components/ContactForm";
+import Scheduler from "@/components/Scheduler";
 import Picture from "@/components/Picture";
 import Reveal from "@/components/Reveal";
 import Shot from "@/components/Shot";
@@ -237,7 +238,7 @@ export default function Home() {
           page read as one long card wall. This is a ledger instead: the
           question a leader actually asks, set as the content, with the report
           that answers it named underneath. Hairlines, no boxes. */}
-      <section className="section surface-paper" id="reporting">
+      <section className="section" id="reporting">
         <div className="container">
           <div className="split">
             <Reveal className="stack">
@@ -297,11 +298,9 @@ export default function Home() {
               </details>
             </Reveal>
 
-            {/* The slot the calendar drops into. Not role="img": until it
-                exists the honest thing to announce is the note itself. */}
-            <div className="booking" id="scheduler">
-              <p className="mono">{close.schedulerPlaceholder}</p>
-            </div>
+            {/* The calendar. Falls back to the marked slot if no scheduling
+                URL is configured. */}
+            <Scheduler />
           </div>
         </div>
       </section>

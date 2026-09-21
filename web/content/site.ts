@@ -105,3 +105,13 @@ export function pageMetadata({
  * has decided, set it here and the query becomes irrelevant.
  */
 export const headerTheme: "dark" | "light" = "light";
+
+/**
+ * The scheduling link the booking slot embeds.
+ *
+ * Set to the agency's own Calendly while the client's account is being made,
+ * so the close is a working booking rather than a marked empty slot. Swap the
+ * URL for hers and nothing else changes. Set it to "" and the slot falls back
+ * to the placeholder note.
+ */
+export const schedulerUrl = "https://calendly.com/omchandel1703/30min";

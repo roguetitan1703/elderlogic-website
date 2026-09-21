@@ -1519,6 +1519,24 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
   color: var(--text-inverse-muted);
 }
 .booking p { margin: 0; }
+/* With a calendar in it the well is a frame, not a placeholder: no padding to
+   inset it, and white behind it because that is what the calendar draws on. */
+.booking--live {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  background: var(--surface-card);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+.booking__frame {
+  display: block;
+  width: 100%;
+  /* Calendly's own layout needs this much before it starts clipping its
+     time zone row; it does not resize the frame for us. */
+  min-height: 48rem;
+  border: 0;
+}
+@media (max-width: 899px) { .booking__frame { min-height: 52rem; } }
 
 .cta__form-intro {
   margin: 0 0 var(--sp-3);

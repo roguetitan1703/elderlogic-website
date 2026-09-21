@@ -28,14 +28,23 @@ export const meta = {
   title: "ElderLogic: hospice placement and marketing visits in Arizona",
   /** Metadata is not a place to be interesting. A search result and an
    *  unwrapped link are both read by someone who has never heard of us, in
-   *  one second, next to nine competitors. Every title and description on
-   *  this site therefore says what the product is before it says anything
-   *  clever about it. The three share surfaces show together, so they must
-   *  not repeat each other either:
-   *    card image  what it is, big
-   *    shareTitle  what it is, for search-shaped reading
-   *    description what it is, plus what is actually in it */
-  shareTitle: "ElderLogic: hospice placement software for Arizona",
+   *  one second, next to nine competitors. So every surface says what the
+   *  product is before it says anything clever about it.
+   *
+   *  But a link card shows all three at once, stacked, and they were saying
+   *  the same thing three times: the card image read "Placement and marketing
+   *  visits for hospice teams", the title read "hospice placement software for
+   *  Arizona", and the page title read "hospice placement and marketing visits
+   *  in Arizona". Three restatements of one fact, which is what a reader
+   *  registers as filler.
+   *
+   *  One fact each, and they are different facts:
+   *    card image   what it is        (the category, set large)
+   *    shareTitle   how much of it    (the scope, and where)
+   *    description  what it does      (the client's own line)
+   *  The page title is the search headline and carries the category and the
+   *  state, because a search result is not a card and shows no image. */
+  shareTitle: "ElderLogic: every licensed residential care home in Arizona",
   /** Describes the card, which carries its own headline. */
   shareImageAlt: "ElderLogic. Placement and marketing visits for hospice teams.",
   /** The one line under the title in a search result. 160 characters. */
