@@ -251,18 +251,19 @@ it in capitals because the site renders group headings in capitals; see 00:46.
 
 - A statewide database, continuously maintained and updated
 - Owner and licensing information from AZDHS
-- Mobile numbers researched and validated by ElderLogic
+- Community contact information and historical AZDHS data
 - Inspection, violation, and enforcement history
 
-**Open, one line only.** The third contradicts her own standing rule: "we don't
-ever say text or call, we just say communicate with or something vague so that
-nobody knows how we're actually doing it." Mobile numbers names the channel to
-any competitor reading the page.
+**Settled 19 September.** The third line as she first wrote it, "Mobile numbers
+researched and validated by ElderLogic", contradicted her own standing rule:
+"we don't ever say text or call, we just say communicate with or something
+vague so that nobody knows how we're actually doing it." Mobile numbers names
+the channel to any competitor reading the page.
 
-Her pricing sheet already has a line that protects it and says the same thing:
-**"Community contact information & historical AZDHS data."**
-
-Om is asking her.
+Om put the choice to her against her pricing sheet's own line. Her answer:
+**"Good call. Vague."** So the site now carries **"Community contact
+information and historical AZDHS data"**, the ampersand written out to match
+the rest of the list.
 
 ## 00:34. Inventory, group two
 
@@ -374,7 +375,9 @@ she saw them. The funnel labels are all lower case. "Sentence case everything"
 reads naturally as: no all-capitals labels, and capitalise the first word of
 every label.
 
-**Working resolution, Proposed.** The two readings do not conflict:
+**Settled 19 September.** Om asked whether she meant "Inspection records" or
+"Inspection Records". Her answer: "Right. I mean Title Case; you're right."
+The two readings do not conflict:
 
 - **Nav items in Title Case**, per Om. Common for short nav labels.
 - **Everything else in true sentence case.** Capitals transforms come off, and
@@ -384,7 +387,10 @@ every label.
 - **Her reporting heading** becomes "Need more visibility? Add reporting." to
   match.
 
-Worth one line to her to confirm, with "Inspection Records" as the example.
+Scope, as shipped: the three nav titles and their copies in the footer and in
+the structured data. Section headings, the hero and the funnel labels stay in
+sentence case, which is how she typed them herself. The one CTA keeps its
+single wording, "Book a demo", across the whole site.
 
 ---
 
@@ -442,11 +448,18 @@ home page this means after the inventory and before the close.
 
 ## Needs Terrah
 
-| # | Question |
-|---|---|
-| 1 | "Mobile numbers researched and validated by ElderLogic": keep, or her pricing sheet's "Community contact information"? |
-| 2 | Can the site show AZDHS values in illustrations yet? Decides whether three rows come off the popup and the hero card |
-| 3 | Is "Sun Ridge Assisted Living" a real home in her database? |
-| 4 | Where did the Sunrise Cares Homes screenshot come from? |
-| 5 | Title Case on the nav and sentence case everywhere else: right? |
-| 6 | Her white navbar mockup, as the brief for that change |
+| # | Question | Status |
+|---|---|---|
+| 1 | "Mobile numbers researched and validated by ElderLogic": keep, or her pricing sheet's "Community contact information"? | **Answered 19 Sep.** "Good call. Vague." Her pricing sheet line ships |
+| 2 | Can the site show AZDHS values in illustrations yet? Decides whether three rows come off the popup and the hero card | Open |
+| 3 | Is "Sun Ridge Assisted Living" a real home in her database? | **Closed.** Om confirmed to her that every name and number in the images is swapped for a fake; the real ones exist only in what she sent us |
+| 4 | Where did the Sunrise Cares Homes screenshot come from? | **Closed** by the same answer |
+| 5 | Title Case on the nav and sentence case everywhere else: right? | **Answered 19 Sep.** "Right. I mean Title Case; you're right." Nav items are Title Case; see 00:46 |
+| 6 | Her white navbar mockup, as the brief for that change | Open |
+
+## 19 September: the domain
+
+Registered under the original **elderlogic.biz** account and managed through
+**Google Admin** with that credential. She wants everything moved to
+**elderlogic.app**, which is the domain the site is already written against.
+Still needed from her: whether a Google Analytics account exists.

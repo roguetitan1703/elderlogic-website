@@ -62,9 +62,9 @@ export const org = {
   audience: "Hospice teams",
   /** The routes a search engine may group under the site in one result. */
   siteLinks: [
-    { name: "How it works", url: "/#walkthrough" },
-    { name: "Inspection records", url: "/#record" },
-    { name: "Marketing visits", url: "/#marketing-visits" },
+    { name: "How It Works", url: "/#walkthrough" },
+    { name: "Inspection Records", url: "/#record" },
+    { name: "Marketing Visits", url: "/#marketing-visits" },
     { name: "Questions", url: "/faq" },
     { name: "Book a demo", url: "/#book" },
   ],
@@ -72,9 +72,9 @@ export const org = {
 
 export const nav = {
   items: [
-    { label: "How it works", href: "/#walkthrough" },
-    { label: "Inspection records", href: "/#record" },
-    { label: "Marketing visits", href: "/#marketing-visits" },
+    { label: "How It Works", href: "/#walkthrough" },
+    { label: "Inspection Records", href: "/#record" },
+    { label: "Marketing Visits", href: "/#marketing-visits" },
     { label: "FAQ", href: "/faq" },
   ],
   cta: { label: "Book a demo", href: "/#book" },
@@ -320,11 +320,12 @@ export const inventory = {
       items: [
         "A statewide database, continuously maintained and updated",
         "Owner and licensing information from AZDHS",
-        /* OPEN with the client. This names the outreach channel, against her
-           own standing rule. Her pricing sheet's line says the same without
-           it: "Community contact information & historical AZDHS data".
-           Shipped as she wrote it until she chooses. */
-        "Mobile numbers researched and validated by ElderLogic",
+        /* Settled 19 September: "Good call. Vague." Her pricing sheet's line
+           replaces "Mobile numbers researched and validated by ElderLogic",
+           which named the outreach channel to any competitor reading the
+           page, against her own standing rule. The ampersand becomes "and" to
+           match the rest of the list. */
+        "Community contact information and historical AZDHS data",
         "Inspection, violation, and enforcement history",
       ],
     },
@@ -515,9 +516,9 @@ export const footer = {
     {
       heading: "Product",
       links: [
-        { label: "How it works", href: "/#walkthrough" },
-        { label: "Marketing visits", href: "/#marketing-visits" },
-        { label: "Inspection records", href: "/#record" },
+        { label: "How It Works", href: "/#walkthrough" },
+        { label: "Marketing Visits", href: "/#marketing-visits" },
+        { label: "Inspection Records", href: "/#record" },
         { label: "FAQ", href: "/faq" },
       ],
     },
