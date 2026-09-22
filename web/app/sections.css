@@ -1421,39 +1421,81 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 @media (min-width: 900px) {
   .band__inner { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--sp-12); }
 }
-.band__copy { display: flex; flex-direction: column; gap: var(--sp-3); }
+/* Four registers down this column, so it reads as set rather than typed:
+   the heading in the display serif, the lede in sans with its audience as a
+   coloured run-in, each report name back in the serif a size down, and its
+   line in sans at caption size. Without the figure beside it the column still
+   has a shape. */
+.band__copy { display: flex; flex-direction: column; }
 .band__heading {
-  margin: 0;
+  margin: 0 0 var(--sp-4);
   font-family: var(--font-display);
   font-size: var(--fs-h2);
   line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading, -0.01em);
   color: var(--text-strong);
   text-wrap: balance;
 }
-.band__lede { margin: 0 0 var(--sp-4); color: var(--text-body); font-size: var(--fs-lead); }
+.band__lede {
+  margin: 0;
+  padding-bottom: var(--sp-6);
+  color: var(--text-body);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
+  max-width: 34ch;
+}
+/* The audience, run into the sentence it belongs to. Not a label above the
+   heading: it is the subject of the line it sits in. */
+.band__for { color: var(--brand-ink); font-weight: var(--fw-semibold); }
 
 /* The rule that separates this band from the close on the same ground. */
 .section--after-band { border-top: var(--border-w) solid var(--border-default); }
 
 .reports { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+/* The rule above the first row is the one that separates the frame from the
+   list, so it is the darker of the two; the rules between rows are hairlines. */
 .reports__item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-1);
-  padding: var(--sp-4) 0;
-  border-top: var(--border-w) solid var(--border-default);
+  display: grid;
+  grid-template-columns: 0.55rem minmax(0, 1fr);
+  column-gap: var(--sp-4);
+  row-gap: var(--sp-1);
+  padding: var(--sp-5) 0;
+  border-top: var(--border-w) solid var(--border-hairline);
 }
-.reports__item:first-child { border-top: 0; }
+.reports__item:first-child { border-top: var(--border-w) solid var(--border-strong); }
 .reports__item:last-child { padding-bottom: 0; }
+/* A filled mark in the gutter, the same one the week uses for a visit that
+   happened. It gives the three rows an optical left edge and it is the
+   diagram's own vocabulary, not a bullet borrowed from somewhere else. */
+.reports__title::before {
+  content: "";
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--brand);
+}
 .reports__title {
+  display: contents;
   margin: 0;
-  font-family: var(--font-sans);
-  font-size: var(--fs-body-sm);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-snug);
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-heading);
   color: var(--text-strong);
 }
-.reports__line { margin: 0; color: var(--text-muted); font-size: var(--fs-body-sm); line-height: var(--lh-body); }
+.reports__title span { grid-column: 2; grid-row: 1; }
+.reports__line {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-body);
+  max-width: 46ch;
+}
 
 /* ---------- the week of visits ------------------------------------------
    Five columns, Monday to Friday. A hollow circle is a visit that was

@@ -247,11 +247,16 @@ export default function Home() {
             </Reveal>
             <Reveal className="band__copy">
               <h2 className="band__heading">{reporting.heading}</h2>
-              <p className="band__lede">{reporting.lede}</p>
+              <p className="band__lede">
+                <span className="band__for">{reporting.ledeFor}:</span>{" "}
+                {reporting.lede}
+              </p>
               <ul className="reports">
                 {reporting.blocks.map((block) => (
                   <li key={block.title} className="reports__item">
-                    <h3 className="reports__title">{block.title}</h3>
+                    <h3 className="reports__title">
+                      <span>{block.title}</span>
+                    </h3>
                     <p className="reports__line">{block.line}</p>
                   </li>
                 ))}

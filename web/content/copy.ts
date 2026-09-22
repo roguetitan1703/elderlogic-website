@@ -382,7 +382,10 @@ export const reporting = {
   /** Reporting kept failing as a section because it had three names and no
    *  reason to exist. The reason is who asks for it. This line names them and
    *  says what they get in one phrase of the client's own. */
-  lede: "For leadership: planned against completed, across your whole team.",
+  /** Split so the two halves can be set in different registers: the audience
+   *  is a run-in, the phrase is the sentence. It is one sentence either way. */
+  ledeFor: "For leadership",
+  lede: "planned against completed, across your whole team.",
   /** One week of marketing visits, drawn. "Planned against completed" is the
    *  whole of what leadership buys here, so the section shows it rather than
    *  describing it: a hollow circle is a visit that was planned, a filled one
