@@ -1635,15 +1635,20 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
   background: var(--surface-card);
   border-color: rgba(255, 255, 255, 0.16);
 }
+/* Google's appointment page has one breakpoint of its own, at 700px: wider
+   than that it puts the month beside the times and stands 750px tall, narrower
+   and it stacks them and stands 1438px tall. Measured, not guessed. The frame
+   does not report its height to us, so the slot has to be told.
+
+   The slot is 567px in the panel's right column, which is the wrong side of
+   that breakpoint, so this is the tall number. That is a layout decision
+   waiting on a call, not a value to tune: see the note in the close. */
 .booking__frame {
   display: block;
   width: 100%;
-  /* Calendly's own layout needs this much before it starts clipping its
-     time zone row; it does not resize the frame for us. */
-  min-height: 48rem;
+  min-height: 90rem;
   border: 0;
 }
-@media (max-width: 899px) { .booking__frame { min-height: 52rem; } }
 
 .cta__form-intro {
   margin: 0 0 var(--sp-3);

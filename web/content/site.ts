@@ -109,9 +109,12 @@ export const headerTheme: "dark" | "light" = "light";
 /**
  * The scheduling link the booking slot embeds.
  *
- * Set to the agency's own Calendly while the client's account is being made,
- * so the close is a working booking rather than a marked empty slot. Swap the
+ * A Google Calendar appointment schedule. It frames without an X-Frame-Options
+ * or frame-ancestors block, checked against the live endpoint, so it needs no
+ * script of Google's to sit on the page.
+ *
+ * Set to the agency's own schedule while the client's is being made. Swap the
  * URL for hers and nothing else changes. Set it to "" and the slot falls back
  * to the placeholder note.
  */
-export const schedulerUrl = "https://calendly.com/omchandel1703/30min";
+export const schedulerUrl = "https://calendar.app.google/MAwPmKLaUHag9y3BA";

@@ -21,12 +21,12 @@ export default function Scheduler() {
     );
   }
 
-  /* hide_event_type_details drops the name and duration header, which is the
-     agency's name until the client's own account exists; hide_gdpr_banner
-     drops the cookie notice that otherwise covers the calendar on a first
-     visit. Both are available on every Calendly plan. Colour parameters are
-     not, so the calendar keeps Calendly's own blue. */
-  const src = `${schedulerUrl}${schedulerUrl.includes("?") ? "&" : "?"}hide_event_type_details=1&hide_gdpr_banner=1`;
+  /* gv=true is Google's own embed parameter. The page carries Google's
+     chrome either way: the schedule owner's logo and name at the top, and a
+     "create your own appointment page" strip at the foot. Neither can be
+     turned off, so the fix for the first is whose account the schedule lives
+     on, not a parameter. */
+  const src = `${schedulerUrl}${schedulerUrl.includes("?") ? "&" : "?"}gv=true`;
 
   return (
     <div className="booking booking--live" id="scheduler">
