@@ -1262,7 +1262,9 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
    Client review, 17 September 2026
    =========================================================================== */
 
-.surface-subtle { background: var(--surface-subtle); }
+/* The pale grey is gone. The page had four grounds, and the fourth was doing
+   no work the paper was not already doing: it read as a fifth of a shade
+   rather than as a change. Three now, navy, white and paper, alternating. */
 
 /* A small factual label: "Optional". Not a status on a home, ever. */
 .tag {

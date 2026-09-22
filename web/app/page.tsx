@@ -138,7 +138,7 @@ export default function Home() {
       {/* Why a home takes the meeting. The line on the right is ElderLogic's
           own opening message, not a home's testimonial, so it is set as ours:
           no blockquote, no attribution, no endorsement styling. */}
-      <section className="section section--ruled">
+      <section className="section surface-paper">
         <div className="container">
           <div className="split">
             <Reveal className="stack">
@@ -154,7 +154,7 @@ export default function Home() {
       </section>
 
       {/* One placement, start to finish. */}
-      <section className="section section--ruled" id="walkthrough">
+      <section className="section" id="walkthrough">
         <div className="container">
           <Reveal className="intro">
             <h2 className="display-2 intro__heading">{walkthrough.heading}</h2>
@@ -218,7 +218,7 @@ export default function Home() {
       {/* What is actually being bought, as panels a reader can take in at
           their own pace. Side by side on a wide screen; one swipeable row on
           a phone, with the next panel always in view. */}
-      <section className="section surface-subtle" id="inventory">
+      <section className="section" id="inventory">
         <div className="container">
           <Reveal className="intro">
             <h2 className="display-2 intro__heading">{inventory.heading}</h2>
