@@ -194,14 +194,26 @@ Airtable. Three variables, set on the host, never in the repo:
 
 | | |
 |---|---|
-| `AIRTABLE_TOKEN` | personal access token with `data.records:write` on the base |
-| `AIRTABLE_BASE_ID` | the base id, `app...`, from the Airtable API page |
-| `AIRTABLE_TABLE` | the table name, default `Enquiries` |
+| `AIRTABLE_TOKEN` | personal access token on the base. The site needs `data.records:write` and nothing else |
+| `AIRTABLE_BASE_ID` | the base id, `app...`: the first path segment of the Airtable URL |
+| `AIRTABLE_TABLE` | the table id, `tbl...`: the second segment. The name works too, but the id survives a rename |
 
 The table needs these fields, spelled exactly: **Name, Organisation, Email,
 Message, Received, Source**. `typecast` is on, so Airtable will coerce a text
 value into a select option that already exists, but it will not invent a field
-that is missing: a wrong spelling fails the write.
+that is missing: a wrong spelling fails the write with `UNKNOWN_FIELD_NAME`.
+
+```
+cd web && python ../scripts/airtable-setup.py
+```
+
+creates whatever is missing and leaves everything else alone, so it is safe to
+re-run and it is how the client's own base gets set up on go live. For that it
+needs `schema.bases:read` and `schema.bases:write` on the token as well; with
+only `data.records:write` it stops and prints the fields to add by hand.
+
+Real values live in `web/.env.local`, which is gitignored, and in the host's
+environment settings. They are never committed.
 
 With the variables unset the enquiry is logged on the server and the form tells
 the reader it did not send, with the email address. That is deliberate. A
