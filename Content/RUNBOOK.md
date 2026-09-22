@@ -197,6 +197,7 @@ Airtable. Three variables, set on the host, never in the repo:
 | `AIRTABLE_TOKEN` | personal access token on the base. The site needs `data.records:write` and nothing else |
 | `AIRTABLE_BASE_ID` | the base id, `app...`: the first path segment of the Airtable URL |
 | `AIRTABLE_TABLE` | the table id, `tbl...`: the second segment. The name works too, but the id survives a rename |
+| `ENQUIRY_FALLBACK_URL` | optional. Any webhook that should receive an enquiry Airtable would not take |
 
 The table needs these fields, spelled exactly: **Name, Organisation, Email,
 Message, Received, Source**. `typecast` is on, so Airtable will coerce a text
@@ -215,9 +216,29 @@ only `data.records:write` it stops and prints the fields to add by hand.
 Real values live in `web/.env.local`, which is gitignored, and in the host's
 environment settings. They are never committed.
 
-With the variables unset the enquiry is logged on the server and the form tells
-the reader it did not send, with the email address. That is deliberate. A
-success message the site cannot back up is worse than no form.
+**The sender is only ever blocked by their own mistakes.** A missing name, an
+address with no `@`, an empty message: those come back instantly, naming the
+field. Everything after that is ours. The route answers in about 180ms and
+files the enquiry after the response, using `after()`, which Vercel keeps
+alive past the response.
+
+Airtable being slow, rate limiting us or misconfigured has nothing to do with
+the person who filled the form, and telling them "that did not send" when they
+did nothing wrong is both untrue and a lost enquiry, because most people do not
+type it again. So the write is retried three times, at 0.5s, 2s and 6s with
+jitter. A 429 or a 5xx is worth retrying; a 401 or an `UNKNOWN_FIELD_NAME` will
+fail identically three seconds later, so those skip straight to the end.
+
+**Nothing is ever dropped silently.** If the write still fails, or the
+variables are not set at all, the enquiry goes to the dead letter: one line in
+the logs beginning `ENQUIRY_UNSTORED` with the whole message in it, and a POST
+to `ENQUIRY_FALLBACK_URL` if that is set. Either recovers the enquiry by hand.
+A Slack incoming webhook works as that URL with no code change, and is the
+cheapest way to be told.
+
+Both paths are tested: a valid enquiry answers in 180ms and appears in Airtable
+a moment later, and a deliberately broken token still answers the sender 200
+and delivers the full enquiry to the fallback.
 
 The route needs a Node runtime. It is `ƒ /api/contact` in the build output. On
 a purely static host it does not exist and every enquiry reports a failure, so
@@ -253,6 +274,8 @@ Tracked so nothing is lost between sessions; see HANDOFF.md for detail.
 - **Booking.** Done, pending the client's own schedule. It points at the
   agency's Google Calendar, so the agency's name is on the calendar a visitor
   sees.
+- **Rate limiting.** Nothing throttles `/api/contact`. See `parked.md` for why,
+  and for the two ways to add it.
 - **Analytics.** Vercel Analytics is installed. The contracted deliverable is
   Google Analytics under the client's own account with events on demo requests,
   form submissions and video plays.

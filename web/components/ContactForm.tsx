@@ -13,11 +13,15 @@ type State = "idle" | "sending" | "sent" | "failed";
  * address, because a form with no action does a GET to its own URL and puts
  * the sender's name and email in the query string. That is gone.
  *
- * Three things the reader is never lied to about. A field that is wrong is
- * named, not just outlined. A send that fails says so and gives the address
- * to use instead. And if the endpoint accepts the enquiry but cannot store it
- * yet, that is a failure here too: a success message the site cannot back up
- * is worse than no form.
+ * A failure here means the message never left the browser, or the site never
+ * took it: a dead connection, a route that is not there. Those are worth
+ * telling the sender about, because the message is still theirs to send and
+ * the address is the way to send it.
+ *
+ * What happens to the enquiry after the site has it is not the sender's
+ * problem and is not reported to them. Airtable being slow or misconfigured is
+ * ours to fix, and the route retries and dead letters it rather than asking
+ * somebody who did nothing wrong to type their message again.
  */
 export default function ContactForm() {
   const [state, setState] = useState<State>("idle");
@@ -44,7 +48,7 @@ export default function ContactForm() {
         setState("idle");
         return;
       }
-      if (!res.ok || !payload.ok || payload.stored === false) {
+      if (!res.ok || !payload.ok) {
         setState("failed");
         return;
       }
