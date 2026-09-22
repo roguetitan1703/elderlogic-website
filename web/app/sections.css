@@ -1585,18 +1585,19 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
      type and a heading it was texture; behind four input fields it was noise,
      and the fields looked mottled. It now peaks in the middle of the panel and
      falls away under both columns. */
-  background: url("/product/map-2x-960.webp") 70% center / cover no-repeat;
+  /* Peaks in the gutter between the two columns and falls away under both,
+     so it is texture behind the heading and never noise behind a field. */
+  background: url("/product/map-2x-960.webp") 45% center / cover no-repeat;
   filter: grayscale(1) brightness(1.6);
-  opacity: 0.16;
-  -webkit-mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
-  mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
+  opacity: 0.14;
+  -webkit-mask-image: linear-gradient(100deg, transparent 8%, #000 42%, rgba(0, 0, 0, 0.35) 66%, transparent 92%);
+  mask-image: linear-gradient(100deg, transparent 8%, #000 42%, rgba(0, 0, 0, 0.35) 66%, transparent 92%);
 }
-/* One column since the calendar moved behind the button. The copy is capped
-   rather than stretched across the panel, so the map ground carries the right
-   of it the way it carries the right of the hero. */
+/* Two columns again. The calendar is behind the button, so the right half
+   carries the second path: the form, open, not folded into a disclosure under
+   the copy with half the panel left empty beside it. */
 @media (min-width: 900px) {
-  .cta { padding-block: clamp(3rem, 7vw, 5.5rem); }
-  .cta__copy { max-width: 34rem; }
+  .cta { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: center; gap: var(--sp-12); }
 }
 /* Stacked, the mask's peak lands across the form instead of in the gutter
    between the two columns, so the map comes back another step. */
@@ -1609,6 +1610,30 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 .cta .arrow-link:visited,
 .cta .arrow-link:hover { color: var(--text-inverse); }
 .cta .arrow-link span { color: var(--green-400); }
+
+/* ---------- the foot of the FAQ ------------------------------------------
+   The question on the left, what to do about it on the right, on one rule.
+   It was a heading, a line and a button stacked down the left of an empty
+   band, which read as the page running out rather than as an offer. */
+.ask {
+  display: grid;
+  gap: var(--sp-8);
+  padding-top: var(--sp-8);
+  border-top: var(--border-w) solid var(--border-strong);
+}
+@media (min-width: 820px) {
+  .ask {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--sp-12);
+  }
+}
+.ask__copy { display: flex; flex-direction: column; gap: var(--sp-4); }
+.ask__heading { margin: 0; max-width: 16ch; text-wrap: balance; }
+.ask__body { margin: 0; max-width: 46ch; color: var(--text-body); }
+.ask__do { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-4); }
+@media (min-width: 820px) { .ask__do { align-items: flex-end; text-align: right; } }
+.ask__alt { margin: 0; color: var(--text-muted); font-size: var(--fs-body-sm); }
 
 /* The booking dialog.
 
@@ -1687,6 +1712,15 @@ body.has-dialog { overflow: hidden; }
    so the dialog body scrolls rather than the frame clipping. */
 @media (max-width: 759px) { .sheet__frame { min-height: 90rem; } }
 
+.cta__book { display: flex; flex-direction: column; gap: var(--sp-3); min-width: 0; }
+.cta__form-heading {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--text-inverse);
+}
 .cta__form-intro {
   margin: 0 0 var(--sp-3);
   color: var(--text-inverse-muted);
@@ -1712,6 +1746,31 @@ body.has-dialog { overflow: hidden; }
   box-shadow: 0 0 0 3px rgba(47, 185, 141, 0.28);
 }
 .cta .cform__foot { margin-top: var(--sp-2); }
+/* Off the page rather than display:none, which some bots skip. */
+.cform__trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.cform { position: relative; }
+.cta .btn--quiet,
+.cta a.btn--quiet:link,
+.cta a.btn--quiet:visited { color: var(--text-inverse); border-color: rgba(255, 255, 255, 0.42); }
+.cta .btn--quiet:hover { background: rgba(255, 255, 255, 0.1); }
+.cta .btn--quiet[disabled] { opacity: 0.6; cursor: default; }
+.cta .field__error { color: var(--green-300); }
+/* Empty until there is something to say, so it holds no space when idle. */
+.cform__notice:empty { display: none; }
+.cform__done {
+  margin: 0;
+  color: var(--text-inverse);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
+  max-width: 32ch;
+}
 .cta .cform__notice { color: var(--text-inverse-muted); }
 .cta .cform__notice a { color: var(--green-400); }
 

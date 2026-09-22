@@ -175,6 +175,46 @@ Vercel's analytics scripts, which only exist when deployed.
 
 ---
 
+## 4a. Enquiries and booking
+
+**Booking** is a Google Calendar appointment schedule. One constant,
+`schedulerUrl` in `web/content/site.ts`. The calendar opens in a dialog behind
+the "Book a demo" button rather than being embedded in the page, so nothing is
+requested from Google until a reader means to book. Swap the URL for the
+client's own schedule and nothing else changes; empty it and the button still
+works, it simply has nothing to show.
+
+Google's page carries its own chrome and none of it can be turned off: the
+schedule owner's logo and name at the top, "Google Calendar" opposite, and a
+"create your own appointment page" strip at the foot. The first of those is
+fixed by whose account the schedule lives on.
+
+**Enquiries** post to `/api/contact`, which validates them and writes them to
+Airtable. Three variables, set on the host, never in the repo:
+
+| | |
+|---|---|
+| `AIRTABLE_TOKEN` | personal access token with `data.records:write` on the base |
+| `AIRTABLE_BASE_ID` | the base id, `app...`, from the Airtable API page |
+| `AIRTABLE_TABLE` | the table name, default `Enquiries` |
+
+The table needs these fields, spelled exactly: **Name, Organisation, Email,
+Message, Received, Source**. `typecast` is on, so Airtable will coerce a text
+value into a select option that already exists, but it will not invent a field
+that is missing: a wrong spelling fails the write.
+
+With the variables unset the enquiry is logged on the server and the form tells
+the reader it did not send, with the email address. That is deliberate. A
+success message the site cannot back up is worse than no form.
+
+The route needs a Node runtime. It is `ƒ /api/contact` in the build output. On
+a purely static host it does not exist and every enquiry reports a failure, so
+whatever the site is deployed to has to run server code.
+
+`web/.env.example` carries all of this next to the code.
+
+---
+
 ## 5. Going live
 
 `NEXT_PUBLIC_SITE_URL` is the switch. Until it is set to the real domain, every
@@ -195,10 +235,12 @@ the share card, which social networks fetch by URL rather than from the page.
 
 Tracked so nothing is lost between sessions; see HANDOFF.md for detail.
 
-- **Enquiry handling.** The form renders and submits nowhere. Needs routing,
-  spam protection and a confirmation.
-- **Booking.** `#scheduler` is a marked slot with a placeholder note. Needs a
-  real calendar.
+- **Enquiry handling.** Done, pending credentials. The route, the validation,
+  the honeypot and the confirmation are built; the Airtable base and token are
+  not created yet, so the form currently reports that it could not send.
+- **Booking.** Done, pending the client's own schedule. It points at the
+  agency's Google Calendar, so the agency's name is on the calendar a visitor
+  sees.
 - **Analytics.** Vercel Analytics is installed. The contracted deliverable is
   Google Analytics under the client's own account with events on demo requests,
   form submissions and video plays.

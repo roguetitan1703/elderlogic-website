@@ -277,9 +277,10 @@ export default function Home() {
           In a dialog it gets the width it wants, and nothing is fetched from
           Google until somebody actually means to book.
 
-          The second path used to sit below the panel, behind a rule and a
-          screen of paper. It is inside the panel, under the action it is the
-          alternative to. <details> so it works with no script. */}
+          With the calendar behind the button the panel had one column of copy
+          and an empty half, so the second path takes that half and is open
+          rather than folded away. It is a real alternative, and it is now
+          weighted as one. */}
       <section className="section surface-paper section--after-band" id="book">
         <div className="container">
           <div className="cta">
@@ -294,13 +295,12 @@ export default function Home() {
                 </a>
               </div>
 
-              <details className="fallback">
-                <summary className="fallback__summary">{close.fallbackToggle}</summary>
-                <div className="fallback__body">
-                  <p className="cta__form-intro">{close.fallbackIntro}</p>
-                  <ContactForm />
-                </div>
-              </details>
+            </Reveal>
+
+            <Reveal className="cta__book">
+              <h3 className="cta__form-heading">{close.formHeading}</h3>
+              <p className="cta__form-intro">{close.formIntro}</p>
+              <ContactForm />
             </Reveal>
 
 

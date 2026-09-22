@@ -446,9 +446,19 @@ export const close = {
   schedulerLabel: "Book a demo",
   schedulerClose: "Close",
   schedulerPlaceholder: "Calendar to be connected",
-  /** The second path, inside the panel rather than below it. */
-  fallbackToggle: "Rather send a note first?",
-  fallbackIntro: "We will come back to you. We read these ourselves.",
+  /** The second path. Open, in the panel's right column: the calendar moved
+   *  into a dialog behind the button, and with the copy alone on the left the
+   *  panel was half a panel. This is also the honest weighting, because the
+   *  form is a real alternative rather than a hidden one. */
+  formHeading: "Rather send a note first?",
+  formIntro: "Tell us what you need and we will come back to you. We read these ourselves.",
+  sending: "Sending",
+  sent: "Thank you. We have it, and we will come back to you.",
+  failed: "That did not send. Email us at",
+  errors: {
+    required: "This one is needed.",
+    email: "That address does not look right.",
+  },
   fields: [
     { name: "name", label: "Name", type: "text" },
     { name: "organisation", label: "Organisation", type: "text" },
@@ -472,7 +482,11 @@ export const questions = {
    *  into the FAQ page and never reached a copy review. */
   closeLead: "Still have a question?",
   closeBody:
-    "Book a demo and ask it directly. We walk you through ElderLogic on the questions your team actually has.",
+    "The demo is not a slide deck. Bring the question, and we will answer it in the product, on your own kind of placement.",
+  /** A reader at the foot of a page of answers wants to ask, not necessarily
+   *  to book, so the address is offered beside the booking rather than left
+   *  for them to hunt for in the footer. */
+  closeAlt: "Or email us at",
   /** Ordered the way a hospice executive actually asks them: what is it and
    *  where, then what my team has to do, then what is inside it, then how we
    *  begin. Five answers are the client's, verbatim, marked below. The rest are

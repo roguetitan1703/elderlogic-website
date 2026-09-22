@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { questions, close } from "@/content/copy";
+import { questions, close, footer } from "@/content/copy";
 import Accordion from "@/components/Accordion";
 import StructuredData from "@/components/StructuredData";
 import { pageMetadata } from "@/content/site";
@@ -26,14 +26,30 @@ export default function Questions() {
         </div>
       </section>
 
+      {/* The foot of a page of answers. It was a heading, a line and a button
+          stacked down the left of an otherwise empty band, which read as the
+          page running out rather than as an offer. Two columns: the question
+          on the left, what to do about it on the right, on one rule.
+
+          A reader who has read every answer and still has a question wants to
+          ask it. So the address sits beside the booking instead of being left
+          to be hunted for in the footer. */}
       <section className="section surface-paper">
-        <div className="container stack">
-          <h2 className="display-3">{questions.closeLead}</h2>
-          <p className="lead measure">{questions.closeBody}</p>
-          <div>
-            <a className="btn btn--primary" href={close.cta.href}>
-              {close.cta.label}
-            </a>
+        <div className="container">
+          <div className="ask">
+            <div className="ask__copy">
+              <h2 className="display-3 ask__heading">{questions.closeLead}</h2>
+              <p className="lead ask__body">{questions.closeBody}</p>
+            </div>
+            <div className="ask__do">
+              <a className="btn btn--primary btn--lg" href={close.cta.href}>
+                {close.cta.label}
+              </a>
+              <p className="ask__alt">
+                {questions.closeAlt}{" "}
+                <a href={`mailto:${footer.email}`}>{footer.email}</a>
+              </p>
+            </div>
           </div>
         </div>
       </section>
