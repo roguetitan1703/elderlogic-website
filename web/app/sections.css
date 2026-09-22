@@ -1585,14 +1585,18 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
      type and a heading it was texture; behind four input fields it was noise,
      and the fields looked mottled. It now peaks in the middle of the panel and
      falls away under both columns. */
-  background: url("/product/map-2x-960.webp") 45% center / cover no-repeat;
+  background: url("/product/map-2x-960.webp") 70% center / cover no-repeat;
   filter: grayscale(1) brightness(1.6);
-  opacity: 0.14;
-  -webkit-mask-image: linear-gradient(100deg, transparent 8%, #000 42%, rgba(0, 0, 0, 0.35) 66%, transparent 92%);
-  mask-image: linear-gradient(100deg, transparent 8%, #000 42%, rgba(0, 0, 0, 0.35) 66%, transparent 92%);
+  opacity: 0.16;
+  -webkit-mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
+  mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
 }
+/* One column since the calendar moved behind the button. The copy is capped
+   rather than stretched across the panel, so the map ground carries the right
+   of it the way it carries the right of the hero. */
 @media (min-width: 900px) {
-  .cta { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: start; gap: var(--sp-12); }
+  .cta { padding-block: clamp(3rem, 7vw, 5.5rem); }
+  .cta__copy { max-width: 34rem; }
 }
 /* Stacked, the mask's peak lands across the form instead of in the gutter
    between the two columns, so the map comes back another step. */
@@ -1606,49 +1610,82 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
 .cta .arrow-link:hover { color: var(--text-inverse); }
 .cta .arrow-link span { color: var(--green-400); }
 
-/* The calendar slot. It was a white card with a 60px drop shadow sitting
-   inside this card, which put the brightest, highest thing in the block on
-   the one part of it that has no content yet. It is a well now: recessed into
-   the panel's own ground, hairline edge, no shadow, so the panel reads as one
-   surface with a space held in it. The calendar drops in here unchanged, and
-   when it does the fill and the border stop mattering. */
-.booking {
+/* The booking dialog.
+
+   The calendar is not embedded in the panel. Google's appointment page has a
+   breakpoint at 700px: wider than that the month sits beside the times and the
+   page is about 750px tall, narrower and they stack and it is 1438px. The
+   panel's right column was 567px, the wrong side of that line, so the calendar
+   made the close the longest section on the site. In a dialog it gets the
+   width it wants and the page keeps its shape.
+
+   The dialog is the platform's own, so the scrim, the focus trap and Escape
+   are the browser's rather than ours. */
+.sheet {
+  width: min(62rem, 94vw);
+  max-width: none;
+  max-height: 92dvh;
+  padding: 0;
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-card);
+  color: var(--text-body);
+  border: 0;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 2px 6px rgba(var(--scrim-900), 0.12), 0 32px 80px rgba(var(--scrim-900), 0.32);
+}
+.sheet::backdrop { background: rgba(var(--scrim-900), 0.55); }
+/* Closed dialogs are display:none by the UA sheet; this only guards against a
+   stylesheet elsewhere setting display on the element. */
+.sheet:not([open]) { display: none; }
+/* The page behind a modal must not scroll under it. */
+body.has-dialog { overflow: hidden; }
+
+.sheet__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-4) var(--sp-4) var(--sp-6);
+  border-bottom: var(--border-w) solid var(--border-hairline);
+}
+.sheet__title {
+  margin: 0;
+  margin-right: auto;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  color: var(--text-strong);
+}
+.sheet__close {
   display: grid;
   place-items: center;
-  min-height: 20rem;
-  padding: var(--sp-6);
-  background: rgba(255, 255, 255, 0.05);
-  border: var(--border-w) solid rgba(255, 255, 255, 0.16);
-  border-radius: var(--radius-xl);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  font-size: var(--fs-caption);
-  letter-spacing: var(--ls-mono);
-  color: var(--text-inverse-muted);
-}
-.booking p { margin: 0; }
-/* With a calendar in it the well is a frame, not a placeholder: no padding to
-   inset it, and white behind it because that is what the calendar draws on. */
-.booking--live {
-  display: block;
+  width: 44px;
+  height: 44px;
   padding: 0;
-  overflow: hidden;
-  background: var(--surface-card);
-  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--text-muted);
+  background: transparent;
+  border: var(--border-w) solid transparent;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: var(--transition-control);
 }
-/* Google's appointment page has one breakpoint of its own, at 700px: wider
-   than that it puts the month beside the times and stands 750px tall, narrower
-   and it stacks them and stands 1438px tall. Measured, not guessed. The frame
-   does not report its height to us, so the slot has to be told.
+.sheet__close:hover { color: var(--text-strong); background: var(--surface-inset); }
+.sheet__close:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+.sheet__close svg { width: 22px; height: 22px; }
 
-   The slot is 567px in the panel's right column, which is the wrong side of
-   that breakpoint, so this is the tall number. That is a layout decision
-   waiting on a call, not a value to tune: see the note in the close. */
-.booking__frame {
+.sheet__body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.sheet__frame {
   display: block;
   width: 100%;
-  min-height: 90rem;
+  /* Above Google's 700px breakpoint the page needs about 750px. */
+  min-height: 48rem;
   border: 0;
 }
+/* Below it the month stacks above the times and the page doubles in height,
+   so the dialog body scrolls rather than the frame clipping. */
+@media (max-width: 759px) { .sheet__frame { min-height: 90rem; } }
 
 .cta__form-intro {
   margin: 0 0 var(--sp-3);

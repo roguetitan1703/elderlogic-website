@@ -13,7 +13,7 @@ import {
 import Inventory from "@/components/Inventory";
 import Route from "@/components/Route";
 import ContactForm from "@/components/ContactForm";
-import Scheduler from "@/components/Scheduler";
+import BookDialog from "@/components/BookDialog";
 import VisitWeek from "@/components/VisitWeek";
 import Picture from "@/components/Picture";
 import Reveal from "@/components/Reveal";
@@ -270,14 +270,15 @@ export default function Home() {
           the strongest block on it. A dark panel that bookends the hero, the
           invitation beside the calendar slot.
 
-          The calendar slot used to be a white card with a drop shadow sitting
-          inside this card: an edge inside an edge, and the brightest thing in
-          the block was the part that has no content yet. It is a well now,
-          recessed into the panel's own ground, so the panel has one edge. The
-          slot itself is unchanged and the calendar drops straight into it.
+          The calendar is behind the button rather than embedded beside it.
+          Google's appointment page stacks its month above its times below
+          700px and stands 1438px tall; the panel's right column was 567px, so
+          embedding it there made the close the longest section on the site.
+          In a dialog it gets the width it wants, and nothing is fetched from
+          Google until somebody actually means to book.
 
           The second path used to sit below the panel, behind a rule and a
-          screen of paper. It is inside the panel, under the actions it is the
+          screen of paper. It is inside the panel, under the action it is the
           alternative to. <details> so it works with no script. */}
       <section className="section surface-paper section--after-band" id="book">
         <div className="container">
@@ -286,10 +287,8 @@ export default function Home() {
             <Reveal className="cta__copy">
               <h2 className="display-2 cta__heading">{close.heading}</h2>
               <p className="lead cta__body">{close.body}</p>
-              <div className="actions">
-                <a className="btn btn--primary btn--lg" href="#scheduler">
-                  {close.cta.label}
-                </a>
+              <div className="actions" id="scheduler">
+                <BookDialog />
                 <a className="arrow-link cta__link" href={close.secondary.href}>
                   {close.secondary.label} <span aria-hidden="true">&#8594;</span>
                 </a>
@@ -304,9 +303,7 @@ export default function Home() {
               </details>
             </Reveal>
 
-            {/* The calendar. Falls back to the marked slot if no scheduling
-                URL is configured. */}
-            <Scheduler />
+
           </div>
         </div>
       </section>

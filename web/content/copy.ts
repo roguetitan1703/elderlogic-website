@@ -442,9 +442,9 @@ export const close = {
   body: "One placement, from the first assessment to the family’s perfect fit, and one day of marketing visits. Your questions answered as we go.",
   cta: { label: "Book a demo", href: "/#book" },
   secondary: { label: "Read the FAQ", href: "/faq" },
-  /** The slot the calendar drops into. Marked, so nothing has to be
-   *  improvised when the account exists. */
-  schedulerLabel: "Scheduling calendar",
+  /** The dialog the calendar opens in, named for anything that announces it. */
+  schedulerLabel: "Book a demo",
+  schedulerClose: "Close",
   schedulerPlaceholder: "Calendar to be connected",
   /** The second path, inside the panel rather than below it. */
   fallbackToggle: "Rather send a note first?",
