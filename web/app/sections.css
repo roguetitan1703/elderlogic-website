@@ -1729,6 +1729,10 @@ body.has-dialog { overflow: hidden; }
 /* One column: the panel's right half is too narrow for the two the form uses
    at full container width, and the message box needs its own row. */
 .cta .cform { grid-template-columns: 1fr; gap: var(--sp-4); }
+/* The heading and intro are the form's own first row, so a sent enquiry
+   replaces them along with the fields. */
+.cform__head { display: flex; flex-direction: column; gap: var(--sp-2); }
+@media (min-width: 720px) { .cform__head { grid-column: 1 / -1; } }
 .cta .cform .field--wide { grid-column: auto; grid-row: auto; }
 .cta .cform .field--wide textarea { height: auto; min-height: 0; }
 .cta .field__label { color: var(--text-inverse-muted); }

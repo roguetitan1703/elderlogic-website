@@ -298,8 +298,6 @@ export default function Home() {
             </Reveal>
 
             <Reveal className="cta__book">
-              <h3 className="cta__form-heading">{close.formHeading}</h3>
-              <p className="cta__form-intro">{close.formIntro}</p>
               <ContactForm />
             </Reveal>
 

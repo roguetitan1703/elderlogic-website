@@ -54,6 +54,10 @@ export default function ContactForm() {
     }
   };
 
+  /* The heading and the intro belong to this component, not to the page, so
+     that a sent enquiry replaces the whole block. Left in the page they stayed
+     behind, and "Tell us what you need" sat directly above "Thank you, we have
+     it", which is the form asking for something it has already been given. */
   if (state === "sent") {
     return (
       <p className="cform__done" role="status">
@@ -64,6 +68,10 @@ export default function ContactForm() {
 
   return (
     <form className="cform" id="contact" noValidate onSubmit={onSubmit}>
+      <div className="cform__head">
+        <h3 className="cta__form-heading">{close.formHeading}</h3>
+        <p className="cta__form-intro">{close.formIntro}</p>
+      </div>
       {close.fields.map((f) => {
         const bad = invalid.includes(f.name);
         return (
