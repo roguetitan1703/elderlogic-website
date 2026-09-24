@@ -167,7 +167,6 @@ export const concierge = {
          the opposite: nothing is lost here, every viable option is visited.
          One row, both labels, and the flat step said out loud. */
       { value: 10, label: "Viable options", also: "every one pre-toured", result: true },
-      { value: 3, label: "Family tour", result: true },
       { value: 1, label: "Family’s perfect fit", result: true },
     ],
     /** "Phoenix area" came off: these are the client's numbers now, and nothing
@@ -186,8 +185,9 @@ export const marketingVisits = {
    *  the old way of doing it, the same kind of exception as the phone list
    *  heading, and it is the client's line. */
   heading: "Marketing visits start with an invitation, not a cold call.",
-  body: "Pick a morning and an area. We contact the homes first and build the route around those interested in meeting, with contact details and inspection history for each.",
-  note: "Family tours work the same way. Your team pre-tours the viable options first, then families tour the homes they want to see.",
+  /* "Pick a day and time range" is the client's wording, 24 September, and it
+     is also what the form on the screen beside it actually asks for. */
+  body: "Pick a day and time range. We contact the homes first and build the route around those interested in meeting, with contact details and inspection history for each.",
   image: {
     /* The HPC capture as it was taken, device frame included, with the white
        surround flood filled to transparent so it sits on any ground. The
@@ -247,7 +247,6 @@ export const walkthrough = {
     },
     { icon: "facilities", title: "Viable options", line: "Room, price, and resident needs confirmed." },
     { icon: "pre-tour", title: "Pre-tour", line: "Your team visits the viable options first." },
-    { icon: "family-tour", title: "Family tour", line: "Your team tours selected homes with the family." },
     {
       icon: "move-in",
       title: "Family’s perfect fit",
@@ -408,22 +407,17 @@ export const reporting = {
       { state: "done", label: "Completed" },
     ],
   },
-  /** Each report is written as the question it answers, in the words the
-   *  person asking uses. The question is the content; the name is the label
-   *  on the thing they buy. Her three names, unchanged. */
+  /** Her three report names and lines, unchanged. */
   blocks: [
     {
-      ask: "How many placements did we make, and how long did each one take?",
       title: "Placement reporting",
       line: "Activity and outcomes, from assessment through to the family’s perfect fit.",
     },
     {
-      ask: "Which homes did our team visit, and how much of the plan got done?",
       title: "Marketing visit reporting",
       line: "Planned against completed marketing visits, and the field activity behind them.",
     },
     {
-      ask: "Did the pre-tour happen before the family toured?",
       title: "Pre-tour visit verification and reporting",
       line: "Planned against completed pre-tour visits, with verification of the visit itself.",
     },
@@ -439,7 +433,7 @@ export const close = {
   /* The old heading restated the flow section's own heading, so the close read
      as one more section rather than as the invitation at the end of one. */
   heading: "Walk through a placement with us.",
-  body: "One placement, from the first assessment to the family’s perfect fit, and one day of marketing visits. Your questions answered as we go.",
+  body: "One placement, from the assessment to the family’s perfect fit, and one day of marketing visits. Your questions answered as we go.",
   cta: { label: "Book a demo", href: "/#book" },
   secondary: { label: "Read the FAQ", href: "/faq" },
   /** The dialog the calendar opens in, named for anything that announces it. */
@@ -510,7 +504,7 @@ export const questions = {
     },
     {
       q: "What does a marketing visit day look like?",
-      a: "Pick a morning and an area. We contact the homes first and build the route around those interested in meeting, with contact details and inspection history for each. Family tours work the same way.",
+      a: "Pick a day and time range. We contact the homes first and build the route around those interested in meeting, with contact details and inspection history for each.",
     },
     {
       q: "What is in a residential care home’s record?",
@@ -524,10 +518,6 @@ export const questions = {
       /* Client's. */
       q: "Do you rate the homes?",
       a: "No. The State of Arizona reports its findings, and ElderLogic displays them as reported. We don’t score or rank homes. Your team reviews the information and decides.",
-    },
-    {
-      q: "What is visit verification?",
-      a: "It confirms your team visited the homes they logged, so the visits you report on are the visits that happened. It comes with the optional reporting.",
     },
     {
       /* Client's, including the question. The em dash in her answer is a

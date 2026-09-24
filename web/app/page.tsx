@@ -103,7 +103,6 @@ export default function Home() {
             <Reveal className="stack">
               <h2 className="display-2 intro__heading">{marketingVisits.heading}</h2>
               <p className="lead measure">{marketingVisits.body}</p>
-              <p className="step__note">{marketingVisits.note}</p>
             </Reveal>
             <Reveal className="pair">
               <figure className="pair__item">

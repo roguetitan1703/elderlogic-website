@@ -277,6 +277,44 @@ data look incomplete and make the tool recognisable.
 
 ---
 
+# 07c. The Mapsly popup, supplied by the client
+
+**24 September. This supersedes 07b.** The client sent her own capture of the
+popup and said: "Let's use this as the Mapsly popup. The data on it is fine as
+it is." It is saved as `Assets/client-mapsly-popup-2026-09-24.jpg`, 468 x 234.
+
+It answers, by omission, the question 07b.5 was hedging against. It carries no
+`License`, `Inspections` or `Open enforcement` rows, so the question of whether
+AZDHS values may appear in an illustration does not arise. Version B is the one
+we are getting, and 07b's two-version instruction is withdrawn.
+
+What it holds: **Example Residential Care Home**, 10805 N 83rd Street,
+Scottsdale, Arizona, 85260, `Mobile: 111-222-1234`, `ALTCS: Pending`,
+`Email: example@example.com`, `AZDHS' Listing URL:` with the URL in a green
+field, and `Navigate` / `Copy address`. Every name and number in it is already
+fake, which is what we had been asking the editor to do by hand.
+
+| # | Do |
+|---|---|
+| 07c.1 | In `home-record` (the wide map capture), **delete the existing popup entirely**, the one headed `Sun Ridge Assisted Living`, and paint the map back underneath it. It sits at roughly x 693 to 1024, y 172 to 420 in the 1280 wide file. |
+| 07c.2 | **Paste the client's popup in its place**, anchored to the same pin so the tail still points at the home it describes. Hers is 468 wide against a 331 wide slot, so it scales down, not up: no softening. Keep its own proportions. |
+| 07c.3 | Redo the phone crop, `home-record-tall`, from the new wide file so the two agree. |
+| 07c.4 | **Leave her popup's contents alone.** The data is hers and it is signed off. |
+
+**Two things to raise before this is cut, not to decide in the edit:**
+
+- Her popup keeps the map tool's own furniture: a settings gear and a close
+  cross at the top right, and a pencil beside the highlighted URL field. The
+  pencil and the green fill are an inline edit state, which is what 07b.3a was
+  trying to get rid of, and they now arrive with her blessing on "the data".
+  She was speaking about the data, so this is still open.
+- The exhibit sits under the heading **"Every inspection the state has
+  published"**, and after this swap it shows no inspection data at all. The
+  section's own copy still lists Licensing, Inspections, Violations and
+  Enforcement. Either the image or the heading it illustrates has to give.
+
+---
+
 # Do not bother with these
 
 Duplicates and superseded captures. Nothing needs doing to any of them.
