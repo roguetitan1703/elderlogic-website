@@ -335,7 +335,7 @@ the map. Illustrative values."
 **The alt text had to change with it.** It described license, inspections and
 open enforcement, which are no longer in the picture.
 
-## The heading still does not match the picture
+## The heading stays. Closed.
 
 Settled, and not by us. Asked whether the popup could show inspections, the
 client answered on 25 September: "It won't on the popup yet because I'd have to
@@ -348,8 +348,20 @@ The exhibit sits under **"Every inspection the state has published"** and shows
 an AZDHS link and nothing else. The section's own copy still lists Licensing,
 Inspections, Violations and Enforcement as what the record carries.
 
-The image can no longer be the thing that changes. Either the caption says
-where the record actually opens, or the heading does.
+**Decided 25 September: nothing changes.** The reader does see every
+inspection, by opening the link, and the page already says so. The record grid
+carries a cell for it:
+
+> **The source.** AZDHS is one tap away at every stop, opening the state's own
+> record.
+
+So the heading is supported by the section's own copy, four cells above the
+picture, and the picture is an illustration of one home rather than the
+evidence for the heading. The client is building the data into the map tool;
+the copy is not going to be rewritten back and forth around a product that is
+mid change.
+
+Not to be reopened without a reason that is new.
 
 ---
 
