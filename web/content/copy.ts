@@ -385,28 +385,6 @@ export const reporting = {
    *  is a run-in, the phrase is the sentence. It is one sentence either way. */
   ledeFor: "For leadership",
   lede: "planned against completed, across your whole team.",
-  /** One week of marketing visits, drawn. "Planned against completed" is the
-   *  whole of what leadership buys here, so the section shows it rather than
-   *  describing it: a hollow circle is a visit that was planned, a filled one
-   *  is a visit that happened, and a check marks one that was verified. No
-   *  counts, no names, no invented screen. A diagram of the idea, the same
-   *  way the route line is. */
-  week: {
-    caption: "One week of marketing visits.",
-    days: [
-      { day: "Mon", visits: ["verified", "done", "done", "planned"] },
-      { day: "Tue", visits: ["done", "done", "planned"] },
-      { day: "Wed", visits: ["verified", "done", "done", "done"] },
-      { day: "Thu", visits: ["done", "planned", "planned"] },
-      { day: "Fri", visits: ["done", "done"] },
-    ],
-    /** Read instead of the circles by anything that cannot see them. */
-    alt: "One week of marketing visits, Monday to Friday. Each day shows the visits planned for it and which of them were completed, with two marked as verified.",
-    legend: [
-      { state: "planned", label: "Planned" },
-      { state: "done", label: "Completed" },
-    ],
-  },
   /** Her three report names and lines, unchanged. */
   blocks: [
     {

@@ -14,7 +14,6 @@ import Inventory from "@/components/Inventory";
 import Route from "@/components/Route";
 import ContactForm from "@/components/ContactForm";
 import BookDialog from "@/components/BookDialog";
-import VisitWeek from "@/components/VisitWeek";
 import Picture from "@/components/Picture";
 import Reveal from "@/components/Reveal";
 import Shot from "@/components/Shot";
@@ -241,15 +240,14 @@ export default function Home() {
       <section className="section band surface-paper" id="reporting">
         <div className="container">
           <div className="band__inner">
-            <Reveal className="band__figure">
-              <VisitWeek />
-            </Reveal>
             <Reveal className="band__copy">
               <h2 className="band__heading">{reporting.heading}</h2>
               <p className="band__lede">
                 <span className="band__for">{reporting.ledeFor}:</span>{" "}
                 {reporting.lede}
               </p>
+            </Reveal>
+            <Reveal>
               <ul className="reports">
                 {reporting.blocks.map((block) => (
                   <li key={block.title} className="reports__item">

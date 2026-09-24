@@ -277,41 +277,56 @@ data look incomplete and make the tool recognisable.
 
 ---
 
-# 07c. The Mapsly popup, supplied by the client
+# 07c. The Mapsly popup: the client's data, our capture
 
 **24 September. This supersedes 07b.** The client sent her own capture of the
 popup and said: "Let's use this as the Mapsly popup. The data on it is fine as
-it is." It is saved as `Assets/client-mapsly-popup-2026-09-24.jpg`, 468 x 234.
+it is." Read as what it is: she is signing off the **data**, not handing us a
+finished asset. So her capture is the reference, not the artwork. It is saved
+as `Assets/client-mapsly-popup-2026-09-24.jpg`, 468 x 234, for reference only.
 
-It answers, by omission, the question 07b.5 was hedging against. It carries no
-`License`, `Inspections` or `Open enforcement` rows, so the question of whether
-AZDHS values may appear in an illustration does not arise. Version B is the one
-we are getting, and 07b's two-version instruction is withdrawn.
+Editing our own capture instead settles three things her file could not. Ours
+is already at the right resolution for the 1280 wide exhibit. Ours has no
+settings gear, no close cross and no inline edit pencil sitting in a green
+highlighted field, which is the map tool's own furniture and is what 07b was
+removing. And the popup keeps the styling of the rest of the site's screens.
 
-What it holds: **Example Residential Care Home**, 10805 N 83rd Street,
-Scottsdale, Arizona, 85260, `Mobile: 111-222-1234`, `ALTCS: Pending`,
-`Email: example@example.com`, `AZDHS' Listing URL:` with the URL in a green
-field, and `Navigate` / `Copy address`. Every name and number in it is already
-fake, which is what we had been asking the editor to do by hand.
+**The data, from her capture, exactly:**
+
+```
+Example Residential Care Home
+10805 N 83rd Street, Scottsdale, Arizona, 85260
+Mobile: 111-222-1234
+ALTCS: Pending
+Email: example@example.com
+AZDHS' Listing URL: <the state listing link>
+                                    Navigate    Copy address
+```
 
 | # | Do |
 |---|---|
-| 07c.1 | In `home-record` (the wide map capture), **delete the existing popup entirely**, the one headed `Sun Ridge Assisted Living`, and paint the map back underneath it. It sits at roughly x 693 to 1024, y 172 to 420 in the 1280 wide file. |
-| 07c.2 | **Paste the client's popup in its place**, anchored to the same pin so the tail still points at the home it describes. Hers is 468 wide against a 331 wide slot, so it scales down, not up: no softening. Keep its own proportions. |
-| 07c.3 | Redo the phone crop, `home-record-tall`, from the new wide file so the two agree. |
-| 07c.4 | **Leave her popup's contents alone.** The data is hers and it is signed off. |
+| 07c.1 | In `home-record`, retype the popup to the block above. The home is `Example Residential Care Home`, not `Sun Ridge Assisted Living`. Every name and number in it is already fake, so nothing has to be invented. |
+| 07c.2 | **Add the `AZDHS' Listing URL:` row.** It is new, and it is the one row that carries the section's "the source is one tap away" line. Style it as the other link rows on the card, not as a highlighted edit field. |
+| 07c.3 | **Delete the `Website: Empty` and `Tags: Nothing selected` rows**, and the pencil beside them. They are the map tool's empty state, not record fields. This part of 07b stands. |
+| 07c.4 | **Delete the close cross** at the top right and paint the corner back to card white. |
+| 07c.5 | **Clear the ghost text.** Faint pieces of old wording show under the retyped values at 400%. Paint each area back to clean card white before setting the value. |
+| 07c.6 | Redo the phone crop, `home-record-tall`, from the new wide file so the two agree. |
+| 07c.7 | 07b.5's two versions are withdrawn. There is one version now, and it is this. |
 
-**Two things to raise before this is cut, not to decide in the edit:**
+**One thing to settle before this is cut.**
 
-- Her popup keeps the map tool's own furniture: a settings gear and a close
-  cross at the top right, and a pencil beside the highlighted URL field. The
-  pencil and the green fill are an inline edit state, which is what 07b.3a was
-  trying to get rid of, and they now arrive with her blessing on "the data".
-  She was speaking about the data, so this is still open.
-- The exhibit sits under the heading **"Every inspection the state has
-  published"**, and after this swap it shows no inspection data at all. The
-  section's own copy still lists Licensing, Inspections, Violations and
-  Enforcement. Either the image or the heading it illustrates has to give.
+Her capture carries no `License`, `Inspections` or `Open enforcement` rows, and
+this brief follows it. But the exhibit sits under the heading **"Every
+inspection the state has published"**, and the section's copy lists Licensing,
+Inspections, Violations and Enforcement as what the record carries. After this
+edit the illustration shows none of them, and the only thing tying it to the
+heading is the AZDHS link.
+
+Worth putting to her in one line: the values on this card are invented, on a
+home that does not exist, so `Licence: Current` and `Inspections: 4 since 2019`
+would publish no real state data about any real home. If that was the concern,
+those two rows can stay and the image illustrates its own section again. If the
+concern was something else, the heading is the thing to change, not the image.
 
 ---
 
