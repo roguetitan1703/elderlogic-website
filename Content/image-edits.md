@@ -279,6 +279,10 @@ data look incomplete and make the tool recognisable.
 
 # 07c. The Mapsly popup: the client's data, our capture
 
+> **DONE, 25 September.** Cut and in the build. What follows is the record of
+> what was asked for and what came back; see the note at the end for the two
+> things that changed along the way.
+
 **24 September. This supersedes 07b.** The client sent her own capture of the
 popup and said: "Let's use this as the Mapsly popup. The data on it is fine as
 it is." Read as what it is: she is signing off the **data**, not handing us a
@@ -313,20 +317,39 @@ AZDHS' Listing URL: <the state listing link>
 | 07c.6 | Redo the phone crop, `home-record-tall`, from the new wide file so the two agree. |
 | 07c.7 | 07b.5's two versions are withdrawn. There is one version now, and it is this. |
 
-**One thing to settle before this is cut.**
+## What came back
 
-Her capture carries no `License`, `Inspections` or `Open enforcement` rows, and
-this brief follows it. But the exhibit sits under the heading **"Every
-inspection the state has published"**, and the section's copy lists Licensing,
-Inspections, Violations and Enforcement as what the record carries. After this
-edit the illustration shows none of them, and the only thing tying it to the
-heading is the AZDHS link.
+The edit was done generatively, from the master `home-record.jpg`, 1681 x 936.
 
-Worth putting to her in one line: the values on this card are invented, on a
-home that does not exist, so `Licence: Current` and `Inspections: 4 since 2019`
-would publish no real state data about any real home. If that was the concern,
-those two rows can stay and the image illustrates its own section again. If the
-concern was something else, the heading is the thing to change, not the image.
+**The card is right.** All six lines correct and crisp, no close cross, none of
+the five removed rows, the AZDHS row styled as a link rather than as an edit
+field. The card came back wider and shorter than the original, which is fine.
+
+**The map was redrawn, as expected of a generative edit.** 41 per cent of the
+pixels outside the card moved. Every label still reads correctly and the map is
+plausible, but the pin density is visibly thinner than the original capture.
+That carries no claim here: the count of homes belongs to the coverage section,
+which uses a different image, and this one is captioned "One home, selected on
+the map. Illustrative values."
+
+**The alt text had to change with it.** It described license, inspections and
+open enforcement, which are no longer in the picture.
+
+## The heading still does not match the picture
+
+Settled, and not by us. Asked whether the popup could show inspections, the
+client answered on 25 September: "It won't on the popup yet because I'd have to
+still figure out how to include another data set into Mapsly and I haven't done
+it yet. It'll show up on their route with the link to AZDHS for the moment.
+It's on my to do list."
+
+So this is not a temporary state of the image, it is the state of the product.
+The exhibit sits under **"Every inspection the state has published"** and shows
+an AZDHS link and nothing else. The section's own copy still lists Licensing,
+Inspections, Violations and Enforcement as what the record carries.
+
+The image can no longer be the thing that changes. Either the caption says
+where the record actually opens, or the heading does.
 
 ---
 
