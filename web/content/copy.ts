@@ -292,12 +292,13 @@ export const record = {
    *  is real is the shape of the card and where it sits in the workflow. */
   image: {
     src: "/product/home-record.jpg",
-    /* Describes what the picture now shows. The popup used to carry license,
-       inspections and open enforcement; the client confirmed on 25 September
-       that those are not in the map tool yet, so they came off the image, and
-       an alt that still listed them would be describing a picture nobody is
-       looking at. */
-    alt: "A residential care home selected on the ElderLogic map, with its details open: address, mobile number, ALTCS status, email, and a link to the home’s AZDHS listing.",
+    /* Describes what the picture now shows, and is rewritten every time the
+       picture changes. The card carried license, inspections and open
+       enforcement until 25 September, when the client confirmed the map tool
+       did not hold them; on 29 September she added the state metrics block, so
+       the counts and the fines are in the picture and belong in the
+       description. */
+    alt: "A residential care home selected on the ElderLogic map, with its details open: address, mobile number, ALTCS status, email, and a block of state metrics holding a link to the home’s AZDHS listing, its citation counts for this year, for last year and in total, and its total enforcement fines.",
     width: 1681,
     height: 936,
     /** The same card, cropped close. At 390px the wide version renders the

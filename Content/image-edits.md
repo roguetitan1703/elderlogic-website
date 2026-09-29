@@ -495,6 +495,63 @@ not. All four match each other, or none of them does.
 Round two works from the returned file, not from the original, so the map is
 not put at risk a third time.
 
+## Round two, 29 September: cut in
+
+`Assets/home-record-07d-round2-fixed.png` is the returned file with two local
+repairs; `Assets/home-record-07d-composite.png` is what shipped.
+
+**The card is right.** Correct home, correct address, mobile, ALTCS and email;
+the green header pill; all four counting rows with the briefed values; the
+AZDHS URL as a plain link; no Zoho link. The three reinstated rows are gone.
+
+**Two things came back wrong and were fixed here rather than in a third round,
+because each one is surgical and another round would put the map at risk
+again.**
+
+The close cross was back at the top right. It sits on flat card white, 251 to
+255 across the whole ring around it, so it was painted out.
+
+The four counting values were set in link blue and underlined. The card's own
+convention is that blue means a link: the mobile number is a `tel:`, the AZDHS
+URL opens the state listing, `Navigate` and `Copy address` are actions. A
+citation count is a value, like `ALTCS: Pending` and the email, which are dark
+with a thin underline. Styling the most sensitive numbers on the page as
+clickable implies a source behind each one that does not exist, when the source
+is the row above them. They were recoloured to the card's body colour by
+recovering each pixel's ink coverage from the red channel and recompositing it
+over white in the dark colour, so the glyph shapes and the underline are
+untouched.
+
+**The map was redrawn again**, harder than in round one: 13.7 per cent of the
+pixels outside the card moved, across the whole pin field. So the card was
+composited onto the original capture, and the result carries **0.000 per cent**
+difference from it outside the card.
+
+That needed one thing the brief had not anticipated. The original file has the
+old card in it, so pasting the new card where the editor happened to put it
+would have left the old one showing alongside. The new card is therefore placed
+at 816, 208 rather than at its own 914, 222, which covers the old card's body
+and the whole of its shadow, measured at about 14 pixels on each edge. Nothing
+is painted back in and no generated map survives anywhere in the file. The
+composite asserts the coverage before it runs, so it cannot silently produce a
+file with two cards in it.
+
+The card is larger than the old one, so it now covers the Scottsdale label. A
+popup covering a city label is what the product does, and the address on the
+card says Scottsdale.
+
+**Then:** the phone crop re-cut at 692 x 519 from 761, 131; AVIF and WebP
+rebuilt at every width; the alt text rewritten to describe the metrics block.
+106 checks with the same six known `<details>` artifacts, and axe clean at
+1440 and 390 across all three routes.
+
+**The heading needs no revisiting.** It was closed on 25 September because the
+copy should not be rewritten back and forth around a product mid change. The
+product has now moved toward the copy: the card shows counts of citations and a
+total of enforcement fines, which is nearer to `Every inspection the state has
+published` than the bare link was. That is a reason to leave the copy alone,
+not a reason to reopen it.
+
 **One thing that is ours, not the editor's.**
 
 The heading question stays closed and this does not reopen it. It was closed on
