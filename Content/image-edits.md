@@ -382,6 +382,11 @@ Total Citation Count:
 Total Enforcement Fines: $
 ```
 
+All of it comes across, header included. The card is a picture of the product,
+so what the product renders is what it shows. The only things left out are the
+two that are not part of the record: an edit affordance on one field, and the
+window controls. Both are named below.
+
 Saved as `Assets/client-mapsly-popup-2026-09-29.png`, 368 x 270, reference
 only. **Her capture is a real home**, Sunrise Care Homes-hayden on North Hayden
 Road with its real mobile number, and none of it goes anywhere near the site.
@@ -389,6 +394,13 @@ Her instruction was: "You'll have to fill in the fake values, but I just wanted
 you to know what it would look like. Those pieces of information are on a real
 home. Let's still use that example home from a few days ago." So the layout is
 hers and the home stays ours.
+
+**The standard is fidelity.** This is a screenshot of a working product, and
+its job is to be believed by somebody who will later see the real thing. So the
+card shows what the product shows. Where this brief removes something, it is
+for one of two reasons and no others: it names the tool the client does not
+publish, or it is a control rather than a piece of the record. Nothing is
+removed because it would look tidier without it.
 
 **Why numbers are allowed here and were refused in 10.7.** Asset 10 carries the
 same four fields and this file says nobody should type a number into them. That
@@ -403,21 +415,41 @@ not the field.
 | # | Do |
 |---|---|
 | 07d.1 | **Work from the current `home-record.jpg`, 1681 x 936.** Everything 07c produced stays: the six existing lines, no close cross, no `Website` row, no `Tags` row. |
-| 07d.2 | **Add the section header** above the AZDHS row, reading `STATE OF ARIZONA'S AZDHS METRICS`, as the green pill in her capture. Retype it crisply rather than lifting it; her capture is 368px wide and will not survive the scale. |
-| 07d.3 | **Move the `AZDHS' Listing URL:` row** so it sits directly under that header, as the first row of the block. Its styling does not change: a plain link row, not the green highlighted edit field with a pencil that her capture shows. That pencil is the map tool's inline editor and it is the thing 07b and 07c were removing. |
-| 07d.4 | **Add four rows** beneath it, in the card's existing label-and-value style, in this order and with these values: `Total Citation Count: 3`, `2026 Citation Count: 0`, `2025 Citation Count: 1`, `Total Enforcement Fines: $500`. |
-| 07d.5 | **The arithmetic has to hold.** Three total, one of them in 2025, none this year. A reader who adds them up and finds they contradict will distrust the whole image. Do not substitute rounder or larger numbers. |
-| 07d.6 | **No word anywhere is a judgement.** These are counts and a dollar amount and nothing else. Nothing reading "good", "clean", "compliant", "in good standing" or any status, pill or colour that grades the home. Green is the block header only, exactly as in her capture, and it labels the source, not the result. |
-| 07d.7 | **Delete `Open in Zoho CRM`** and its external link icon from the action row if the rebuilt card carries one. `Navigate` and `Copy address` remain, centred. That tool cannot be named anywhere on this site. |
-| 07d.8 | **Delete the settings gear and the close cross** at the top right of the card. The card's corner is clean white. |
-| 07d.9 | **Do not redraw the map** if it can be avoided. The last generative pass moved 41 per cent of the pixels outside the card and thinned the pin density. If the map does change, every label still has to read correctly. |
-| 07d.10 | **Send the wide file at 1681 x 936**, then the phone crop `home-record-tall` at 692 x 519 cut from the same file so the two agree. |
+| 07d.2 | **Add the section header** `STATE OF ARIZONA'S AZDHS METRICS`, as the green pill in her capture, below the `Email:` row. Retype it cleanly at the card's own scale rather than lifting it: her capture is 368px wide and will not survive being scaled into a 1681px file. Same typeface, weight and letter spacing as her capture, which sets it in small caps on a pale green fill. |
+| 07d.3 | **Move the `AZDHS' Listing URL:` row** under that header, as the first row of the block, which is where her capture has it. |
+| 07d.4 | **Add four rows** beneath it, in the card's existing label-and-value style, in this order: `Total Citation Count: 3`, `2026 Citation Count: 0`, `2025 Citation Count: 1`, `Total Enforcement Fines: $500`. |
+| 07d.5 | **Keep the AZDHS URL row a plain link.** Her capture shows it inside a green filled box with a pencil at the end. That is the map tool's inline editor, caught mid edit; it is a control for changing the field, not a way the record reads. The header pill stays, that box and pencil do not. |
+| 07d.6 | **The arithmetic has to hold.** Three total, one of them in 2025, none this year. A reader who adds them up and finds they contradict will distrust the whole image. Do not substitute rounder or larger numbers. |
+| 07d.7 | **No word anywhere is a judgement.** These are counts and a dollar amount and nothing else. Nothing reading "good", "clean", "compliant", "in good standing", and no status, badge or colour that grades the home. The numbers are set in the card's ordinary text colour, the same as every other value on it. The green belongs to the header, where it labels the source, and goes no further down the block. |
+| 07d.8 | **Delete `Open in Zoho CRM`** and its external link icon from the action row if the rebuilt card carries one. `Navigate` and `Copy address` remain, centred. That tool cannot be named anywhere on this site. |
+| 07d.9 | **Delete the settings gear and the close cross** at the top right of the card, and paint the corner back to clean card white. Those are the popup's window controls, not the record. |
+| 07d.10 | **Do not redraw the map** if it can be avoided. The last generative pass moved 41 per cent of the pixels outside the card and thinned the pin density. If the map does change, every label still has to read correctly. |
+| 07d.11 | **Send the wide file at 1681 x 936**, then the phone crop `home-record-tall` at 692 x 519 cut from the same file so the two agree. |
 
-**Two things follow on our side, not the editor's.**
+## After the file comes back
 
-The alt text changes again. It currently describes address, mobile, ALTCS,
-email and the AZDHS link. Four rows are being added to the picture and the
-description has to match what is in it.
+The edit is generative, so the map is at risk whatever 07d.10 asks for: the last
+pass moved 41 per cent of the pixels outside the card. That is bounded rather
+than trusted. The returned card is composited back onto the **original** map,
+so only the card region is ever new and the map on the site is the same capture
+it has always been. If the returned card's bounds do not allow a clean
+composite, the whole returned file is used and the map is re-checked label by
+label, as it was in 07c.
+
+Then, in order:
+
+1. Composite, and write the result to `web/public/product/home-record.jpg` at
+   1681 x 936.
+2. Re-cut `home-record-tall.jpg` at 692 x 519 from that same file, so the wide
+   and phone versions cannot disagree.
+3. `python scripts/build-images.py`, which regenerates AVIF and WebP at 640,
+   960, 1280 and 1681 for the wide file and 400 and 692 for the crop, and
+   rewrites `content/images.generated.ts`.
+4. Rewrite the image's alt text to describe the four new rows.
+5. Build, run the verify suite and axe, commit the generated files with the
+   source.
+
+**One thing that is ours, not the editor's.**
 
 The heading question stays closed and this does not reopen it. It was closed on
 the reasoning that the copy is not rewritten back and forth around a product
