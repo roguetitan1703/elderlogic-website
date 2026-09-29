@@ -449,6 +449,52 @@ Then, in order:
 5. Build, run the verify suite and axe, commit the generated files with the
    source.
 
+## Round one, 29 September: not cut in
+
+Saved as `Assets/home-record-07d-round1.png`, 1680 x 936.
+
+**The map held.** 3.2 per cent of the pixels outside the card moved at a
+threshold that ignores compression noise, against 41 per cent last time. Giving
+the editor the current file and telling it to leave the map alone worked. The
+remaining 3.2 per cent is mostly pins east of Mesa, and the composite step
+removes it entirely, so the map is effectively solved.
+
+**The card was rebuilt from the wrong file.** It has gone back to the identity
+07c replaced on 24 September, and reinstated three rows 07c deleted:
+
+| in the returned file | should be |
+|---|---|
+| `Sun Ridge Assisted Living` | `Example Residential Care Home` |
+| `4120 N Recker Rd, Mesa, AZ, 85215` | `10805 N 83rd Street, Scottsdale, Arizona, 85260` |
+| `Mobile: (480) 555-0176` | `Mobile: 111-222-1234` |
+| `ALTCS: Yes` | `ALTCS: Pending` |
+| `Email: contact@sunridgeal.example.com` | `Email: example@example.com` |
+| `Licence: Current` | deleted |
+| `Inspections: 4 since 2019` | deleted |
+| `Open enforcement: None` | deleted |
+
+**The three reinstated rows fail the standard this brief set.** They were
+invented on 16 September under 07.9, before the client had shown us the popup
+at all. Her captures of 24 and 29 September both show that the product has no
+such rows. Under fidelity they go, and they would go even if nobody minded
+them: `Open enforcement: None` reads as a clean record rather than a fact, which
+07d.7 forbids, and it now sits four lines above `Total Enforcement Fines: $500`,
+where a careful reader will take the two as contradicting each other.
+
+`Licence` is also the British spelling, which 07b.4 flagged a week ago.
+
+**Right in the returned file, and to be kept:** the green header pill, all four
+counting rows with the values as briefed, the AZDHS URL as a plain link with no
+edit box or pencil, no settings gear, no close cross, and no Zoho link in the
+action row.
+
+**One thing to fix while the rows are being cut.** The four new values are
+underlined inconsistently: `1` and `$500` carry an underline, `3` and `0` do
+not. All four match each other, or none of them does.
+
+Round two works from the returned file, not from the original, so the map is
+not put at risk a third time.
+
 **One thing that is ours, not the editor's.**
 
 The heading question stays closed and this does not reopen it. It was closed on
