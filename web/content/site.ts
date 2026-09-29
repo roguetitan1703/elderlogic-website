@@ -113,8 +113,8 @@ export const headerTheme: "dark" | "light" = "light";
  * or frame-ancestors block, checked against the live endpoint, so it needs no
  * script of Google's to sit on the page.
  *
- * Set to the agency's own schedule while the client's is being made. Swap the
- * URL for hers and nothing else changes. Set it to "" and the slot falls back
- * to the placeholder note.
+ * This is the client's own schedule, on the elderlogic.app Google profile, so
+ * the dialog carries her name and not ours. Set it to "" and the slot falls
+ * back to the placeholder note.
  */
-export const schedulerUrl = "https://calendar.app.google/MAwPmKLaUHag9y3BA";
+export const schedulerUrl = "https://calendar.app.google/fMsMmLKX8JkLSGXP6";

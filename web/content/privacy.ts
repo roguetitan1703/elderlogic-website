@@ -5,9 +5,14 @@
  * DO NOT EDIT the wording here. It is legal copy. If it needs to change,
  * the change comes from the client and this file is regenerated.
  *
- * OUTSTANDING: the effective date in the source document still reads
- * "MMDD, 2026". It must be a real date before go-live.
+ * The one exception is the effective date. The source document left it as
+ * "MMDD, 2026": a fill-in, not a clause. A policy states the day it takes
+ * effect, so it is set below and nowhere else. If the launch moves, move this
+ * one line with it.
  */
+
+/** The day this policy takes effect. Publication day. */
+const effectiveDate = "September 29, 2026";
 
 export const privacy = {
   title: "ElderLogic Privacy Policy",
@@ -15,7 +20,7 @@ export const privacy = {
     {
       heading: null,
       paras: [
-        "Effective Date: MMDD, 2026",
+        `Effective Date: ${effectiveDate}`,
         "This Privacy Policy (Policy) describes the information collected by or on behalf of ElderLogic LLC when you visit our websites located at https://www.elderlogic.app/ and its subdomains (the \"Sites\") or use our mobile application (the \"App\") and how the information is used and shared. If you have questions or concerns about this Policy, please contact us as set forth below.",
         "We may modify this Policy at any time. All changes will be effective immediately upon posting to the Sites. Changes that we, in our sole discretion, determine are material will be conspicuously posted on the Sites or otherwise communicated to you.",
         "We do not collect or process health information in a manner regulated by the Health Insurance Portability and Accountability Act (\"HIPAA\").",

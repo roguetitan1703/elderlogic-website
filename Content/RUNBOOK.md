@@ -180,14 +180,15 @@ Vercel's analytics scripts, which only exist when deployed.
 **Booking** is a Google Calendar appointment schedule. One constant,
 `schedulerUrl` in `web/content/site.ts`. The calendar opens in a dialog behind
 the "Book a demo" button rather than being embedded in the page, so nothing is
-requested from Google until a reader means to book. Swap the URL for the
-client's own schedule and nothing else changes; empty it and the button still
-works, it simply has nothing to show.
+requested from Google until a reader means to book. It is the client's own
+schedule, on the elderlogic.app Google profile, so the dialog carries her name.
+Swap the URL and nothing else changes; empty it and the button still works, it
+simply has nothing to show.
 
 Google's page carries its own chrome and none of it can be turned off: the
 schedule owner's logo and name at the top, "Google Calendar" opposite, and a
 "create your own appointment page" strip at the foot. The first of those is
-fixed by whose account the schedule lives on.
+now hers; the other two are the price of a free scheduler.
 
 **Enquiries** post to `/api/contact`, which validates them and writes them to
 Airtable. Three variables, set on the host, never in the repo:
@@ -240,6 +241,31 @@ Both paths are tested: a valid enquiry answers in 180ms and appears in Airtable
 a moment later, and a deliberately broken token still answers the sender 200
 and delivers the full enquiry to the fallback.
 
+**Being told an enquiry arrived.** Airtable is where an enquiry is kept; it is
+not where anybody looks. The mail goes out of Airtable itself rather than out
+of this route, for three reasons: it needs no third mail vendor, no DNS record
+and no secret in our environment; Airtable retries its own sends; and it keeps
+working if the site is redeployed, rolled back or moved. The cost is the from
+address, which is Airtable's, not `elderlogic.app`.
+
+In the base, **Automations, Create automation**:
+
+| | |
+|---|---|
+| Trigger | *When record created*, table **Enquiries** |
+| Action | *Send email* |
+| To | `hello@elderlogic.app` |
+| Subject | `Website enquiry: ` + the record's **Name** |
+| Body | **Name**, **Organisation**, **Email**, **Message**, **Received** |
+
+Turn it on, then submit the real form once and confirm the mail lands. This has
+to be built again on the client's own base, because an automation belongs to a
+base and does not travel with the token.
+
+If the from address ever has to read `elderlogic.app`, that is a mail provider
+and two DNS records on the domain, and the send moves into the route beside the
+Airtable write. It is not needed to launch.
+
 The route needs a Node runtime. It is `ƒ /api/contact` in the build output. On
 a purely static host it does not exist and every enquiry reports a failure, so
 whatever the site is deployed to has to run server code.
@@ -262,6 +288,27 @@ indexing on, and it is the last thing to do, not the first.
 Setting it also fixes the canonical URLs, the sitemap, and the absolute URL on
 the share card, which social networks fetch by URL rather than from the page.
 
+### The old Wix URLs
+
+Every path in the Wix sitemap redirects, 301, from `web/next.config.mjs`:
+
+| old | now |
+|---|---|
+| `/how-it-works` | `/#walkthrough` |
+| `/routes-field-workflows` | `/#marketing-visits` |
+| `/request-a-demo` | `/#book` |
+| `/contact-us` | `/#book` |
+| `/blank`, `/blank-1` | `/` |
+
+The two `blank` paths were Wix placeholders with nothing to preserve, so they
+go to the top of the site rather than to a section that would misrepresent what
+was clicked. Nothing outside that sitemap is redirected: an invented path would
+be a guess, and a 404 is the honest answer to a URL that was never published.
+
+These are 301 rather than Next's default 308. Both are permanent and Google
+treats them alike, but 301 is the one every crawler and link checker has
+understood for twenty five years.
+
 ---
 
 ## 6. Not done
@@ -271,16 +318,16 @@ Tracked so nothing is lost between sessions; see HANDOFF.md for detail.
 - **Enquiry handling.** Done, pending credentials. The route, the validation,
   the honeypot and the confirmation are built; the Airtable base and token are
   not created yet, so the form currently reports that it could not send.
-- **Booking.** Done, pending the client's own schedule. It points at the
-  agency's Google Calendar, so the agency's name is on the calendar a visitor
-  sees.
+- **Booking.** Done. It points at the client's own Google Calendar schedule on
+  the elderlogic.app profile.
 - **Rate limiting.** Nothing throttles `/api/contact`. See `parked.md` for why,
   and for the two ways to add it.
 - **Analytics.** Vercel Analytics is installed. The contracted deliverable is
   Google Analytics under the client's own account with events on demo requests,
   form submissions and video plays.
-- **Migration.** The live Wix site has not been crawled and no redirect map
-  exists.
+- **Migration.** Redirects are in place for every URL in the Wix sitemap. What
+  remains is pointing the domain at this deployment, which is the cutover
+  itself.
 - **Real hardware.** The device sweep runs three engines headless. WebKit shares
   Safari's engine, so it catches engine bugs, but it is not an iPhone. Someone
   has to open the site on one before launch.
