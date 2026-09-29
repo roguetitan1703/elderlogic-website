@@ -365,6 +365,67 @@ Not to be reopened without a reason that is new.
 
 ---
 
+# 07d. The AZDHS metrics rows
+
+**29 September. Adds to 07c, which stands. Not yet done.**
+
+The client built the rollup she said was on her to do list four days ago. Her
+capture of 29 September shows the popup now carrying a headed block of state
+metrics under the contact rows:
+
+```
+STATE OF ARIZONA'S AZDHS METRICS      (green pill, section header)
+AZDHS' Listing URL:                   (the state listing link)
+Total Citation Count:
+2026 Citation Count:
+2025 Citation Count:
+Total Enforcement Fines: $
+```
+
+Saved as `Assets/client-mapsly-popup-2026-09-29.png`, 368 x 270, reference
+only. **Her capture is a real home**, Sunrise Care Homes-hayden on North Hayden
+Road with its real mobile number, and none of it goes anywhere near the site.
+Her instruction was: "You'll have to fill in the fake values, but I just wanted
+you to know what it would look like. Those pieces of information are on a real
+home. Let's still use that example home from a few days ago." So the layout is
+hers and the home stays ours.
+
+**Why numbers are allowed here and were refused in 10.7.** Asset 10 carries the
+same four fields and this file says nobody should type a number into them. That
+still holds for asset 10, because the numbers there would sit beside a real
+home's real message thread, where an invented regulatory history reads as that
+home's record. Here the home is `Example Residential Care Home` at a fake
+address with a fake phone and a fake email, the exhibit is captioned
+"Illustrative values", and every other value in the card was already invented in
+07c. Adding these four is no different in kind. The line is the home's identity,
+not the field.
+
+| # | Do |
+|---|---|
+| 07d.1 | **Work from the current `home-record.jpg`, 1681 x 936.** Everything 07c produced stays: the six existing lines, no close cross, no `Website` row, no `Tags` row. |
+| 07d.2 | **Add the section header** above the AZDHS row, reading `STATE OF ARIZONA'S AZDHS METRICS`, as the green pill in her capture. Retype it crisply rather than lifting it; her capture is 368px wide and will not survive the scale. |
+| 07d.3 | **Move the `AZDHS' Listing URL:` row** so it sits directly under that header, as the first row of the block. Its styling does not change: a plain link row, not the green highlighted edit field with a pencil that her capture shows. That pencil is the map tool's inline editor and it is the thing 07b and 07c were removing. |
+| 07d.4 | **Add four rows** beneath it, in the card's existing label-and-value style, in this order and with these values: `Total Citation Count: 3`, `2026 Citation Count: 0`, `2025 Citation Count: 1`, `Total Enforcement Fines: $500`. |
+| 07d.5 | **The arithmetic has to hold.** Three total, one of them in 2025, none this year. A reader who adds them up and finds they contradict will distrust the whole image. Do not substitute rounder or larger numbers. |
+| 07d.6 | **No word anywhere is a judgement.** These are counts and a dollar amount and nothing else. Nothing reading "good", "clean", "compliant", "in good standing" or any status, pill or colour that grades the home. Green is the block header only, exactly as in her capture, and it labels the source, not the result. |
+| 07d.7 | **Delete `Open in Zoho CRM`** and its external link icon from the action row if the rebuilt card carries one. `Navigate` and `Copy address` remain, centred. That tool cannot be named anywhere on this site. |
+| 07d.8 | **Delete the settings gear and the close cross** at the top right of the card. The card's corner is clean white. |
+| 07d.9 | **Do not redraw the map** if it can be avoided. The last generative pass moved 41 per cent of the pixels outside the card and thinned the pin density. If the map does change, every label still has to read correctly. |
+| 07d.10 | **Send the wide file at 1681 x 936**, then the phone crop `home-record-tall` at 692 x 519 cut from the same file so the two agree. |
+
+**Two things follow on our side, not the editor's.**
+
+The alt text changes again. It currently describes address, mobile, ALTCS,
+email and the AZDHS link. Four rows are being added to the picture and the
+description has to match what is in it.
+
+The heading question stays closed and this does not reopen it. It was closed on
+the reasoning that the copy is not rewritten back and forth around a product
+that is mid change. The product has now changed in the direction the copy
+already described, which is a reason to leave the copy exactly where it is.
+
+---
+
 # Do not bother with these
 
 Duplicates and superseded captures. Nothing needs doing to any of them.
