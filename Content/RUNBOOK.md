@@ -209,10 +209,33 @@ that is missing: a wrong spelling fails the write with `UNKNOWN_FIELD_NAME`.
 cd web && python ../scripts/airtable-setup.py
 ```
 
-creates whatever is missing and leaves everything else alone, so it is safe to
-re-run and it is how the client's own base gets set up on go live. For that it
-needs `schema.bases:read` and `schema.bases:write` on the token as well; with
-only `data.records:write` it stops and prints the fields to add by hand.
+is how the client's own base gets set up. It creates the table if it is not
+there, which a brand new base never has, creates any missing field, then writes
+one enquiry exactly the way `/api/contact` writes it and deletes it again.
+
+That last step is the point of the script. A schema that looks right and a
+write that actually succeeds are different claims, and on go live only the
+second one matters: a token missing `data.records:write` passes every other
+check and fails only when a real enquiry arrives, silently, at the worst
+possible moment. `--no-smoke` skips it, `--keep` leaves the row in place.
+
+Everything it does is idempotent, so it is safe to re-run, and a partial run is
+finished by running it again. Fields it does not know about are left alone: a
+new base arrives with `Notes`, `Assignee` and `Status` on its default table and
+none of them are touched.
+
+It needs `schema.bases:read` and `schema.bases:write` on the token as well as
+`data.records:write`. Without them it stops and prints exactly what to make by
+hand. The failures are told apart rather than lumped together: a 401 is a token
+Airtable does not recognise, a 403 is a real token that was never given access
+to that base, and a 404 is the wrong `app...` id.
+
+To aim it at a base other than the one in `web/.env.local`, put the values in
+front of it. The environment wins over the file, which is Next's own order:
+
+```
+AIRTABLE_BASE_ID=appHERS AIRTABLE_TOKEN=patHERS python ../scripts/airtable-setup.py
+```
 
 Real values live in `web/.env.local`, which is gitignored, and in the host's
 environment settings. They are never committed.
