@@ -319,6 +319,35 @@ tied to a named person.
 
 ---
 
+## 4c. Branches, and the preview the client sees
+
+Two branches, and the difference matters because one of them is a URL you have
+given to somebody.
+
+`main` is the work. Every commit lands here first.
+
+`deployments` is what the client is looking at. Vercel builds a preview for it
+and gives it a stable URL that does not change between builds, so the link she
+was sent keeps working. Nothing is developed on this branch; it only ever
+fast forwards to `main` when the work is ready to be seen.
+
+```
+git checkout deployments && git merge --ff-only main
+git push origin deployments && git push delpat deployments
+git checkout main
+```
+
+If that merge is not a fast forward, something was committed to `deployments`
+directly. Find it before forcing anything: it is a change that exists nowhere
+else.
+
+Previews serve `noindex` regardless, because `NEXT_PUBLIC_SITE_URL` is set on
+the production deployment only and Vercel marks a branch build
+`VERCEL_ENV=preview`. So the preview cannot compete with the real site in
+search, and it cannot be found by anyone who was not sent the link.
+
+---
+
 ## 5. Going live
 
 `NEXT_PUBLIC_SITE_URL` is the switch. Until it is set to the real domain, every
