@@ -230,6 +230,26 @@ hand. The failures are told apart rather than lumped together: a 401 is a token
 Airtable does not recognise, a 403 is a real token that was never given access
 to that base, and a 404 is the wrong `app...` id.
 
+**What the script cannot do, because Airtable's API cannot.** There is no
+endpoint that deletes a field or a table: both are UI only, checked against the
+live API rather than taken from the documentation. So a base made from
+Airtable's default template arrives with `Notes`, `Assignee`, `Status`,
+`Attachments` and `Attachment Summary`, and the script can rename `Notes` to
+`Message`, because the type already matches, but the rest have to be removed by
+hand or left.
+
+`Attachment Summary` is the one that actually has to go. It is an AI field
+computed from `Attachments`, and with nothing attached it resolves to
+`{"state": "error", "errorType": "emptyDependency"}` on **every** row, so every
+enquiry arrives carrying a visible error. `Assignee` and `Attachments` are
+merely unused. `Status` is worth keeping: whether an enquiry has been answered
+is the obvious next question about it, and Todo / In progress / Done already
+says that.
+
+A new table also ships with three blank records. Those the API can delete, and
+the base should be empty before go live so the first row in it is a real
+enquiry.
+
 To aim it at a base other than the one in `web/.env.local`, put the values in
 front of it. The environment wins over the file, which is Next's own order:
 
