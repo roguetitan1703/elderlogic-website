@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import Analytics from "@/components/Analytics";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import StructuredData from "@/components/StructuredData";
@@ -93,12 +92,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <SiteFooter />
         <ToTop />
-        {/* Page views and Core Web Vitals, from Vercel. No cookie, no consent
-            banner, no third party: it is first party to the deployment and
-            collects nothing that identifies a visitor, which is what keeps it
-            compatible with the privacy policy as written. Inert off Vercel. */}
+        {/* Google Analytics, under the client's own account, so the numbers
+            belong to her and survive a change of host. Renders nothing at all
+            unless NEXT_PUBLIC_GA_ID is set, which keeps previews out of her
+            reporting. Replaced the two Vercel tags, which only worked on
+            Vercel and reported to us rather than to her. */}
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );

@@ -274,6 +274,51 @@ whatever the site is deployed to has to run server code.
 
 ---
 
+## 4b. Analytics
+
+**Google Analytics 4, under the client's own account.** The two Vercel tags
+that were here before are gone: they only worked on Vercel, and they reported
+to us rather than to her. One variable, `NEXT_PUBLIC_GA_ID`, the measurement id
+from Admin, Data streams, the web stream. Unset, the tag does not render at
+all, so local builds and previews send nothing and her reporting stays clean.
+
+The id is public by design. It is in the page source of every site that uses
+GA, which is why it is a `NEXT_PUBLIC_` variable and not a secret.
+
+**Access.** GA charges nothing per user and has no seat limit. She owns the
+property; Admin, Property access management, add whoever needs it as
+Administrator or Editor. Implementing the tag needs only the id, not access to
+her account, so she can send the id and add people later.
+
+**The events the site sends.** Two, both in `web/lib/track.ts`:
+
+| event | fires when |
+|---|---|
+| `demo_request` | the booking dialog opens |
+| `enquiry_sent` | the contact form gets an answer the sender was told was a success |
+
+`demo_request` counts intent, not bookings. The booking itself happens on
+Google's page inside an iframe, which we cannot see into, so the completed
+bookings are counted in her calendar and the two numbers are read together.
+
+`enquiry_sent` fires only on success. A 422 is the sender fixing their own
+typo and is not an enquiry; a failed send is not one either. Counting either
+would overstate her numbers.
+
+Both go through `track()`, which is silent when the tag is not there. Analytics
+must never be able to break a booking or an enquiry, so it never throws.
+
+**Video plays are contracted and there is no video on the site.** If one is
+added, it gets a third event here.
+
+**Cookies.** GA sets them and is a third party, which the Vercel tag was not.
+The privacy policy already covers this: it names cookies, web beacons and pixel
+tags, and lists what they collect. No new clause is needed. GA4 truncates IP
+addresses on collection, and the site has no login, so nothing it records is
+tied to a named person.
+
+---
+
 ## 5. Going live
 
 `NEXT_PUBLIC_SITE_URL` is the switch. Until it is set to the real domain, every
@@ -322,9 +367,9 @@ Tracked so nothing is lost between sessions; see HANDOFF.md for detail.
   the elderlogic.app profile.
 - **Rate limiting.** Nothing throttles `/api/contact`. See `parked.md` for why,
   and for the two ways to add it.
-- **Analytics.** Vercel Analytics is installed. The contracted deliverable is
-  Google Analytics under the client's own account with events on demo requests,
-  form submissions and video plays.
+- **Analytics.** Google Analytics is wired and inert until
+  `NEXT_PUBLIC_GA_ID` is set. Demo requests and form submissions are sent; see
+  section 4b. Video plays are contracted and there is no video on the site.
 - **Migration.** Redirects are in place for every URL in the Wix sitemap. What
   remains is pointing the domain at this deployment, which is the cutover
   itself.

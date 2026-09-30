@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { close, footer } from "@/content/copy";
+import { track } from "@/lib/track";
 
 type State = "idle" | "sending" | "sent" | "failed";
 
@@ -53,6 +54,10 @@ export default function ContactForm() {
         return;
       }
       setState("sent");
+      /* Only on an answer the sender was told was a success. A 422 is the
+         sender fixing their own typo and is not an enquiry; a failure is not
+         one either. Counting either would overstate her numbers. */
+      track("enquiry_sent");
     } catch {
       setState("failed");
     }

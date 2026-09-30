@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { schedulerUrl } from "@/content/site";
 import { close as closeCopy } from "@/content/copy";
+import { track } from "@/lib/track";
 
 /**
  * The booking calendar, in a dialog.
@@ -40,6 +41,11 @@ export default function BookDialog() {
     setMounted(true);
     document.body.classList.add("has-dialog");
     ref.current?.showModal();
+    /* Opening the calendar is the closest thing the site has to a demo
+       request: the booking itself happens on Google's page, which we cannot
+       see. So this counts intent, and the bookings are counted in her
+       calendar. Both numbers are needed to read either. */
+    track("demo_request");
   };
 
   const src = `${schedulerUrl}${schedulerUrl.includes("?") ? "&" : "?"}gv=true`;
