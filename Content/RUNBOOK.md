@@ -321,12 +321,24 @@ whatever the site is deployed to has to run server code.
 
 **Google Analytics 4, under the client's own account.** The two Vercel tags
 that were here before are gone: they only worked on Vercel, and they reported
-to us rather than to her. One variable, `NEXT_PUBLIC_GA_ID`, the measurement id
-from Admin, Data streams, the web stream. Unset, the tag does not render at
-all, so local builds and previews send nothing and her reporting stays clean.
+to us rather than to her.
 
-The id is public by design. It is in the page source of every site that uses
-GA, which is why it is a `NEXT_PUBLIC_` variable and not a secret.
+The measurement id is written into `web/components/Analytics.tsx`, not held in
+a variable. It is not a secret, it is in the page source of every site that
+uses GA, and it never changes. A variable would have been one more thing that
+can be absent, and an absent one fails as silently broken tracking that loses
+days of data before anybody notices.
+
+What the variable was really buying was keeping previews and local builds out
+of her reporting, and `isProduction` already says that. It is the same switch
+that turns off `noindex`, so analytics and indexing cannot disagree about
+whether this is the real site. Verified three ways: a plain build renders no
+tag, a build with `NEXT_PUBLIC_SITE_URL` renders it on every route including
+the 404, and a build with `VERCEL_ENV=preview` renders none.
+
+It is rendered from the root layout, so it is on every page. Google's
+instruction to paste the snippet into every page is written for hand built
+HTML.
 
 **Access.** GA charges nothing per user and has no seat limit. She owns the
 property; Admin, Property access management, add whoever needs it as
@@ -407,20 +419,9 @@ move is a well worn way to confuse Google about a site that was fine.
 6. Data collection, platform **Web**. Website URL `https://elderlogic.app`,
    stream name `ElderLogic website`.
 7. The stream shows a **Measurement ID**, `G-XXXXXXXXXX`. That is the whole
-   handover: it goes in `NEXT_PUBLIC_GA_ID` on the production deployment and
-   nothing else is needed. It is public by design, so it is not a secret to
-   pass around carefully.
-
-   **Setting it is not enough. It has to be redeployed.** Anything named
-   `NEXT_PUBLIC_` is inlined into the bundle when the site is built, not read
-   when it is served, so saving the variable changes nothing until a build runs
-   with it present. Set it for **Production only**, so previews stay out of her
-   reporting, then redeploy. Confirm from outside rather than from the
-   dashboard:
-
-   ```
-   curl -s https://elderlogic.app/ | grep -o "gtag/js?id=G-[A-Z0-9]*"
-   ```
+   handover. It goes into `MEASUREMENT_ID` in `web/components/Analytics.tsx`
+   and the site is redeployed. There is no environment variable for it: see
+   section 4b for why.
 8. Leave **Enhanced measurement** on. Outbound clicks are part of it, which is
    how clicks through to the AZDHS listing get counted without any extra work.
 
