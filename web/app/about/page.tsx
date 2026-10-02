@@ -29,6 +29,9 @@ export const metadata: Metadata = pageMetadata({
  * "we" and has not yet been shown who that is.
  */
 export default function About() {
+  const before = about.story.slice(0, about.photoAfter);
+  const after = about.story.slice(about.photoAfter);
+
   return (
     <main id="top" tabIndex={-1}>
       <StructuredData page="about" />
@@ -44,13 +47,11 @@ export default function About() {
         <div className="container">
           <div className="about">
             <p className="lead about__lede">{about.lede}</p>
-
-            <p className="about__claim">{about.claim}</p>
-
-            <p className="about__p">{about.origin}</p>
-
-            <p className="about__claim">{about.built}</p>
-            <p className="about__p">{about.became}</p>
+            {before.map((block, i) => (
+              <p key={i} className={block.kind === "claim" ? "about__claim" : "about__p"}>
+                {block.text}
+              </p>
+            ))}
           </div>
 
           {/* A sibling of the text rather than a child of it, so it can run
@@ -67,21 +68,13 @@ export default function About() {
           </figure>
 
           <div className="about">
-            {about.sections.map((section) => (
-              <section key={section.heading} className="about__block">
-                <h2 className="display-3 about__sub">{section.heading}</h2>
-                {section.paras.map((para, i) => (
-                  <p key={i} className="about__p">
-                    {para}
-                  </p>
-                ))}
-              </section>
+            {after.map((block, i) => (
+              <p key={i} className={block.kind === "claim" ? "about__claim" : "about__p"}>
+                {block.text}
+              </p>
             ))}
-
             <p className="about__close">
-              {about.closing.map((line) => (
-                <span key={line}>{line}</span>
-              ))}
+              <span>{about.closing}</span>
             </p>
           </div>
         </div>

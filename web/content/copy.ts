@@ -82,60 +82,84 @@ export const org = {
 /**
  * About.
  *
- * The client's own words, supplied 30 September. Two changes and no others,
- * both of them her rules rather than our taste:
+ * The client's own words, rewritten by her on 2 October after reading the
+ * first version back and finding it understated what she actually did. The
+ * second version names her, and names what she built, which the first did not.
  *
- *   - The em dash after "senior care placement" became a colon. No dash of
- *     that kind appears anywhere on this site, which is her rule, not ours.
- *   - "pretours" became "pre-tours", which is how the rest of the site spells
- *     it, including the walkthrough step a reader will have just come from.
+ * Two changes and no others, both of them her rules rather than our taste. She
+ * used an em dash twice, in both cases to introduce an elaboration, and both
+ * became colons, which is the same move and the one this site already makes.
+ * Nothing else is touched.
  *
- * Everything else is hers, including the headings, which are already in the
- * title case she asked for. The short declarative lines are set apart in the
- * layout rather than rewritten: they are the best sentences on the page and
- * they are doing structural work.
+ * The first version carried "We don't score or rank homes". That line is not
+ * lost: it is still in the record section's rule line and in an FAQ answer,
+ * which are the two places a reader is actually wondering about it.
+ *
+ * The story is an array because it alternates between paragraphs and the short
+ * declarative lines that turn the argument. Set apart by the layout, never
+ * rewritten. Three of them, not five: a fourth would make them furniture.
  */
 export const about = {
   metaTitle: "About",
   metaDescription:
-    "ElderLogic was built by people who worked in senior care placement, to solve the problems they met in the field.",
+    "Terrah Shaw rebuilt the systems behind a senior care placement business, then wrote the software. That software became ElderLogic.",
   eyebrow: "About us",
   heading: "Built for the Field, Not the Boardroom",
-  lede: "ElderLogic was built from real experience in senior care placement: working with families, walking into residential care homes, building relationships, making calls, sending referrals, coordinating tours, and navigating the realities of finding the right care.",
-  claim: "We know this work because we’ve done it.",
-  origin:
-    "Beginning in 2023, we started building technology for our own placement business to solve the problems we encountered every day in the field. We needed better information about residential care homes. We needed a faster way to identify viable options for families. We needed to organize outreach, responses, regulatory information, availability, and follow-up without piecing it together across multiple systems.",
-  built: "So we built it.",
-  became: "Over time, that internal system became ElderLogic.",
+  lede: "ElderLogic grew out of years of hands-on experience in senior care placement.",
+  /** `claim` is set apart by the layout. `p` is a paragraph. */
+  story: [
+    {
+      kind: "p",
+      text: "When Terrah Shaw took over operations for her husband Jon’s senior care placement business, she quickly saw how difficult the work was to manage with the tools available.",
+    },
+    {
+      kind: "p",
+      text: "Critical information was scattered across different sources. Care home data changed constantly. Searches required extensive manual work. Outreach was difficult to track. Regulatory information lived in separate systems. Important details were spread across spreadsheets, disconnected software, individual records, and manual processes.",
+    },
+    { kind: "claim", text: "The problem wasn’t the work itself." },
+    { kind: "claim", text: "It was the way the work had to be done." },
+    {
+      kind: "p",
+      text: "Terrah began rebuilding the operational systems behind the business: first by creating better processes, organizing the information, and connecting the pieces that already existed.",
+    },
+    { kind: "claim", text: "Then she started writing software." },
+    {
+      kind: "p",
+      text: "She designed and developed tools around the actual work happening every day: searching for care homes, managing facility information, conducting outreach, tracking responses, reviewing regulatory information, preparing placement options, and keeping the process organized from beginning to end.",
+    },
+    {
+      kind: "p",
+      text: "Each new tool solved another problem she had encountered firsthand.",
+    },
+    {
+      kind: "p",
+      text: "The difference was immediate. Work that once required searching across multiple sources, manually tracking information, and piecing together what had already happened became faster, clearer, and far more efficient.",
+    },
+    {
+      kind: "p",
+      text: "For Jon, that meant spending less time managing the mechanics of the process and more time doing the part of the work that technology can’t replace: talking with families, understanding what they need, building relationships, and helping people through difficult decisions.",
+    },
+    {
+      kind: "p",
+      text: "Over the next several years, those tools became increasingly connected and sophisticated. What began as a way to make their placement business operate better grew into a comprehensive technology platform built around how senior care placement actually works.",
+    },
+    { kind: "claim", text: "That platform became ElderLogic." },
+    {
+      kind: "p",
+      text: "Today, ElderLogic brings years of real-world placement and operational experience into one platform, helping senior care and hospice teams work with better information, clearer processes, and fewer unnecessary steps.",
+    },
+  ],
+  /** The photograph goes after this many story blocks. Placed where both of
+   *  them are in play, just after what the change meant for Jon, rather than
+   *  up at the top where it would be decoration. */
+  photoAfter: 10,
   photo: {
     src: "/about/founders.jpg",
     alt: "Terrah and Jon Shaw, seated together on a stone bench on a desert hillside, with the valley behind them.",
     caption: "Terrah and Jon Shaw",
   },
-  sections: [
-    {
-      heading: "Technology Shaped by Real-World Experience",
-      paras: [
-        "Every part of ElderLogic starts with a practical question: What does someone actually need to do their job better?",
-        "That perspective has shaped everything from how residential care home information is organized to how outreach, mapping, pre-tours, placement searches, and reporting work.",
-        "We intentionally keep the platform focused. No unnecessary steps, complicated workflows, or features added simply for the sake of having more features. If it doesn’t make the work easier, clearer, or more useful in the field, it doesn’t belong.",
-        "As the platform evolved, we recognized that hospice teams face many of the same challenges we experienced ourselves: thousands of residential care homes, constantly changing information, limited visibility into where relationships exist, and representatives who need useful information while they’re actually out in the community.",
-        "ElderLogic brings that information and workflow together.",
-      ],
-    },
-    {
-      heading: "Built for the People Doing the Work",
-      paras: [
-        "We believe technology should support relationships, not replace them.",
-        "ElderLogic helps hospice teams identify residential care homes, conduct targeted outreach, prepare for more productive visits, and keep the information they need accessible in the field.",
-        "We don’t score or rank homes, and we don’t tell teams where to build relationships. We provide better information and better tools so your team can make those decisions for themselves.",
-      ],
-    },
-  ],
-  closing: [
-    "ElderLogic wasn’t built by people guessing what this work looks like.",
-    "It was built by people who have done it.",
-  ],
+  closing:
+    "The goal remains the same as it was from the beginning: let technology handle more of the administrative work so people have more time for the work that actually requires a person.",
 };
 
 export const nav = {

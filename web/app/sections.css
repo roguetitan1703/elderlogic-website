@@ -1862,10 +1862,6 @@ body:has(.site-header--light) .site-header.site-header--light:not(.is-open) {
   color: var(--text-muted);
 }
 
-.about + .about__figure { margin-top: var(--sp-10); }
-.about__figure + .about .about__block:first-child { margin-top: 0; }
-.about__block { margin-top: var(--sp-10); }
-.about__sub { margin: 0 0 var(--sp-5); max-width: 24ch; }
 
 /* The closing pair. Two sentences, one beat apart, so they are two lines and
    not a paragraph. */
