@@ -362,6 +362,78 @@ tied to a named person.
 
 ---
 
+## 4d. Setting up Analytics and Search Console
+
+Both live in the client's own Google account, the same one the calendar is on.
+Do them in this order: Search Console verification can take an hour to
+propagate, so start it first and do Analytics while it settles.
+
+### Search Console
+
+1. `search.google.com/search-console`, signed in as the elderlogic.app user.
+2. Add property, and choose **Domain**, not URL prefix. A Domain property
+   covers `http` and `https`, `www` and the apex, and every subdomain, in one
+   place. A URL prefix property would cover only the exact origin typed in,
+   which is how people end up with two properties that each see half the
+   traffic.
+3. Enter `elderlogic.app`. No scheme, no `www`.
+4. Google returns a TXT value beginning `google-site-verification=`. In GoDaddy,
+   DNS, add a TXT record with Name `@` and that value as the data. The
+   nameservers are `ns43/ns44.domaincontrol.com`, so GoDaddy is where the zone
+   actually lives and this is the only place to add it.
+5. Verify. If it fails, it has not propagated; wait and press it again rather
+   than adding a second record.
+6. Sitemaps, add `sitemap.xml`, submit. The full URL is
+   `https://elderlogic.app/sitemap.xml` and it lists three pages.
+7. URL inspection on `https://elderlogic.app/`, then Request indexing. That
+   queues the home page rather than waiting for a crawl.
+
+**The Change of Address tool is not used here, and should not be.** It is for
+moving to a different domain. This move was Wix to Vercel and `www` to the
+apex, both inside `elderlogic.app`, which is one domain. A Domain property sees
+both hosts, and the 301s do the rest. Reaching for the tool on a same domain
+move is a well worn way to confuse Google about a site that was fine.
+
+### Analytics
+
+1. `analytics.google.com`, same account. Admin, Create, Account.
+2. Account name `ElderLogic`. The data sharing defaults are fine.
+3. Property name `ElderLogic`.
+4. **Reporting time zone: United States, (GMT-07:00) Phoenix.** Arizona does
+   not observe daylight saving, so picking Los Angeles or Denver puts every
+   report an hour out for half the year. Currency: US Dollar.
+5. Business details and objectives: whichever fit. "Generate leads" matches
+   what the site is for and tunes the default reports toward it.
+6. Data collection, platform **Web**. Website URL `https://elderlogic.app`,
+   stream name `ElderLogic website`.
+7. The stream shows a **Measurement ID**, `G-XXXXXXXXXX`. That is the whole
+   handover: it goes in `NEXT_PUBLIC_GA_ID` on the production deployment and
+   nothing else is needed. It is public by design, so it is not a secret to
+   pass around carefully.
+8. Leave **Enhanced measurement** on. Outbound clicks are part of it, which is
+   how clicks through to the AZDHS listing get counted without any extra work.
+
+**Two settings people get wrong, both worth doing on day one.**
+
+**Data retention defaults to 2 months.** Admin, Data settings, Data retention,
+change it to **14 months**. Nothing recovers data thrown away under the old
+setting, so this is the single most expensive click to forget.
+
+**Key events have to be marked, and only appear once they have fired.** After
+the tag is live and somebody has opened the booking dialog and sent an enquiry,
+go to Admin, Events, and mark `demo_request` and `enquiry_sent` as key events.
+Until then they are not in the list, which looks like the tracking is broken
+and is not.
+
+### Access
+
+Neither product charges per user. She owns both; add whoever needs them:
+
+- Analytics: Admin, Property access management, add the address as Editor.
+- Search Console: Settings, Users and permissions, add as Full or Restricted.
+
+---
+
 ## 4c. Branches, and the preview the client sees
 
 Two branches, and the difference matters because one of them is a URL you have
