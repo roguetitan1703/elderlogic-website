@@ -117,6 +117,38 @@ export const images: Record<string, Entry> = {
       ]
     ]
   },
+  "/about/founders.jpg": {
+    "width": 1237,
+    "height": 820,
+    "avif": [
+      [
+        420,
+        "/about/founders-420.avif"
+      ],
+      [
+        840,
+        "/about/founders-840.avif"
+      ],
+      [
+        1237,
+        "/about/founders-1237.avif"
+      ]
+    ],
+    "webp": [
+      [
+        420,
+        "/about/founders-420.webp"
+      ],
+      [
+        840,
+        "/about/founders-840.webp"
+      ],
+      [
+        1237,
+        "/about/founders-1237.webp"
+      ]
+    ]
+  },
   "/product/phone-assessment.png": {
     "width": 760,
     "height": 1540,

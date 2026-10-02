@@ -79,11 +79,71 @@ export const org = {
   ],
 };
 
+/**
+ * About.
+ *
+ * The client's own words, supplied 30 September. Two changes and no others,
+ * both of them her rules rather than our taste:
+ *
+ *   - The em dash after "senior care placement" became a colon. No dash of
+ *     that kind appears anywhere on this site, which is her rule, not ours.
+ *   - "pretours" became "pre-tours", which is how the rest of the site spells
+ *     it, including the walkthrough step a reader will have just come from.
+ *
+ * Everything else is hers, including the headings, which are already in the
+ * title case she asked for. The short declarative lines are set apart in the
+ * layout rather than rewritten: they are the best sentences on the page and
+ * they are doing structural work.
+ */
+export const about = {
+  metaTitle: "About",
+  metaDescription:
+    "ElderLogic was built by people who worked in senior care placement, to solve the problems they met in the field.",
+  eyebrow: "About us",
+  heading: "Built for the Field, Not the Boardroom",
+  lede: "ElderLogic was built from real experience in senior care placement: working with families, walking into residential care homes, building relationships, making calls, sending referrals, coordinating tours, and navigating the realities of finding the right care.",
+  claim: "We know this work because we’ve done it.",
+  origin:
+    "Beginning in 2023, we started building technology for our own placement business to solve the problems we encountered every day in the field. We needed better information about residential care homes. We needed a faster way to identify viable options for families. We needed to organize outreach, responses, regulatory information, availability, and follow-up without piecing it together across multiple systems.",
+  built: "So we built it.",
+  became: "Over time, that internal system became ElderLogic.",
+  photo: {
+    src: "/about/founders.jpg",
+    alt: "Terrah and Jon Shaw, seated together on a stone bench on a desert hillside, with the valley behind them.",
+    caption: "Terrah and Jon Shaw",
+  },
+  sections: [
+    {
+      heading: "Technology Shaped by Real-World Experience",
+      paras: [
+        "Every part of ElderLogic starts with a practical question: What does someone actually need to do their job better?",
+        "That perspective has shaped everything from how residential care home information is organized to how outreach, mapping, pre-tours, placement searches, and reporting work.",
+        "We intentionally keep the platform focused. No unnecessary steps, complicated workflows, or features added simply for the sake of having more features. If it doesn’t make the work easier, clearer, or more useful in the field, it doesn’t belong.",
+        "As the platform evolved, we recognized that hospice teams face many of the same challenges we experienced ourselves: thousands of residential care homes, constantly changing information, limited visibility into where relationships exist, and representatives who need useful information while they’re actually out in the community.",
+        "ElderLogic brings that information and workflow together.",
+      ],
+    },
+    {
+      heading: "Built for the People Doing the Work",
+      paras: [
+        "We believe technology should support relationships, not replace them.",
+        "ElderLogic helps hospice teams identify residential care homes, conduct targeted outreach, prepare for more productive visits, and keep the information they need accessible in the field.",
+        "We don’t score or rank homes, and we don’t tell teams where to build relationships. We provide better information and better tools so your team can make those decisions for themselves.",
+      ],
+    },
+  ],
+  closing: [
+    "ElderLogic wasn’t built by people guessing what this work looks like.",
+    "It was built by people who have done it.",
+  ],
+};
+
 export const nav = {
   items: [
     { label: "How It Works", href: "/#walkthrough" },
     { label: "Inspection Records", href: "/#record" },
     { label: "Marketing Visits", href: "/#marketing-visits" },
+    { label: "About", href: "/about" },
     { label: "FAQ", href: "/faq" },
   ],
   cta: { label: "Book a demo", href: "/#book" },
@@ -562,6 +622,7 @@ export const footer = {
     {
       heading: "Company",
       links: [
+        { label: "About", href: "/about" },
         { label: "Privacy", href: "/privacy" },
         { label: "Book a demo", href: "/#book" },
       ],

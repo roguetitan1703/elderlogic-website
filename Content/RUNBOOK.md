@@ -150,11 +150,21 @@ npm i axe-core
 
 | Check | Command | Expect |
 |---|---|---|
+| Content and structure | `python scripts/verify.py` | 106 checks, **6 known failures** |
 | Accessibility | `python scripts/a11y-audit.py` | 0 violations |
 | Cross-browser and device | `python scripts/device-matrix.py` | no findings |
 | Performance | `npx lighthouse http://localhost:3195/ --preset=desktop` | see below |
 
-Both scripts assume the site is on port 3195; set `BASE` to change it.
+All three scripts assume the site is on port 3195; set `BASE` to change it.
+
+**`verify.py` always reports six failures and they are not failures.** Five are
+FAQ answers and one is a casing check that reads them. A collapsed `<details>`
+does not expose its text to `inner_text`, and the accordion uses `name="faq"`,
+which makes the disclosures exclusive, so opening one closes the last and they
+cannot all be read at once. Those six are confirmed through the DOM separately.
+**Anything beyond six is real**, and the number is the point: a suite that is
+expected to be green teaches you to skim it, whereas this one has a count you
+have to match.
 
 The device sweep also prints which image file each engine chose. Expect
 Chromium and Firefox to take AVIF and WebKit to take WebP: that is the reason

@@ -252,7 +252,11 @@
 .qa__item[open] > .qa__q .qa__mark { color: var(--brand-ink); }
 
 .qa__a {
-  padding-bottom: var(--sp-7);
+  /* Was --sp-7, which is not on the scale: the steps run 6 then 8. An
+     undefined custom property makes the whole declaration invalid, so this
+     has been zero since it was written and every open answer has sat flush
+     against the question under it. */
+  padding-bottom: var(--sp-6);
   padding-right: var(--sp-8);
 }
 .qa__a p {
@@ -1806,3 +1810,74 @@ body:has(.site-header--light) .site-header.site-header--light:not(.is-open) {
 .site-header--light:not(.is-open) .site-header__nav a:hover { color: var(--text-strong); }
 .site-header--light:not(.is-open) .site-header__toggle { color: var(--text-strong); }
 .site-header--light:not(.is-open) .site-header__toggle:focus-visible { outline-color: var(--border-focus); }
+
+
+/* ---------------------------------------------------------------------------
+   About
+   One column, because the page is one argument. Three sentences carry it and
+   they are set apart rather than rewritten: the layout does the emphasis.
+   Width is constrained the way the privacy page constrains it, with a measure
+   and no auto margin, so the text starts on the same line as the heading
+   above it rather than floating in the middle of the container.
+   --------------------------------------------------------------------------- */
+.about { max-width: var(--measure); }
+.about__heading { max-width: 18ch; }
+.about__lede { margin: 0 0 var(--sp-6); }
+.about__p {
+  margin: 0 0 var(--sp-5);
+  color: var(--text-body);
+}
+.about__p:last-child { margin-bottom: 0; }
+
+/* The turns in the argument. A rule rather than a quote mark: these are
+   statements the page is making, not something being quoted into it. */
+.about__claim {
+  margin: var(--sp-8) 0;
+  padding-left: var(--sp-5);
+  border-left: 2px solid var(--brand-ink);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  color: var(--text-strong);
+}
+
+/* The one element allowed past the measure. Text stays at a readable column
+   and the photograph runs wider, which gives a long single column page a
+   change of rhythm and stops a wide screen reading as half empty. Capped
+   rather than full bleed: beyond about 56rem the source has no more detail to
+   give and it would be upscaled. */
+.about__figure {
+  margin: var(--sp-10) 0;
+  width: min(56rem, 100%);
+}
+.about__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+}
+.about__cap {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-caption);
+  color: var(--text-muted);
+}
+
+.about + .about__figure { margin-top: var(--sp-10); }
+.about__figure + .about .about__block:first-child { margin-top: 0; }
+.about__block { margin-top: var(--sp-10); }
+.about__sub { margin: 0 0 var(--sp-5); max-width: 24ch; }
+
+/* The closing pair. Two sentences, one beat apart, so they are two lines and
+   not a paragraph. */
+.about__close {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin: var(--sp-10) 0 0;
+  padding-top: var(--sp-8);
+  border-top: var(--border-w) solid var(--border-hairline);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  color: var(--text-strong);
+}

@@ -1,4 +1,4 @@
-import { footer, meta, org, questions } from "@/content/copy";
+import { about, footer, meta, org, questions } from "@/content/copy";
 import { siteUrl } from "@/content/site";
 
 /**
@@ -21,7 +21,7 @@ import { siteUrl } from "@/content/site";
  * both be false, and an aggregateRating would break the rule this product is
  * built on.
  */
-export default function StructuredData({ page }: { page?: "faq" }) {
+export default function StructuredData({ page }: { page?: "faq" | "about" }) {
   const orgId = `${siteUrl}/#organization`;
   const siteId = `${siteUrl}/#website`;
 
@@ -82,6 +82,37 @@ export default function StructuredData({ page }: { page?: "faq" }) {
       },
     },
   ];
+
+  /* The about page is the only place on the site that says who is behind it,
+     so it is the only place a founder belongs in the markup. Named people are
+     what let a search engine, or a model answering a question about the
+     company, connect the product to the experience the page claims for it,
+     which is the page's whole argument. Both names are already public on their
+     other company's team page. */
+  if (page === "about") {
+    const founders = [
+      { "@type": "Person", "@id": `${siteUrl}/about#terrah`, name: "Terrah Shaw" },
+      { "@type": "Person", "@id": `${siteUrl}/about#jon`, name: "Jon Shaw" },
+    ];
+    graph.push(
+      {
+        "@type": "AboutPage",
+        "@id": `${siteUrl}/about#about`,
+        url: `${siteUrl}/about`,
+        name: about.heading,
+        description: about.metaDescription,
+        isPartOf: { "@id": siteId },
+        about: { "@id": orgId },
+      },
+      ...founders,
+      {
+        "@type": "Organization",
+        "@id": orgId,
+        foundingDate: "2023",
+        founder: founders.map((f) => ({ "@id": f["@id"] })),
+      },
+    );
+  }
 
   /* The FAQ page answers five questions in full on the page itself, which is
      exactly what FAQPage is for. Marking up questions that are not visible, or

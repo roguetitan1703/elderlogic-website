@@ -29,6 +29,10 @@ SOURCES = {
     # Record card, right column of a two-up. ~640 CSS px at the widest.
     "product/home-record.jpg": [640, 960, 1280, 1681],
     "product/home-record-tall.jpg": [400, 692],
+    # The founders, on the about page. Beside the copy at about 420 CSS px on a
+    # wide screen and full width on a phone, so 840 is the 2x it needs and the
+    # source's own 1237 is the ceiling.
+    "about/founders.jpg": [420, 840, 1237],
     # Phone captures. The CSS caps them near 368 CSS px, so 760 is already 2x.
     "product/phone-assessment.png": [380, 760],
     "product/phone-route.png": [380, 760],
