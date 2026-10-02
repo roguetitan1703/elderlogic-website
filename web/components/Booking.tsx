@@ -34,10 +34,17 @@ import { track } from "@/lib/track";
  * <dialog> does not do by itself: the click lands on the dialog element rather
  * than on anything inside it, which is what the bounds test below reads.
  */
-const BookingContext = createContext<(() => void) | null>(null);
+type Booking = {
+  /** Show the dialog. */
+  open: () => void;
+  /** Start loading Google's page without showing anything. Idempotent. */
+  warm: () => void;
+};
 
-/** Opens the booking dialog. Null outside the provider, so a button can still
- *  render and fall back to the anchor rather than throwing. */
+const BookingContext = createContext<Booking | null>(null);
+
+/** Null outside the provider, so a button can still render and fall back to
+ *  the anchor rather than throwing. */
 export function useBooking() {
   return useContext(BookingContext);
 }
@@ -54,6 +61,29 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
     return () => el.removeEventListener("close", onClose);
   }, []);
 
+  /**
+   * Begin loading the calendar before anybody asks to see it.
+   *
+   * Google's page takes about 1.5 seconds to answer, and the short link spends
+   * one of its hops redirecting from calendar.app.google to
+   * calendar.google.com, so a cold open is a visibly empty dialog.
+   *
+   * Deliberately not done for every visitor on page load. That would put a
+   * request to Google, and Google's cookies, into every single page view for
+   * the sake of the few who book, on a site whose whole reason for not using
+   * Google's own button was that it fetched things nobody had asked for. It
+   * would also pull a full Google application onto a phone that may never need
+   * it.
+   *
+   * So it is done on intent instead: the first hover, focus or touch of any
+   * "Book a demo". The iframe mounts inside the dialog while the dialog is
+   * still closed, and an iframe inside a display:none element still loads,
+   * which is the whole trick. By the time the click lands, the page is already
+   * on its way, and the preconnect in the document head has the connections to
+   * both of Google's origins open before even that.
+   */
+  const warm = () => setMounted(true);
+
   const open = () => {
     setMounted(true);
     document.body.classList.add("has-dialog");
@@ -68,7 +98,7 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
   const src = `${schedulerUrl}${schedulerUrl.includes("?") ? "&" : "?"}gv=true`;
 
   return (
-    <BookingContext.Provider value={open}>
+    <BookingContext.Provider value={{ open, warm }}>
       {children}
 
       <dialog
@@ -135,9 +165,9 @@ export function BookButton({
   /** Runs before the dialog opens. The header menu uses it to close itself. */
   onActivate?: () => void;
 }) {
-  const open = useBooking();
+  const booking = useBooking();
 
-  if (!open) {
+  if (!booking) {
     return (
       <a className={className} href="/#book" onClick={onActivate}>
         {children}
@@ -149,9 +179,15 @@ export function BookButton({
     <button
       type="button"
       className={className}
+      /* Three ways in, because they are three different people: a pointer
+         approaching, a finger landing, and a keyboard arriving. Each gives
+         the calendar a head start the click would otherwise have waited for. */
+      onPointerEnter={booking.warm}
+      onTouchStart={booking.warm}
+      onFocus={booking.warm}
       onClick={() => {
         onActivate?.();
-        open();
+        booking.open();
       }}
     >
       {children}

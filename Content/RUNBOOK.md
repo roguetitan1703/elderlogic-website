@@ -177,7 +177,23 @@ Vercel's analytics scripts, which only exist when deployed.
 
 ## 4a. Enquiries and booking
 
-**Booking** is a Google Calendar appointment schedule. One constant,
+**Booking** is a Google Calendar appointment schedule, warmed before it is
+asked for. Google's page takes about 1.5 seconds to answer and the short link
+spends a hop redirecting from `calendar.app.google` to `calendar.google.com`,
+so a cold open was 806ms of empty dialog, measured. The first hover, touch or
+focus of any "Book a demo" mounts the iframe inside the still closed dialog,
+and an iframe inside a `display:none` element loads anyway, which is the trick.
+Both origins are preconnected in the document head.
+
+It is deliberately not warmed for everybody on page load. That would put a
+request to Google, and Google's cookies, into every page view for the sake of
+the few who book, on a site that avoided Google's own booking button for
+exactly that reason, and it would pull a full Google application onto phones
+that never need it. Checked: a visitor who never goes near the button makes
+zero requests to Google's calendar; one who hovers makes one, and the calendar
+has finished loading before their click lands.
+
+ One constant,
 `schedulerUrl` in `web/content/site.ts`. The calendar opens in a dialog behind
 the "Book a demo" button rather than being embedded in the page, so nothing is
 requested from Google until a reader means to book. It is the client's own
@@ -374,6 +390,33 @@ tied to a named person.
 
 ---
 
+## 4c. Branches, and the preview the client sees
+
+Two branches, and the difference matters because one of them is a URL you have
+given to somebody.
+
+`main` is the work. Every commit lands here first.
+
+`deployments` is what the client is looking at. Vercel builds a preview for it
+and gives it a stable URL that does not change between builds, so the link she
+was sent keeps working. Nothing is developed on this branch; it only ever
+fast forwards to `main` when the work is ready to be seen.
+
+```
+git checkout deployments && git merge --ff-only main
+git push origin deployments && git push delpat deployments
+git checkout main
+```
+
+If that merge is not a fast forward, something was committed to `deployments`
+directly. Find it before forcing anything: it is a change that exists nowhere
+else.
+
+Previews serve `noindex` regardless, because `NEXT_PUBLIC_SITE_URL` is set on
+the production deployment only and Vercel marks a branch build
+`VERCEL_ENV=preview`. So the preview cannot compete with the real site in
+search, and it cannot be found by anyone who was not sent the link.
+
 ## 4d. Setting up Analytics and Search Console
 
 Both live in the client's own Google account, the same one the calendar is on.
@@ -446,33 +489,6 @@ Neither product charges per user. She owns both; add whoever needs them:
 
 ---
 
-## 4c. Branches, and the preview the client sees
-
-Two branches, and the difference matters because one of them is a URL you have
-given to somebody.
-
-`main` is the work. Every commit lands here first.
-
-`deployments` is what the client is looking at. Vercel builds a preview for it
-and gives it a stable URL that does not change between builds, so the link she
-was sent keeps working. Nothing is developed on this branch; it only ever
-fast forwards to `main` when the work is ready to be seen.
-
-```
-git checkout deployments && git merge --ff-only main
-git push origin deployments && git push delpat deployments
-git checkout main
-```
-
-If that merge is not a fast forward, something was committed to `deployments`
-directly. Find it before forcing anything: it is a change that exists nowhere
-else.
-
-Previews serve `noindex` regardless, because `NEXT_PUBLIC_SITE_URL` is set on
-the production deployment only and Vercel marks a branch build
-`VERCEL_ENV=preview`. So the preview cannot compete with the real site in
-search, and it cannot be found by anyone who was not sent the link.
-
 ---
 
 ## 5. Going live
@@ -529,6 +545,12 @@ Tracked so nothing is lost between sessions; see HANDOFF.md for detail.
 - **Migration.** Redirects are in place for every URL in the Wix sitemap. What
   remains is pointing the domain at this deployment, which is the cutover
   itself.
-- **Real hardware.** The device sweep runs three engines headless. WebKit shares
-  Safari's engine, so it catches engine bugs, but it is not an iPhone. Someone
-  has to open the site on one before launch.
+- **Real hardware.** Done, on an iPhone, and it earned its place: it found four
+  things the headless sweep did not. The tab strip above "what your team gets"
+  chained its scroll to the page, which reads as the header sliding sideways.
+  Selecting the second tab left the third off screen. An FAQ question turned
+  green on tap and stayed green, because :hover sticks on a touch screen until
+  something else is tapped. And the record screenshot, being lazy on a dark
+  section, left an empty navy rectangle for anyone scrolling at normal speed.
+  None of those reproduce in Chromium or WebKit headless at the same viewport.
+  Android has still not been checked.

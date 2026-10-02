@@ -88,6 +88,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             the page is doing anyway. Only this one origin: preconnect is a
             cost per entry, and Lighthouse caps the useful number at four. */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
+        {/* The booking calendar's two origins. The short link lives on the
+            first and redirects to the second, which is where the page it
+            actually shows comes from, so both connections are worth having
+            open before anybody books. A preconnect opens a socket and nothing
+            more: no request, no cookie, no page. Four is the useful ceiling
+            and this is three. */}
+        <link rel="preconnect" href="https://calendar.app.google" />
+        <link rel="preconnect" href="https://calendar.google.com" />
         {/* The two faces the first viewport is set in, fetched in parallel
             with the stylesheet instead of after it. Everything else the page
             needs is declared in ds/tokens.css and loads normally. Preloading
