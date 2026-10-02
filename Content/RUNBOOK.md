@@ -410,6 +410,17 @@ move is a well worn way to confuse Google about a site that was fine.
    handover: it goes in `NEXT_PUBLIC_GA_ID` on the production deployment and
    nothing else is needed. It is public by design, so it is not a secret to
    pass around carefully.
+
+   **Setting it is not enough. It has to be redeployed.** Anything named
+   `NEXT_PUBLIC_` is inlined into the bundle when the site is built, not read
+   when it is served, so saving the variable changes nothing until a build runs
+   with it present. Set it for **Production only**, so previews stay out of her
+   reporting, then redeploy. Confirm from outside rather than from the
+   dashboard:
+
+   ```
+   curl -s https://elderlogic.app/ | grep -o "gtag/js?id=G-[A-Z0-9]*"
+   ```
 8. Leave **Enhanced measurement** on. Outbound clicks are part of it, which is
    how clicks through to the AZDHS listing get counted without any extra work.
 
