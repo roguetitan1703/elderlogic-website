@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { footer, nav } from "@/content/copy";
 import { headerTheme } from "@/content/site";
+import { BookButton } from "@/components/Booking";
 
 /**
  * The header, and on a phone the only navigation there is.
@@ -117,9 +118,9 @@ export default function SiteHeader() {
             ))}
           </nav>
 
-          <a className="btn btn--primary site-header__cta" href={nav.cta.href}>
+          <BookButton className="btn btn--primary site-header__cta">
             {nav.cta.label}
-          </a>
+          </BookButton>
 
           <button
             ref={toggle}
@@ -170,9 +171,12 @@ export default function SiteHeader() {
         </nav>
 
         <div className="site-menu__foot">
-          <a className="btn btn--primary site-menu__cta" href={nav.cta.href} onClick={() => setOpen(false)}>
+          <BookButton
+            className="btn btn--primary site-menu__cta"
+            onActivate={() => setOpen(false)}
+          >
             {nav.cta.label}
-          </a>
+          </BookButton>
           <p className="site-menu__lead">{nav.menu.contactLead}</p>
           <a className="site-menu__contact mono" href={`mailto:${footer.email}`}>
             {footer.email}

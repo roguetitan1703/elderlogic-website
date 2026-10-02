@@ -13,7 +13,7 @@ import {
 import Inventory from "@/components/Inventory";
 import Route from "@/components/Route";
 import ContactForm from "@/components/ContactForm";
-import BookDialog from "@/components/BookDialog";
+import { BookButton } from "@/components/Booking";
 import Picture from "@/components/Picture";
 import Reveal from "@/components/Reveal";
 import Shot from "@/components/Shot";
@@ -42,9 +42,7 @@ export default function Home() {
             <h1 className="display-1 hero__heading">{hero.heading}</h1>
             <p className="lead hero__sub">{hero.sub}</p>
             <div className="actions">
-              <a className="btn btn--primary" href={hero.primary.href}>
-                {hero.primary.label}
-              </a>
+              <BookButton className="btn btn--primary">{hero.primary.label}</BookButton>
               <a className="arrow-link" href={hero.secondary.href}>
                 {hero.secondary.label} <span aria-hidden="true">&#8594;</span>
               </a>
@@ -201,10 +199,17 @@ export default function Home() {
                 />
               </div>
               <div className="exhibit__narrow">
+                {/* Eager, unlike every other image below the fold. This is the
+                    phone crop: 15KB at 400px, 31KB at 692. Left lazy it began
+                    downloading only as it came into view, and on a dark
+                    section a reader scrolling at normal speed arrived at an
+                    empty navy rectangle. The wide crop beside it stays lazy,
+                    so a phone never pays for both. */}
                 <Picture
                   src={record.image.narrowSrc}
                   alt={record.image.alt}
                   sizes="92vw"
+                  priority
                 />
               </div>
               <figcaption className="exhibit__cap mono">{record.caption}</figcaption>
@@ -286,7 +291,9 @@ export default function Home() {
               <h2 className="display-2 cta__heading">{close.heading}</h2>
               <p className="lead cta__body">{close.body}</p>
               <div className="actions" id="scheduler">
-                <BookDialog />
+                <BookButton className="btn btn--primary btn--lg">
+                  {close.cta.label}
+                </BookButton>
                 <a className="arrow-link cta__link" href={close.secondary.href}>
                   {close.secondary.label} <span aria-hidden="true">&#8594;</span>
                 </a>

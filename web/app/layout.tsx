@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Metadata, Viewport } from "next";
 import Analytics from "@/components/Analytics";
+import { BookingProvider } from "@/components/Booking";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import StructuredData from "@/components/StructuredData";
@@ -115,16 +116,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       {/* Header and footer live here rather than in each page, so a route
           added later cannot ship without them. */}
       <body>
-        <SiteHeader />
-        {children}
-        <SiteFooter />
-        <ToTop />
+        {/* One booking dialog for the whole site. Every "Book a demo" asks
+            this to open, so the calendar appears where the reader already is
+            instead of sending them to the bottom of the home page to press a
+            second button. Nothing is fetched from Google until it is opened. */}
+        <BookingProvider>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+          <ToTop />
         {/* Google Analytics, under the client's own account, so the numbers
             belong to her and survive a change of host. Renders nothing at all
             unless NEXT_PUBLIC_GA_ID is set, which keeps previews out of her
             reporting. Replaced the two Vercel tags, which only worked on
             Vercel and reported to us rather than to her. */}
-        <Analytics />
+          <Analytics />
+        </BookingProvider>
       </body>
     </html>
   );

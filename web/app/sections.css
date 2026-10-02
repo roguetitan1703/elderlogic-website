@@ -211,7 +211,14 @@
 }
 /* Safari draws its own triangle and ignores list-style on the summary box. */
 .qa__q::-webkit-details-marker { display: none; }
-.qa__q:hover { color: var(--brand-ink); }
+/* Only where a pointer can actually hover. On a touch screen :hover sticks
+   after a tap and does not clear until something else is tapped, which read as
+   the question turning green and staying green for no reason. */
+@media (hover: hover) {
+  .qa__q:hover { color: var(--brand-ink); }
+}
+/* Open is the state worth showing, and it is the one that was not shown. */
+.qa__item[open] > .qa__q { color: var(--brand-ink); }
 .qa__q:focus-visible {
   outline: var(--border-w) solid var(--border-focus);
   outline-offset: 4px;
@@ -239,7 +246,10 @@
 }
 .qa__mark::after { transform: rotate(90deg); }
 .qa__item[open] .qa__mark::after { transform: rotate(0deg); }
-.qa__q:hover .qa__mark { color: var(--brand-ink); }
+@media (hover: hover) {
+  .qa__q:hover .qa__mark { color: var(--brand-ink); }
+}
+.qa__item[open] > .qa__q .qa__mark { color: var(--brand-ink); }
 
 .qa__a {
   padding-bottom: var(--sp-7);
@@ -534,7 +544,22 @@
   color: var(--text-inverse-muted);
 }
 
-.site-footer a {
+/* The booking link is a <button>, because it opens the dialog rather than
+   going anywhere. It has to read as the link it sits beside, so it shares
+   every rule with .site-footer a and resets what a button brings with it. */
+.site-footer__book {
+  background: none;
+  border: 0;
+  /* A button carries its own padding, which indented it a few pixels past the
+     links above it. Everything a button brings has to go, not just the parts
+     that are obvious. */
+  padding-inline: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.site-footer a,
+.site-footer__book {
   align-self: start;
   color: var(--text-inverse);
   font-size: var(--fs-body-sm);
@@ -544,8 +569,10 @@
   transition: color var(--dur-fast, 140ms) var(--ease-standard),
               border-color var(--dur-fast, 140ms) var(--ease-standard);
 }
-.site-footer a:hover { color: var(--green-300); border-bottom-color: var(--green-400); }
-.site-footer a:focus-visible {
+.site-footer a:hover,
+.site-footer__book:hover { color: var(--green-300); border-bottom-color: var(--green-400); }
+.site-footer a:focus-visible,
+.site-footer__book:focus-visible {
   outline: var(--border-w) solid var(--green-400);
   outline-offset: 3px;
   border-bottom-color: transparent;
@@ -590,6 +617,21 @@
   margin-bottom: var(--sp-4);
 }
 .legal__p { margin-bottom: var(--sp-4); color: var(--text-body); }
+
+/* Addresses and URLs inside the policy. Underlined rather than coloured: this
+   is a legal document, and a green word in a wall of grey reads as emphasis on
+   the wrong thing. */
+.legal__link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+.legal__link:hover { color: var(--brand-ink); }
+.legal__link:focus-visible {
+  outline: var(--border-w) solid var(--border-focus);
+  outline-offset: 2px;
+}
 .legal__p:last-child { margin-bottom: 0; }
 
 /* ---------- close ------------------------------------------------------ */
@@ -1316,6 +1358,14 @@ body:not(:has(.hero)) main { padding-top: var(--header-h); }
   margin-bottom: var(--sp-5);
   overflow-x: auto;
   scrollbar-width: none;
+  /* Without this, swiping past the end of the strip hands the gesture to the
+     page, which on iOS reads as the whole header sliding sideways. */
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  scroll-padding-inline: var(--sp-4);
+}
+@media (prefers-reduced-motion: reduce) {
+  .inv__index { scroll-behavior: auto; }
 }
 .inv__index::-webkit-scrollbar { display: none; }
 .inv__tab {

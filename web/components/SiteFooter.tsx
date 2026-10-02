@@ -1,4 +1,5 @@
 import { footer } from "@/content/copy";
+import { BookButton } from "@/components/Booking";
 
 export default function SiteFooter() {
   return (
@@ -13,11 +14,20 @@ export default function SiteFooter() {
         {footer.columns.map((col) => (
           <nav key={col.heading} className="site-footer__col" aria-label={col.heading}>
             <span className="eyebrow">{col.heading}</span>
-            {col.links.map((link) => (
-              <a key={link.href} href={link.href}>
-                {link.label}
-              </a>
-            ))}
+            {col.links.map((link) =>
+              /* The one footer link that is not a destination. It opens the
+                 same dialog every other call to action opens, rather than
+                 scrolling the reader back up to press a second button. */
+              link.href === "/#book" ? (
+                <BookButton key={link.href} className="site-footer__book">
+                  {link.label}
+                </BookButton>
+              ) : (
+                <a key={link.href} href={link.href}>
+                  {link.label}
+                </a>
+              )
+            )}
           </nav>
         ))}
 

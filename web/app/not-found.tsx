@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BookButton } from "@/components/Booking";
 import { close, nav, notFound } from "@/content/copy";
 
 export const metadata: Metadata = {
@@ -42,9 +43,7 @@ export default function NotFound() {
                 ))}
               </nav>
               <div className="actions">
-                <Link className="btn btn--primary" href={close.cta.href}>
-                  {close.cta.label}
-                </Link>
+                <BookButton className="btn btn--primary">{close.cta.label}</BookButton>
                 <Link className="arrow-link" href="/">
                   {notFound.back} <span aria-hidden="true">&#8594;</span>
                 </Link>

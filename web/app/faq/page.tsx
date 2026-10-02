@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { questions, close, footer } from "@/content/copy";
 import Accordion from "@/components/Accordion";
+import { BookButton } from "@/components/Booking";
 import StructuredData from "@/components/StructuredData";
 import { pageMetadata } from "@/content/site";
 
@@ -42,9 +43,7 @@ export default function Questions() {
               <p className="lead ask__body">{questions.closeBody}</p>
             </div>
             <div className="ask__do">
-              <a className="btn btn--primary btn--lg" href={close.cta.href}>
-                {close.cta.label}
-              </a>
+              <BookButton className="btn btn--primary btn--lg">{close.cta.label}</BookButton>
               <p className="ask__alt">
                 {questions.closeAlt}{" "}
                 <a href={`mailto:${footer.email}`}>{footer.email}</a>

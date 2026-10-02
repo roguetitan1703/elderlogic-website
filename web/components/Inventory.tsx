@@ -26,8 +26,23 @@ import { inventory } from "@/content/copy";
  */
 export default function Inventory() {
   const rail = useRef<HTMLDivElement>(null);
+  const index = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [ready, setReady] = useState(false);
+
+  /* The strip of tabs is itself a scroller on a phone, narrower than the tabs
+     it holds. Selecting the second one used to leave the third off-screen, so
+     the reader had no way of knowing it was there. Whenever the active tab
+     changes, from a tap or from swiping the panels, centre it. Centring
+     rather than the cheaper 'nearest' is the point: 'nearest' scrolls the
+     minimum, which parks the selected tab against the right edge and leaves
+     the next one still hidden, which is the bug. Centred, the tabs either side
+     of it are always partly showing, so the strip looks like what it is. The
+     browser clamps at both ends, so the first and last tabs do not drift. */
+  useEffect(() => {
+    const tab = index.current?.children[active] as HTMLElement | undefined;
+    tab?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [active]);
 
   useEffect(() => {
     const el = rail.current;
@@ -59,7 +74,7 @@ export default function Inventory() {
 
   return (
     <div className="inv">
-      <div className="inv__index" hidden={!ready}>
+      <div className="inv__index" ref={index} hidden={!ready}>
         {inventory.groups.map((group, i) => (
           <button
             key={group.heading}
