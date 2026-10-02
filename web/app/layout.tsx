@@ -3,6 +3,7 @@ import path from "node:path";
 import type { Metadata, Viewport } from "next";
 import Analytics from "@/components/Analytics";
 import { BookingProvider } from "@/components/Booking";
+import SectionTracker from "@/components/SectionTracker";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import StructuredData from "@/components/StructuredData";
@@ -139,6 +140,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             reporting. Replaced the two Vercel tags, which only worked on
             Vercel and reported to us rather than to her. */}
           <Analytics />
+          <SectionTracker />
         </BookingProvider>
       </body>
     </html>

@@ -35,8 +35,8 @@ import { track } from "@/lib/track";
  * than on anything inside it, which is what the bounds test below reads.
  */
 type Booking = {
-  /** Show the dialog. */
-  open: () => void;
+  /** Show the dialog. Takes the name of the call to action that asked. */
+  open: (where: string) => void;
   /** Start loading Google's page without showing anything. Idempotent. */
   warm: () => void;
 };
@@ -84,7 +84,7 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
    */
   const warm = () => setMounted(true);
 
-  const open = () => {
+  const open = (where: string) => {
     setMounted(true);
     document.body.classList.add("has-dialog");
     ref.current?.showModal();
@@ -92,7 +92,7 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
        request: the booking itself happens on Google's page, which we cannot
        see into. So this counts intent, and the bookings are counted in her
        calendar. Both numbers are needed to read either. */
-    track("demo_request");
+    track("demo_request", { cta_location: where });
   };
 
   const src = `${schedulerUrl}${schedulerUrl.includes("?") ? "&" : "?"}gv=true`;
@@ -159,11 +159,16 @@ export function BookButton({
   className,
   children,
   onActivate,
+  where,
 }: {
   className: string;
   children: React.ReactNode;
   /** Runs before the dialog opens. The header menu uses it to close itself. */
   onActivate?: () => void;
+  /** Which call to action this is, reported as cta_location. There are seven
+   *  of them and they are not equivalent: the header is a reader who decided
+   *  early, the one in the close section is a reader who read the page. */
+  where: string;
 }) {
   const booking = useBooking();
 
@@ -187,7 +192,7 @@ export function BookButton({
       onFocus={booking.warm}
       onClick={() => {
         onActivate?.();
-        booking.open();
+        booking.open(where);
       }}
     >
       {children}

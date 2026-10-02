@@ -43,7 +43,7 @@ export default function Questions() {
               <p className="lead ask__body">{questions.closeBody}</p>
             </div>
             <div className="ask__do">
-              <BookButton className="btn btn--primary btn--lg">{close.cta.label}</BookButton>
+              <BookButton className="btn btn--primary btn--lg" where="faq-page">{close.cta.label}</BookButton>
               <p className="ask__alt">
                 {questions.closeAlt}{" "}
                 <a href={`mailto:${footer.email}`}>{footer.email}</a>

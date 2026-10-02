@@ -19,7 +19,7 @@ export default function SiteFooter() {
                  same dialog every other call to action opens, rather than
                  scrolling the reader back up to press a second button. */
               link.href === "/#book" ? (
-                <BookButton key={link.href} className="site-footer__book">
+                <BookButton key={link.href} className="site-footer__book" where="footer">
                   {link.label}
                 </BookButton>
               ) : (

@@ -42,7 +42,7 @@ export default function Home() {
             <h1 className="display-1 hero__heading">{hero.heading}</h1>
             <p className="lead hero__sub">{hero.sub}</p>
             <div className="actions">
-              <BookButton className="btn btn--primary">{hero.primary.label}</BookButton>
+              <BookButton className="btn btn--primary" where="hero">{hero.primary.label}</BookButton>
               <a className="arrow-link" href={hero.secondary.href}>
                 {hero.secondary.label} <span aria-hidden="true">&#8594;</span>
               </a>
@@ -291,7 +291,7 @@ export default function Home() {
               <h2 className="display-2 cta__heading">{close.heading}</h2>
               <p className="lead cta__body">{close.body}</p>
               <div className="actions" id="scheduler">
-                <BookButton className="btn btn--primary btn--lg">
+                <BookButton className="btn btn--primary btn--lg" where="close-section">
                   {close.cta.label}
                 </BookButton>
                 <a className="arrow-link cta__link" href={close.secondary.href}>

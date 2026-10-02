@@ -118,7 +118,7 @@ export default function SiteHeader() {
             ))}
           </nav>
 
-          <BookButton className="btn btn--primary site-header__cta">
+          <BookButton className="btn btn--primary site-header__cta" where="header">
             {nav.cta.label}
           </BookButton>
 
@@ -173,6 +173,7 @@ export default function SiteHeader() {
         <div className="site-menu__foot">
           <BookButton
             className="btn btn--primary site-menu__cta"
+            where="phone-menu"
             onActivate={() => setOpen(false)}
           >
             {nav.cta.label}

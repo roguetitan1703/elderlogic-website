@@ -361,12 +361,45 @@ property; Admin, Property access management, add whoever needs it as
 Administrator or Editor. Implementing the tag needs only the id, not access to
 her account, so she can send the id and add people later.
 
-**The events the site sends.** Two, both in `web/lib/track.ts`:
+**The events the site sends.** Two, both through `web/lib/track.ts`:
 
-| event | fires when |
-|---|---|
-| `demo_request` | the booking dialog opens |
-| `enquiry_sent` | the contact form gets an answer the sender was told was a success |
+| event | fires when | parameters |
+|---|---|---|
+| `demo_request` | the booking dialog opens | `cta_location`, `deepest_section` |
+| `enquiry_sent` | the contact form gets an answer the sender was told was a success | `deepest_section` |
+
+**`deepest_section` is how the contracted "which sections lead to enquiries"
+is answered.** GA can count enquiries and it can count page views, but it
+cannot see a section, so on its own it can never say which part of the page did
+the work. One parameter on the conversion settles it: group enquiries by this
+and the sections that precede them are the sections that earn them.
+
+It is the furthest section reached, not the one on screen when the button was
+pressed. A reader who gets to the bottom, decides, then scrolls back up to the
+header button has been convinced by the bottom of the page, and calling that
+"the header" would be worse than reporting nothing. `web/components/
+SectionTracker.tsx` keeps it, counting a section as reached when its top
+crosses the middle of the viewport rather than when it first peeks in at the
+bottom.
+
+**`cta_location`** names which of the seven buttons was pressed: `header`,
+`phone-menu`, `hero`, `close-section`, `footer`, `faq-page`, `not-found`. They
+are not equivalent. The header is somebody who decided early; the close section
+is somebody who read the page.
+
+**Both have to be registered in GA before they appear in any report.** Custom
+parameters are collected from the first event but stay invisible until they are
+declared. Admin, Custom definitions, Create custom dimension, twice:
+
+| Dimension name | Scope | Event parameter |
+|---|---|---|
+| Deepest section | Event | `deepest_section` |
+| CTA location | Event | `cta_location` |
+
+Then Explore, free form, with `deepest_section` as the row and `enquiry_sent`
+plus `demo_request` as the values. That report is the deliverable. Note that
+GA only populates a custom dimension from the point it is created, so this is a
+day-one job, not a later one.
 
 `demo_request` counts intent, not bookings. The booking itself happens on
 Google's page inside an iframe, which we cannot see into, so the completed
@@ -542,9 +575,8 @@ Tracked so nothing is lost between sessions; see HANDOFF.md for detail.
 - **Analytics.** Google Analytics is wired and inert until
   `NEXT_PUBLIC_GA_ID` is set. Demo requests and form submissions are sent; see
   section 4b. Video plays are contracted and there is no video on the site.
-- **Migration.** Redirects are in place for every URL in the Wix sitemap. What
-  remains is pointing the domain at this deployment, which is the cutover
-  itself.
+- **Migration.** Done. All six URLs from the Wix sitemap redirect, 301, and the
+  domain is pointed at this deployment. Verified live: see section 5.
 - **Real hardware.** Done, on an iPhone, and it earned its place: it found four
   things the headless sweep did not. The tab strip above "what your team gets"
   chained its scroll to the page, which reads as the header sliding sideways.

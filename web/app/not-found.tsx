@@ -43,7 +43,7 @@ export default function NotFound() {
                 ))}
               </nav>
               <div className="actions">
-                <BookButton className="btn btn--primary">{close.cta.label}</BookButton>
+                <BookButton className="btn btn--primary" where="not-found">{close.cta.label}</BookButton>
                 <Link className="arrow-link" href="/">
                   {notFound.back} <span aria-hidden="true">&#8594;</span>
                 </Link>
