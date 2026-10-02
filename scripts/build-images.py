@@ -37,6 +37,16 @@ SOURCES = {
 
 QUALITY = {"avif": 52, "webp": 78}
 
+# Per-image override, for images where the quality simply does not have to be
+# there. The hero map is the whole first viewport by area, so it is the single
+# heaviest thing on the critical path, and it is also aria-hidden decoration
+# sitting behind the headline: nobody reads it, and no claim rests on it. The
+# record card and the phone captures are the opposite, text in a screenshot
+# that somebody will squint at, so they keep the default.
+QUALITY_BY_SOURCE = {
+    "product/map-2x.jpg": {"avif": 38, "webp": 66},
+}
+
 
 def build():
     manifest = {}
@@ -50,6 +60,8 @@ def build():
         total_before += src.stat().st_size
         entry = {"width": im.width, "height": im.height, "avif": [], "webp": []}
 
+        quality = {**QUALITY, **QUALITY_BY_SOURCE.get(rel, {})}
+
         for w in sorted({min(w, im.width) for w in widths}):
             resized = im if w == im.width else im.resize(
                 (w, round(im.height * w / im.width)), Image.LANCZOS
@@ -58,7 +70,7 @@ def build():
                 out = stem.parent / f"{stem.name}-{w}.{fmt}"
                 # AVIF has no palette mode and WebP wants straight RGB(A).
                 frame = resized.convert("RGBA" if "A" in resized.mode else "RGB")
-                frame.save(out, quality=QUALITY[fmt], method=6 if fmt == "webp" else None)
+                frame.save(out, quality=quality[fmt], method=6 if fmt == "webp" else None)
                 total_after += out.stat().st_size
                 entry[fmt].append([w, "/" + out.relative_to(PUB).as_posix()])
         manifest["/" + rel] = entry

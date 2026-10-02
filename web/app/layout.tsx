@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { Metadata, Viewport } from "next";
 import Analytics from "@/components/Analytics";
 import SiteFooter from "@/components/SiteFooter";
@@ -57,10 +59,34 @@ export const viewport: Viewport = {
   ],
 };
 
+/**
+ * The token bundle, read at build time and inlined below.
+ *
+ * It was a <link> until Lighthouse put 450ms of the mobile critical path on
+ * it: 15KB that every first paint waits for, fetched only after the HTML that
+ * references it has arrived and been parsed. Inlining removes that round trip
+ * entirely. It costs ~15KB on every HTML response, which is cheaper than a
+ * blocking request on a phone, and the file still has one source of truth:
+ * ds/tokens/, built by scripts/build-ds.py.
+ *
+ * Read once at module scope, so it happens at build time for the static pages
+ * rather than per request.
+ */
+const tokens = fs.readFileSync(
+  path.join(process.cwd(), "public", "ds", "tokens.css"),
+  "utf8",
+);
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        {/* Google's tag is the heaviest thing on the page and the last thing
+            discovered, because nothing references it until the script runs.
+            Opening the connection early overlaps DNS, TCP and TLS with work
+            the page is doing anyway. Only this one origin: preconnect is a
+            cost per entry, and Lighthouse caps the useful number at four. */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
         {/* The two faces the first viewport is set in, fetched in parallel
             with the stylesheet instead of after it. Everything else the page
             needs is declared in ds/tokens.css and loads normally. Preloading
@@ -79,10 +105,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="/ds/fonts/IBMPlexSans-450-latin.woff2"
           crossOrigin=""
         />
-        {/* Design system tokens. Never hard-code a value that has a token.
-            One file, built by scripts/build-ds.py from ds/tokens/. Edit the
-            token files, not this bundle, and re-run the script. */}
-        <link rel="stylesheet" href="/ds/tokens.css" />
+        {/* Design system tokens, inlined rather than linked. Never hard-code a
+            value that has a token. One file, built by scripts/build-ds.py from
+            ds/tokens/. Edit the token files, not this bundle, and re-run the
+            script. See the note above the constant for why it is not a link. */}
+        <style dangerouslySetInnerHTML={{ __html: tokens }} />
         <StructuredData />
       </head>
       {/* Header and footer live here rather than in each page, so a route
