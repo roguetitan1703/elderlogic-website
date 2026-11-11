@@ -371,12 +371,13 @@ property; Admin, Property access management, add whoever needs it as
 Administrator or Editor. Implementing the tag needs only the id, not access to
 her account, so she can send the id and add people later.
 
-**The events the site sends.** Two, both through `web/lib/track.ts`:
+**The events the site sends.** Three, all through `web/lib/track.ts`:
 
 | event | fires when | parameters |
 |---|---|---|
 | `demo_request` | the booking dialog opens | `cta_location`, `deepest_section` |
 | `enquiry_sent` | the contact form gets an answer the sender was told was a success | `deepest_section` |
+| `contact_click` | someone presses the email address or phone number, anywhere on the site (`web/components/ContactTracker.tsx`, added 11 Nov 2026) | `method` (email or phone), `link_location` (header, footer or main), `deepest_section` |
 
 **`deepest_section` is how the contracted "which sections lead to enquiries"
 is answered.** GA can count enquiries and it can count page views, but it
