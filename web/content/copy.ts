@@ -63,7 +63,13 @@ export const meta = {
  * price, and nothing here that is not already true on the page.
  */
 export const org = {
-  legalName: "ElderLogic",
+  /** As her own privacy policy names the company. */
+  legalName: "ElderLogic LLC",
+  /** Other ways people write the name. Google picks the site name it shows
+   *  above a result from WebSite name and alternateName; without these it was
+   *  falling back to the bare domain, "elderlogic.app", in small grey type.
+   *  "ElderLogic Concierge" is the client's own name for the service. */
+  alternateName: ["Elder Logic", "ElderLogic Concierge"],
   area: "Arizona",
   country: "US",
   /** What the product is, in the vocabulary a search engine expects. */
@@ -533,7 +539,9 @@ export const close = {
 /* --------------------------------------------------------------- FAQ. */
 
 export const questions = {
-  heading: "FAQ",
+  /** The page's one heading, and what a search engine reads as its topic.
+   *  "FAQ" alone said nothing about what the questions are about. */
+  heading: "Questions about placement and marketing visits",
   /** The browser tab and the search result, which "FAQ" alone tells nobody
    *  anything about. The brand is appended by the layout's title template. */
   metaTitle: "Questions about placement and marketing visits",
